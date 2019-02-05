@@ -3,7 +3,7 @@ models:
   external_links:
     - mysql:db
   volumes:
-    - ~/cs4501/app:/app
+    - ~/cs4501/app/isa:/app
   ports:
     - "8001:8000"
-  command: bash -c "mod_wsgi-express start-server --working-directory ~/cs4501/app:/app --reload-on-changes ~/cs4501/app/isa/isa/wsgi.py"
+  command: bash -c "mod_wsgi-express start-server --working-directory ~/cs4501/app/isa --reload-on-changes ~/cs4501/app/isa/isa/wsgi.py"
