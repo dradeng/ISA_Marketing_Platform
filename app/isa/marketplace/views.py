@@ -55,3 +55,8 @@ def ad(request):
         return
     elif(reqeuest.method == "PUT"):
         return null
+
+def ad_detail(request, ad_id)
+    ad = get_object_or_404(Ad, pk=ad_id)
+    return render(request, 'ad_detail.html',
+                  {'ad': ad})

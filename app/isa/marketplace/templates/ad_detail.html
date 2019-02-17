@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+
+<head>
+    <link rel="stylesheet" href="{% static 'css/assignment_detail.css' %}">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU"
+        crossorigin="anonymous">
+</head>
+<div style="margin-left: 5%">
+    <h1>{{ ad.site_title }}</h1>
+    <p>{{ ad.url }}</p>
+    <h2>{{ ad.User }}</h1>
+    <h5>{{ad.cost }} - {{ ad.duration }} days</h5>
+    <!-- show ad image -->
+</div>
+{% endblock %}

@@ -23,9 +23,11 @@ class Ad(models.Model):
     duration = models.IntegerField(default=0)
     User = models.ForeignKey(User, on_delete=models.CASCADE)
     cost = models.DecimalField(max_digits=20, decimal_places=2)
+    url = models.URLField(verbose_name=_('URL'), null=True, blank=True)
+    site_title = models.CharField(max_length=255, verbose_name=_('Title'))
 
 
     @classmethod
     def create(image, duration, User, cost):
-        AdCreated = cls(image=image, User = User, duration=duration, cost=cost)
+        AdCreated = cls(image=image, User = User, duration=duration, cost=cost, url=url, site_title=site_title)
         return AdCreated

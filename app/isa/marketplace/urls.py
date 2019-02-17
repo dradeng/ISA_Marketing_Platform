@@ -8,4 +8,8 @@ from . import views
 urlpatterns = [
     path('accounts/', include('django.contrib.auth.urls')),
     path('', views.home, name='home'),
+     path(
+        '<int:ad_id>/detail',
+        views.ad_detail,
+        name='ad_detail'),
 ]
