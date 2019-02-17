@@ -35,6 +35,7 @@ def user(request):
         return
     elif(reqeuest.method == "PUT"):
         return
+<<<<<<< HEAD
 def adCreate(request):
     newAd = Ad.create(
         image=request.POST['image'],
@@ -52,3 +53,30 @@ def adUpdate(request):
     return
 def adGet(request):
     return Ad.objects.get(id=request.POST['id'])
+=======
+def ad(request):
+
+    if(request.method == "POST"):
+        newAd = Ad.create(
+            image=request.POST['image'],
+            duration=request.POST['duration'],
+            User=request.POST['User'],
+            cost=request.POST['cost'],
+        )
+        newAd.save()
+        return
+    elif(request.method == "GET"):
+
+        return Ad.objects.get(id=request.POST['id'])
+
+    elif(request.method == "DELETE"):
+        Ad.objects.filter(id=request.DELETE['id']).delete()
+        return
+    elif(reqeuest.method == "PUT"):
+        return null
+
+def ad_detail(request, ad_id)
+    ad = get_object_or_404(Ad, pk=ad_id)
+    return render(request, 'ad_detail.html',
+                  {'ad': ad})
+>>>>>>> e82751867fc84974252ffc804dadf6748b1d5538
