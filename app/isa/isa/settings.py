@@ -123,4 +123,5 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 LOGIN_REDIRECT_URL = '/'
+AUTH_USER_MODEL = 'marketplace.User'
 LOGOUT_REDIRECT_URL = '/'
