@@ -7,7 +7,7 @@ def home(request):
     ads = Ad.objects.all()
     return render(request, 'home.html',
         {'ads': ads })
-    
+
 def user(request):
 
     if(request.method == "POST"):
@@ -35,23 +35,20 @@ def user(request):
         return
     elif(reqeuest.method == "PUT"):
         return
-def ad(request):
-
-    if(request.method == "POST"):
-        newAd = Ad.create(
-            image=request.POST['image'],
-            duration=request.POST['duration'],
-            User=request.POST['User'],
-            cost=request.POST['cost'],
-        )
-        newAd.save()
-        return
-    elif(request.method == "GET"):
-
-        return Ad.objects.get(id=request.POST['id'])
-
-    elif(request.method == "DELETE"):
-        Ad.objects.filter(id=request.DELETE['id']).delete()
-        return
-    elif(reqeuest.method == "PUT"):
-        return null
+def adCreate(request):
+    newAd = Ad.create(
+        image=request.POST['image'],
+        duration=request.POST['duration'],
+        User=request.POST['User'],
+        cost=request.POST['cost'],
+    )
+    newAd.save()
+    return
+def adDelete(request):
+    Ad.objects.filter(id=request.DELETE['id']).delete()
+    return
+def adUpdate(request):
+    
+    return
+def adGet(request):
+    return Ad.objects.get(id=request.POST['id'])
