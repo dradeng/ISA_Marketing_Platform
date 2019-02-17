@@ -4,12 +4,10 @@ from .models import Ad, User
 from django.template import loader
 
 def home(request):
-    context = {
-
-    }
-    template = loader.get_template('base.html')
-    return HttpResponse(template.render(context, request))
-
+    ads = Ad.objects.all()
+    return render(request, 'home.html',
+        {'ads': ads })
+    
 def user(request):
 
     if(request.method == "POST"):

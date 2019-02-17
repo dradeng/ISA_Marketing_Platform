@@ -19,5 +19,5 @@ from django.views.generic.base import TemplateView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path(r'', include('marketplace.urls'))
+    path('', include('marketplace.urls'))
 ]
