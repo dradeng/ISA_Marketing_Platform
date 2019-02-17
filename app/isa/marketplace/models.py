@@ -23,8 +23,9 @@ class Ad(models.Model):
     duration = models.IntegerField(default=0)
     User = models.ForeignKey(User, on_delete=models.CASCADE)
     cost = models.DecimalField(max_digits=20, decimal_places=2)
-    url = models.URLField(verbose_name=_('URL'), null=True, blank=True)
-    site_title = models.CharField(max_length=255)
+    url = models.URLField( null=True, blank=True)
+    site_title = models.CharField(max_length=255, default='google.com')
+
 
 
     @classmethod
