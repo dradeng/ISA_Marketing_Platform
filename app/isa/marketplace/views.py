@@ -31,7 +31,7 @@ def user(request):
         newUser.save()
         return
     elif(request.method == "GET"):
-        return
+        return request.user
     elif(request.method == "DELETE"):
         User.objects.filter(id=request.DELETE['id']).delete()
         return
@@ -49,7 +49,9 @@ def ad(request):
         newAd.save()
         return
     elif(request.method == "GET"):
-        return
+
+        return Ad.objects.get(id=request.POST['id'])
+
     elif(request.method == "DELETE"):
         Ad.objects.filter(id=request.DELETE['id']).delete()
         return
