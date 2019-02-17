@@ -40,6 +40,13 @@ def user(request):
 def ad(request):
 
     if(request.method == "POST"):
+        newAd = Ad.create(
+            image=request.POST['image'],
+            duration=request.POST['duration'],
+            User=request.POST['User'],
+            cost=request.POST['cost'],
+        )
+        newAd.save()
         return
     elif(request.method == "GET"):
         return

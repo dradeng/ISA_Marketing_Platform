@@ -25,5 +25,5 @@ class Ad(models.Model):
 
     @classmethod
     def create(image, duration, User, cost):
-        AdCreated = cls(image=image, duration=duration, cost=cost)
+        AdCreated = cls(image=image, User = User, duration=duration, cost=cost)
         return AdCreated
