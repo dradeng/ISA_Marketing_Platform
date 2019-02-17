@@ -24,7 +24,7 @@ class Ad(models.Model):
     User = models.ForeignKey(User, on_delete=models.CASCADE)
     cost = models.DecimalField(max_digits=20, decimal_places=2)
     url = models.URLField(verbose_name=_('URL'), null=True, blank=True)
-    site_title = models.CharField(max_length=255, verbose_name=_('Title'))
+    site_title = models.CharField(max_length=255)
 
 
     @classmethod
