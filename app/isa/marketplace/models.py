@@ -11,6 +11,10 @@ class User(models.Model):
     def create(username, name, email, password, company):
         userCreated = cls(username=username, name=name, email=email, password=password, company=company)
         return userCreated
+    @classmethod
+    def create(username, name, email, password):
+        userCreated = cls(username=username, name=name, email=email, password=password)
+        return userCreated
 
 class Ad(models.Model):
     image = models.FileField(upload_to='documents/%Y/%m/%d')
