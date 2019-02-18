@@ -1,0 +1,46 @@
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'style.css' %}" />
+<div class="modal" tabindex="-1" role="dialog" id="ad_create">
+  <div class="modal-dialog" role="document" style="width:auto; max-width:600px">
+    <div class="modal-content" style="height: auto; min-height: 445px">
+      <div class="modal-header">
+        <h2 class="modal-title">Create Ad</h2>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+          style="margin-top: -50px"
+        >
+          <span aria-hidden="true" style="font-size: 30px">&times;</span>
+        </button>
+      </div>
+      <form method="post" action="{% url 'adCreate' %}">
+        {% csrf_token %}
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="image">Image AdSpace</label>
+            <input type="text" class="form-control" required="required" name="image" id="image" maxlength="255"/>
+          </div>
+          <div class="form-group">
+            <label for="url">Site Title</label>
+            <input type="text" class="form-control" required="required" name="site_title" id="site_title" maxlength="255"/>
+          </div>
+          <div class="form-group">
+            <label for="url">Site URL</label>
+            <input type="text" class="form-control" required="required" name="url" id="url" maxlength="255"/>
+          </div>
+          <div class="form-group">
+            <label for="cost">Price</label>
+            <input type="text" class="form-control" required="required" name="site_title" id="site_title" maxlength="255"/>
+          </div>
+          <div class="form-group">
+              <label for="duration">Duration</label>
+              <input type="text" class="form-control" required="required" name="duration" id="duration" maxlength="1000"/>
+          </div>
+          <button type="submit" class="btn btn-primary pull-right">Add</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
