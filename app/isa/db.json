@@ -1,0 +1,48 @@
+[
+  {
+    "model": "marketplace.User",
+    "pk": 1,
+    "fields": {
+      "name": "John",
+      "email": "john@email.com",
+      "password": "password",
+      "company": "Google",
+      "username": "John Doe"
+    }
+  },
+  {
+    "model": "marketplace.User",
+    "pk": 2,
+    "fields": {
+      "name": "Billy",
+      "email": "billy@email.com",
+      "password": "password",
+      "company": "Microsoft",
+      "username": "Billy Joe"
+    }
+  },
+  {
+    "model": "marketplace.Ad",
+    "pk": 3,
+    "fields": {
+      "image": "https://media.boingboing.net/wp-content/uploads/2018/05/Baby_goats_jan_2007_crop.jpg",
+      "duration": 30,
+      "User": 1,
+      "cost": 50,
+      "url": "google.com",
+      "site_title": "Google"
+    }
+  },
+  {
+    "model": "marketplace.Ad",
+    "pk": 4,
+    "fields": {
+      "image": "https://media.boingboing.net/wp-content/uploads/2018/05/Baby_goats_jan_2007_crop.jpg"
+      "duration": 20,
+      "User": 2,
+      "cost": 100,
+      "url": "facebook.com",
+      "site_title": "Facebook"
+    }
+  }
+]
