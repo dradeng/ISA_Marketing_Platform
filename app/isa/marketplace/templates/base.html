@@ -1,1 +1,52 @@
-<p>WHAT UP</p>
+{% load staticfiles i18n %}
+<!DOCTYPE html>
+<html lang="en" ng-app>
+
+<head>
+  <meta charset="utf-8">
+  <title>{% block title %}{{ project_name }}{% endblock title %}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  {% block stylesheets %}
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css' %}">
+  <!-- Font awesome CSS -->
+  {% endblock stylesheets %}
+  
+  {% block css %}
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+
+  <!-- Optional theme -->
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-theme.min.css">
+
+  <!-- Your stuff: Third-party css libraries go here -->
+  <link rel="stylesheet" href="{% static 'assets/css/bootstrap.css' %}">
+
+  <!-- This file store project specific CSS -->
+  {% endblock %}
+
+  {% block angular %}
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
+  {% endblock %}
+
+
+</head>
+  <body>
+    <div class="header navbar" style="height:60px; margin-bottom:100px">
+        <div class="container">
+      <a class="navbar-brand" href="https://www.virginia.edu"><img src="{% static 'login/uva-logo.png' %}" style="align: left; width:30%;"></img></a>
+    <div class="container">
+    {% block content %}
+
+    {% endblock content %}
+
+  </div> <!-- /container -->
+
+  </div> <!-- /container -->
+
+    <!-- {% block modal %}{% endblock modal %} -->
+
+  </body>
+</html>
