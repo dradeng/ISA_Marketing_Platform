@@ -42,16 +42,21 @@ def userGet(request):
     return request.user
 
 def adCreate(request):
-    newAd = Ad.create(
+    if request.method == "POST":
         image=request.POST['image'],
         duration=request.POST['duration'],
-        User=request.user,
+        #User=request.user,
         cost=request.POST['cost'],
         url = request.POST['url'],
         site_title = request.POST['site_title']
-    )
-    newAd.save()
-    return
+        form_data={'image' : 'iamge', 'duration' : 'duration', 'cost' : 'cost', 'url' : 'url', 'site_title' : 'site_title'}
+        form = AdForm(data = form_data)
+        if(form.is_valid):
+            #User = User.objects.get(user_id=user_id)
+            createdAd = Ad(image=image, duration=duration, User=User, cost=cost, url=url, site_title=site_title)
+            createdAd.save()
+            return redirect('home')
+    return redirect('home')
 def adDelete(request):
     Ad.objects.filter(id=request.DELETE['id']).delete()
     return
