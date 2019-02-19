@@ -37,7 +37,7 @@
     "model": "marketplace.Ad",
     "pk": 4,
     "fields": {
-      "image": "https://media.boingboing.net/wp-content/uploads/2018/05/Baby_goats_jan_2007_crop.jpg"
+      "image": "https://media.boingboing.net/wp-content/uploads/2018/05/Baby_goats_jan_2007_crop.jpg",
       "duration": 20,
       "User": 2,
       "cost": 100,

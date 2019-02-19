@@ -7,3 +7,56 @@ models:
   ports:
     - "8001:8000"
   command: bash -c "mod_wsgi-express start-server --working-directory /app/isa --reload-on-changes /app/isa/isa/wsgi.py"
+
+
+#   models:
+#   image: tp33/django
+#   container_name: models
+#   external_links:
+#     - mysql:db
+#   ports:
+#     - "8001:8000"
+#   volumes:
+#     - /home/tp/stuff-models:/app
+#   command: "mod_wsgi-express start-server --reload-on-changes stuff-models/wsgi.py"
+
+# exp:
+#   image: tp33/django
+#   container_name: exp
+#   links:
+#     - models:models-api
+#   ports:
+#     - "8002:8000"
+#   volumes:
+#     - /home/tp/stuff-exp:/app
+#   command: "mod_wsgi-express start-server --reload-on-changes stuff-exp/wsgi.py"
+# exp:
+#   image: tp33/django
+#   container_name: exp
+#   links:
+#     - models:models-api
+#   ports:
+#     - "8002:8000"
+#   volumes:
+#     - ./app/exp:/app/exp
+#   command: "mod_wsgi-express start-server --reload-on-changes /app/exp/exp/wsgi.py"
+# web:
+#   image: tp33/django
+#   container_name: web
+#   links:
+#     - exp:exp-api
+#   ports:
+#     - "8000:8000"
+#   volumes:
+#     - /home/tp/stuff-web:/app
+#   command: "mod_wsgi-express start-server --reload-on-changes stuff-web/wsgi.py"
+# web:
+#   image: tp33/django
+#   container_name: web
+#   links:
+#     - exp:exp-api
+#   ports:
+#     - "8000:8000"
+#   volumes:
+#     - ./app/web:/app/web
+#   command: "mod_wsgi-express start-server --reload-on-changes /app/web/web/wsgi.py"

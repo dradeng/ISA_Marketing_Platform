@@ -26,7 +26,3 @@ class Ad(models.Model):
     url = models.URLField( null=True, blank=True)
     site_title = models.CharField(max_length=255, default='Google')
 
-    @classmethod
-    def create(image, duration, User, cost):
-        AdCreated = cls(image=image, User = User, duration=duration, cost=cost, url=url, site_title=site_title)
-        return AdCreated
