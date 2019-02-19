@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from .models import User, Ad
 from django.template import loader
 from django.contrib.auth import authenticate, login
+from .forms import AdForm
 
 
 
@@ -86,15 +87,15 @@ def adCreate(request):
     if request.method == "POST":
         image=request.POST['image'],
         duration=request.POST['duration'],
-        #User=request.user,
+        user=request.user,
         cost=request.POST['cost'],
         url = request.POST['url'],
         site_title = request.POST['site_title']
         form_data={'image' : 'iamge', 'duration' : 'duration', 'cost' : 'cost', 'url' : 'url', 'site_title' : 'site_title'}
         form = AdForm(data = form_data)
         if(form.is_valid):
-            #User = User.objects.get(user_id=user_id)
-            createdAd = Ad(image=image, duration=duration, User=User, cost=cost, url=url, site_title=site_title)
+            #User = user.objects.get(user_id=request.user.id)
+            createdAd = Ad(image=image, duration=duration, user=user, cost=cost, url=url, site_title=site_title)
             createdAd.save()
             return redirect('home')
     return redirect('home')
