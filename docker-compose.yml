@@ -6,4 +6,4 @@ models:
     - ./app/isa:/app/isa
   ports:
     - "8001:8000"
-  command: bash -c "mod_wsgi-express start-server --working-directory /app/isa --reload-on-changes /app/isa/isa/wsgi.py"
+  command: bash -c "mod_wsgi-express start-server loaddata --working-directory /app/isa --reload-on-changes /app/isa/isa/wsgi.py"
