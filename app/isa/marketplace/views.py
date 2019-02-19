@@ -2,12 +2,36 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .models import Ad, User
 from django.template import loader
+from django.contrib.auth import authenticate, login
 
+
+
+
+# @route   POST views.login
+# @desc    Login user
+# @access  Public
+def login(request):
+    username = request.POST['username']
+    password = request.POST['password']
+    user = authenticate(request, username=username, password=password)
+    if user is not None:
+        login(request, user)
+        #redirect
+        return HttpResponseRedirect('/')
+    #invalid login
+    return HttpResponseRedirect('/')
+
+# @route   Get views.home
+# @desc    Render home page
+# @access  Private
 def home(request):
     ads = Ad.objects.all()
     return render(request, 'home.html',
         {'ads': ads })
 
+# @route   POST views.userCreate
+# @desc    Login user
+# @access  Private
 def userCreate(request):
     if(request.POST['company'] is not None and request.POST['company'] != ''):
         newUser = User.create(
@@ -26,9 +50,18 @@ def userCreate(request):
         )
     newUser.save()
     return
+
+# @route   DELETE views.userDelete
+# @desc    Delete a user
+# @access  Private
 def userDelete(request):
     User.objects.filter(id=request.DELETE['id']).delete()
     return
+
+
+# @route   POST views.userUpdate
+# @desc    update user info
+# @access  Private
 def userUpdate(request):
     updatedUser = request.user
     updatedUser.password = request.POST['password'] if request.POST['password'] else updatedUser.password
@@ -38,9 +71,17 @@ def userUpdate(request):
     updatedUser.name = request.POST['name'] if request.POST['name'] else updatedUser.name
     updatedUser.save()
     return
+
+# @route   GET views.userGet
+# @desc    return user object
+# @access  Private
 def userGet(request):
     return request.user
 
+
+# @route   POST views.adCreate
+# @desc    Create an ad
+# @access  Private
 def adCreate(request):
     if request.method == "POST":
         image=request.POST['image'],
@@ -57,9 +98,19 @@ def adCreate(request):
             createdAd.save()
             return redirect('home')
     return redirect('home')
+
+
+# @route   DELETE views.adDelete
+# @desc    delete ad
+# @access  Private
 def adDelete(request):
     Ad.objects.filter(id=request.DELETE['id']).delete()
     return
+
+
+# @route   POST views.adUpdate
+# @desc    Update an ad
+# @access  Private
 def adUpdate(request):
     updatedAd = Ad.objects(id = request.POST['id'])
     updatedAd.image = request.POST['image'] if request.POST['image'] else updatedAd.image
@@ -69,8 +120,16 @@ def adUpdate(request):
     updatedAd.site_title = request.POST['site_title'] if request.POST['site_title'] else updatedAd.site_title
     updatedAd.save()
     return
+
+# @route   GET views.adGet
+# @desc    render individual ad
+# @access  Public
 def adGet(request):
     return Ad.objects.get(id=request.POST['id'])
+
+# @route   GET views.userCreate
+# @desc    return ad info
+# @access  Public
 def ad_detail(request, ad_id):
     ad = get_object_or_404(Ad, pk=ad_id)
     return render(request, 'ad_detail.html',
