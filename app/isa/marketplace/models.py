@@ -21,7 +21,7 @@ class User(AbstractUser):
 class Ad(models.Model):
     image = models.TextField(max_length=100)
     duration = models.IntegerField(default=0)
-    User = models.ForeignKey(User, on_delete=models.CASCADE)
+    User = models.ForeignKey(User, on_delete=models.CASCADE, default=None)
     cost = models.DecimalField(max_digits=20, decimal_places=2)
     url = models.URLField( null=True, blank=True)
     site_title = models.CharField(max_length=255, default='google.com')
