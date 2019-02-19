@@ -43,5 +43,20 @@
   
     {% endblock content %}
     <!-- {% block modal %}{% endblock modal %} -->
+
+    {% block javascript %}
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+
+    <!-- Your stuff: Third-party javascript libraries go here -->
+
+    <!-- place project specific Javascript in this file -->
+    <script src="{% static 'js/underscore-min.js' %}"></script>
+
+    <link rel=”stylesheet” href=”//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css”>
+    <link rel=”stylesheet” href=”/resources/demos/style.css”>
+
+  {% endblock javascript %}
+
   </body>
 </html>
