@@ -1,5 +1,5 @@
 *.pyc
 db/
 app/isa/isa/__pycache__/
-app/isa/isa/marketplace/__pycache__/
 app/isa/marketplace/__pycache__/
+app/isa/marketplace/migrations/__pycache__/
