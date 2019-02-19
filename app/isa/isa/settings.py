@@ -122,6 +122,5 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
-LOGIN_REDIRECT_URL = '/'
-AUTH_USER_MODEL = 'marketplace.User'
+LOGIN_REDIRECT_URL = '/home'
 LOGOUT_REDIRECT_URL = '/'
