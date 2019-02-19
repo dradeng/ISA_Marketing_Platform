@@ -5,26 +5,26 @@
 
 {% block content %}
 {% if user.is_authenticated %}
-  Hi {{ user.username }}!
-  <p><a href="{% url 'logout' %}">logout</a></p>
+Hi {{ user.username }}!
+<p><a href="{% url 'logout' %}">logout</a></p>
 {% else %}
-  <p>You are not logged in</p>
-  <a href="{% url 'login' %}">login</a>
+<p>You are not logged in</p>
+<a href="{% url 'login' %}">login</a>
 {% endif %}
 
 
 
-{% include "ad_create.html" %}
-<button class="btn btn-primary" type="button" data-toggle="modal" data-target="#ad_create" name="button" style="margin-top:10px">
+
+<button class="btn btn-primary" type="button" action="{% url 'ad_create' %}" name="button" style="margin-top:10px">
   New Ad
 </button>
 
 <div class="panel-body">
   {% if ads %}
   <ul>
-      {% for ad in ads %}
-      <li><a href="{{ ad.id }}/detail" target="_blank">{{ ad.title }}</a></li>
-      {% endfor %}
+    {% for ad in ads %}
+    <li><a href="{{ ad.id }}/detail" target="_blank">{{ ad.title }}</a></li>
+    {% endfor %}
   </ul>
   {% else %}
   <p>No ad space for purchase</p>

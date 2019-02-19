@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .models import Ad, User
 from django.template import loader
+from .forms import AdForm
 
 def home(request):
     ads = Ad.objects.all()
@@ -45,7 +46,7 @@ def adCreate(request):
     if request.method == "POST":
         image=request.POST['image'],
         duration=request.POST['duration'],
-        #User=request.user,
+        User=request.user,
         cost=request.POST['cost'],
         url = request.POST['url'],
         site_title = request.POST['site_title']
@@ -57,6 +58,7 @@ def adCreate(request):
             createdAd.save()
             return redirect('home')
     return redirect('home')
+
 def adDelete(request):
     Ad.objects.filter(id=request.DELETE['id']).delete()
     return

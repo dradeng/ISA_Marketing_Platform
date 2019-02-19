@@ -24,7 +24,7 @@ class Ad(models.Model):
     User = models.ForeignKey(User, on_delete=models.CASCADE, default=None)
     cost = models.DecimalField(max_digits=20, decimal_places=2)
     url = models.URLField( null=True, blank=True)
-    site_title = models.CharField(max_length=255, default='google.com')
+    site_title = models.CharField(max_length=255, default='Google')
 
     @classmethod
     def create(image, duration, User, cost):
