@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from .models import User, Ad
 from django.template import loader
@@ -87,7 +87,8 @@ def adCreate(request):
     if request.method == "POST":
         image=request.POST['image'],
         duration=request.POST['duration'],
-        user=request.user,
+        username=request.user.username,
+        print('test')
         cost=request.POST['cost'],
         url = request.POST['url'],
         site_title = request.POST['site_title']
@@ -95,7 +96,7 @@ def adCreate(request):
         form = AdForm(data = form_data)
         if(form.is_valid):
             #User = user.objects.get(user_id=request.user.id)
-            createdAd = Ad(image=image, duration=duration, user=user, cost=cost, url=url, site_title=site_title)
+            createdAd = Ad(image=image, duration=duration, user=User.objects.get(username=username).pk, cost=cost, url=url, site_title=site_title)
             createdAd.save()
             return redirect('home')
     return redirect('home')
@@ -132,6 +133,7 @@ def adGet(request):
 # @desc    return ad info
 # @access  Public
 def ad_detail(request, ad_id):
+    
     ad = get_object_or_404(Ad, pk=ad_id)
     return render(request, 'ad_detail.html',
                   {'ad': ad})
