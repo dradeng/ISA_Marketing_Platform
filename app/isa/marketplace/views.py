@@ -40,10 +40,14 @@ def adCreate(request):
 # @desc    delete ad
 # @access  Private
 def adDelete(request):
-    ad_object = Ad.objects.filter(pk=request.GET['pk'])
-    ad_object.delete()
-    return HttpResponse({"ad_delete_success": "Ad deleted successfully"}, status=200)
-
+    if request.method == "DELETE":
+        try:
+            ad_object = Ad.objects.get(pk=request.GET['pk'])
+            ad_object.delete()
+            return HttpResponse({"ad_delete_success": "Ad deleted successfully"}, status=200)
+        except:
+            return HttpResponse({"seller_delete_failure": "Ad could not be ound"}, status=404)
+    return HttpResponse({"seller_delete_failure": "Invalid Method Request"}, status=404)
 
 
 # @route   POST views.adUpdate
@@ -51,26 +55,31 @@ def adDelete(request):
 # @access  Private
 @csrf_exempt
 def adUpdate(request):
-    try:
-        ad_id = request.GET.get('pk')
-        updatedAd = Ad.objects.get(pk=ad_id)
-        updatedAd.image = request.GET.get('image') if request.GET.get('image') else updatedAd.image
-        updatedAd.duration = request.GET.get('duration') if request.GET.get('duration') else updatedAd.duration
-        updatedAd.cost = request.GET.get('cost') if request.GET.get('cost') else updatedAd.cost
-        updatedAd.url = request.GET.get('url') if request.GET.get('url') else updatedAd.url
-        updatedAd.site_title = request.GET.get('site_title') if request.GET.get('site_title') else updatedAd.site_title
-        updatedAd.save()
-        updatedAd.save()
-        return HttpResponse({"ad_update_success": "Ad Updated successfully"}, status=200)
-    except:
-        return HttpResponse({"ad_update_failure": "Ad unable to find"}, status=404)
+    if request.method == "POST":
+        try:
+            ad_id = request.GET.get('pk')
+            updatedAd = Ad.objects.get(pk=ad_id)
+            updatedAd.image = request.GET.get('image') if request.GET.get('image') else updatedAd.image
+            updatedAd.duration = request.GET.get('duration') if request.GET.get('duration') else updatedAd.duration
+            updatedAd.cost = request.GET.get('cost') if request.GET.get('cost') else updatedAd.cost
+            updatedAd.url = request.GET.get('url') if request.GET.get('url') else updatedAd.url
+            updatedAd.site_title = request.GET.get('site_title') if request.GET.get('site_title') else updatedAd.site_title
+            updatedAd.save()
+            updatedAd.save()
+            return HttpResponse({"ad_update_success": "Ad Updated successfully"}, status=200)
+        except:
+            return HttpResponse({"ad_update_failure": "Ad unable to find"}, status=404)
+
+    return HttpResponse({'ad_update_failure': "Invalid Request"}, status=404)
 
 # @route   GET views.adGet
 # @desc    render all ad
 # @access  Public
 def adGet(request):
-    data = serializers.serialize("json", Ad.objects.all())
-    return HttpResponse(data)
+    if request.method == "GET":
+        data = serializers.serialize("json", Ad.objects.all())
+        return HttpResponse(data)
+    return HttpResponse({'ad_get_failure': "Invalid Request"}, status=404)
 
 
 
@@ -99,11 +108,16 @@ def buyerCreate(request):
 # @route   DELETE views.adDelete
 # @desc    delete ad
 # @access  Private
+@csrf_exempt
 def buyerDelete(request):
-    buyer_object = Buyer.objects.filter(pk=request.GET['pk'])
-    buyer_object.delete()
-    return HttpResponse({"buyer_delete_success": "Buyer deleted successfully"}, status=200)
-
+    if request.method == "DELETE":
+        try:
+            buyer_object = Buyer.objects.get(pk=request.GET['pk'])
+            buyer_object.delete()
+            return HttpResponse({"buyer_delete_success": "Buyer deleted successfully"}, status=200)
+        except:
+            return HttpResponse({"buyer_delete_failure": "Buyer could not be found"}, status=404)
+    return HttpResponse({"seller_delete_failure": "Invalid Method Request"}, status=404)
 
 
 # @route   POST views.adUpdate
@@ -111,23 +125,26 @@ def buyerDelete(request):
 # @access  Private
 @csrf_exempt
 def buyerUpdate(request):
-    try:
-        user_id = request.GET.get('pk')
-        updatedBuyer = Buyer.objects.get(pk=user_id)
-        updatedBuyer.company = request.GET.get('credit') if request.GET.get('credit') else updatedBuyer.credit
-        updatedBuyer.save()
-        return HttpResponse({"buyer_update_success": "Buyer Updated successfully"}, status=200)
-    except:
-        return HttpResponse({"buyer_update_failure": "Missing params or user not found"}, status=404)
-
+    if request.method == "POST":
+        try:
+            user_id = request.GET.get('pk')
+            updatedBuyer = Buyer.objects.get(pk=user_id)
+            updatedBuyer.company = request.GET.get('credit') if request.GET.get('credit') else updatedBuyer.credit
+            updatedBuyer.save()
+            return HttpResponse({"buyer_update_success": "Buyer Updated successfully"}, status=200)
+        except:
+            return HttpResponse({"buyer_update_failure": "Missing params or user not found"}, status=404)
+    return HttpResponse({'seller_update_failure': "Invalid Request"}, status=404)
 
 
 # @route   GET views.adGet
 # @desc    render individual ad
 # @access  Public
 def buyerGet(request):
-    data = serializers.serialize("json", Buyer.objects.all())
-    return HttpResponse(data)
+    if request.method == "GET":
+        data = serializers.serialize("json", Buyer.objects.all())
+        return HttpResponse(data)
+    return HttpResponse({'buyer_get': "Invalid request"}, status=404)
 
 # @route   POST views.adCreate
 # @desc    Create an ad
@@ -153,10 +170,16 @@ def sellerCreate(request):
 # @route   DELETE views.adDelete
 # @desc    delete ad
 # @access  Private
+@csrf_exempt
 def sellerDelete(request):
-    seller_object = Seller.objects.filter(pk=request.GET['pk'])
-    seller_object.delete()
-    return HttpResponse({"seller_delete_success": "Seller deleted successfully"}, status=200)
+    if request.method == "DELETE":
+        try:
+            seller_object = Seller.objects.get(pk=request.GET['pk'])
+            seller_object.delete()
+            return HttpResponse({"seller_delete_success": "Seller deleted successfully"}, status=200)
+        except:
+            return HttpResponse({"seller_delete_failure": "Seller could not be found"}, status=404)
+    return HttpResponse({"seller_delete_failure": "Invalid Method Request"}, status=404)
 
 
 
@@ -165,14 +188,17 @@ def sellerDelete(request):
 # @access  Private
 @csrf_exempt
 def sellerUpdate(request):
-    try:
-        user_id = request.GET.get('pk')
-        updatedSeller = Seller.objects.get(pk=user_id)
-        updatedSeller.company = request.GET.get('company') if request.GET.get('company') else updatedSeller.company
-        updatedSeller.save()
-        return HttpResponse({"seller_update_success": "Seller Updated successfully"}, status=200)
-    except:
-        return HttpResponse({"seller_update_failure": "Missing params or user not found"}, status=404)
+    if request.method == "POST":
+        try:
+            user_id = request.GET.get('pk')
+            updatedSeller = Seller.objects.get(pk=user_id)
+            updatedSeller.company = request.GET.get('company') if request.GET.get('company') else updatedSeller.company
+            updatedSeller.save()
+            return HttpResponse({"seller_update_success": "Seller Updated successfully"}, status=200)
+        except:
+            return HttpResponse({"seller_update_failure": "Missing params or user not found"}, status=404)
+
+    return HttpResponse({'seller_update_failure': "Invalid Request"}, status=404)
 
 
 
@@ -181,8 +207,10 @@ def sellerUpdate(request):
 # @desc    render individual ad
 # @access  Public
 def sellerGet(request):
-    data = serializers.serialize("json", Seller.objects.all())
-    return HttpResponse(data)
+    if request.method == "GET":
+        data = serializers.serialize("json", Seller.objects.all())
+        return HttpResponse(data)
+    return HttpResponse({'seller_get': "Invalid Request"}, status=404)
 
 
 
