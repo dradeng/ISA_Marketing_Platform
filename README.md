@@ -22,7 +22,7 @@ POST /api/v1/seller/create/?  Creates a seller object
 POST /api/v1/seller/update/?  Updates a seller object
 DELETE /api/v1/seller/delete/?  Deletes a seller object
 
-``
+```
 
 # ** Individual Route Info **
 
