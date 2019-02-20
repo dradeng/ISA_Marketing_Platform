@@ -1,0 +1,105 @@
+[
+{
+    "model": "auth.user",
+    "fields": {
+        "password": "pbkdf2_sha256$120000$tfoe8clcjRhp$+MUTIfyM01GW/VkhWz6DHE5f+UsaWF/QrtbezAvqAis=",
+        "last_login": "2019-02-20T18:43:52.109Z",
+        "is_superuser": true,
+        "username": "root",
+        "first_name": "",
+        "last_name": "",
+        "email": "email@email.com",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2019-02-19T17:35:54.973Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "fields": {
+        "password": "pbkdf2_sha256$120000$aQsDtDqVBabu$1llcPwIhDeMst5PnCYYCiXJL7aT8uPtAiDAUnvcQtPE=",
+        "last_login": "2019-02-20T18:43:13.997Z",
+        "is_superuser": false,
+        "username": "trevor",
+        "first_name": "Trevor",
+        "last_name": "Bedsaul",
+        "email": "tmoeb2@gmail.com",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2019-02-19T22:42:02Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "marketplace.ad",
+    "pk": 1,
+    "fields": {
+        "user": [
+            "trevor"
+        ],
+        "image": "blah",
+        "duration": 99983,
+        "cost": "99999.31",
+        "url": "http://google.com",
+        "site_title": "Google"
+    }
+},
+{
+    "model": "marketplace.ad",
+    "pk": 2,
+    "fields": {
+        "user": [
+            "trevor"
+        ],
+        "image": "sadfasfd",
+        "duration": 30,
+        "cost": "2.00",
+        "url": "http://youtube.com",
+        "site_title": "YouTube"
+    }
+},
+{
+    "model": "marketplace.ad",
+    "pk": 3,
+    "fields": {
+        "user": [
+            "trevor"
+        ],
+        "image": "img",
+        "duration": 7,
+        "cost": "0.50",
+        "url": "http://facebook.com",
+        "site_title": "Facebook"
+    }
+},
+{
+    "model": "marketplace.ad",
+    "pk": 4,
+    "fields": {
+        "user": [
+            "root"
+        ],
+        "image": "img url",
+        "duration": 365,
+        "cost": "60.00",
+        "url": "http://twitch.tv",
+        "site_title": "Twitch"
+    }
+},
+{
+    "model": "marketplace.ad",
+    "pk": 5,
+    "fields": {
+        "user": [
+            "root"
+        ],
+        "image": "image",
+        "duration": 10,
+        "cost": "1.00",
+        "url": "http://github.com",
+        "site_title": "GitHub"
+    }
+}
