@@ -24,7 +24,10 @@ DELETE /api/v1/seller/delete/?  Deletes a seller object
 
 ```
 
-# ** Individual Route Info **
+# Individual Route Info
+
+## POST /api/v1/ad/create/?  Creates an ad
+
 
 ###### params
 user  (integer of a user pk)
@@ -33,10 +36,12 @@ url (url of a website)
 site_title  (title of ad)
 duration  (integer of how long ad will last)
 cost  (cost of ad)
-POST /api/v1/ad/create/?  Creates an ad
 
 
-POST /api/v1/ad/update/?  Updates a specific ad
+
+## POST /api/v1/ad/update/?  Updates a specific ad
+
+
 ###### notes
 Cant update user associated with ad
 Update as many as you want
@@ -49,27 +54,55 @@ site_title  (title of ad)
 duration  (integer of how long ad will last)
 cost  (cost of ad)
 
+## DELETE /api/v1/ad/delete/?  Deletes a specific ad
+
 
 ###### params
 pk (integer of the pk of the ad)
-DELETE /api/v1/ad/delete/?  Deletes a specific ad
+
+
+## POST /api/v1/buyer/create/?   Creates a buyer
+
 
 ###### params
-POST /api/v1/buyer/create/?   Creates a buyer
+user (integer of user pk)
+credit (integer of how much credit the user has)
+
+
+## POST /api/v1/buyer/update/?   Updates a buyer
+
 
 ###### params
-POST /api/v1/buyer/update/?   Updates a buyer
+credit (integer of credit)
+
+##### notes
+Can't change user associated with the buyer
+
+
+
+## DELETE /api/v1/buyer/delete/?   Deletes a buyer
 
 ###### params
-DELETE /api/v1/buyer/delete/?   Deletes a buyer
+pk (integer of user pk)
+
+
+## POST /api/v1/seller/create/?  Creates a seller object
 
 ###### params
-POST /api/v1/seller/create/?  Creates a seller object
+company (string of company of the seller)
+user (integer of user pk)
+
+
+## POST /api/v1/seller/update/?  Updates a seller object
 
 ###### params
-POST /api/v1/seller/update/?  Updates a seller object
+company (string of company of the seller)
+
+###### notes
+Can't change user associated with seller
+
+## DELETE /api/v1/seller/delete/?  Deletes a seller object
 
 ###### params
-DELETE /api/v1/seller/delete/?  Deletes a seller object
-
+pk (integer of user pk)
 
