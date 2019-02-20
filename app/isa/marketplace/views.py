@@ -17,7 +17,7 @@ def adCreate(request):
         cost=request.POST['cost'],
         url = request.POST['url'],
         site_title = request.POST['site_title']
-        form_data={'image' : 'iamge', 'duration' : 'duration', 'cost' : 'cost', 'url' : 'url', 'site_title' : 'site_title'}
+        form_data={'image' : 'image', 'duration' : 'duration', 'cost' : 'cost', 'url' : 'url', 'site_title' : 'site_title'}
         form = AdForm(data = form_data)
         if(form.is_valid):
             createdAd = Ad(image=image, duration=duration, user=user, cost=cost, url=url, site_title=site_title)
