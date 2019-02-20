@@ -8,26 +8,31 @@ from django.forms.models import model_to_dict
 from django.http import JsonResponse
 from django.core import serializers
 import json
+from django.contrib.auth.models import User
+from django.views.decorators.csrf import csrf_exempt
 
 # @route   POST views.adCreate
 # @desc    Create an ad
 # @access  Private
 def adCreate(request):
     if request.method == "POST":
-        image=request.POST['image'],
-        duration=request.POST['duration'],
-        user=request.user,
-        cost=request.POST['cost'],
-        url = request.POST['url'],
-        site_title = request.POST['site_title']
-        form_data={'image' : 'image', 'duration' : 'duration', 'cost' : 'cost', 'url' : 'url', 'site_title' : 'site_title'}
-        form = AdForm(data = form_data)
-        if(form.is_valid):
-            #User = user.objects.get(user_id=request.user.id)
-            createdAd = Ad(image=image, duration=duration, user=user, cost=cost, url=url, site_title=site_title)
+        try:
+            user_id = request.GET.get('user')
+            image = request.GET.get('image')
+            cost = request.GET.get('cost')
+            duration = request.GET.get('duration')
+            url =request.GET.get('url')
+            site_title = reques.GET.get('site_title')
+            user = User.objects.get(pk=user_id)
+            createdAd = Buyer(user=user, image=image, cost=cost, duration=duration,site_title=site_title, url=url)
             createdAd.save()
-            return redirect('home')
-    return redirect('home')
+        except:
+            return HttpResponse({'ad_create_failure': "User does not exist"}, status=404)
+
+        return HttpResponse({'ad_create_success': "Ad created successfully"}, status=200)
+
+    return HttpResponse({"ad_create_failure": "Ad created failed"}, status=404)
+
 
 
 # @route   DELETE views.adDelete
@@ -69,14 +74,19 @@ def adGet(request):
 # @access  Private
 def buyerCreate(request):
     if request.method == "POST":
-        company=request.POST['company'],
-        user=request.user,
+        try:
+            user_id=request.GET.get('user')
+            credit=request.GET.get('credit')
+            user = User.objects.get(pk=user_id)
+            createdBuyer = Buyer(user=user, credit=credit)
+            createdBuyer.save()
+        except:
+            return HttpResponse({'buyer_create_failure': "User does not exist"}, status=404)
 
-            #User = user.objects.get(user_id=request.user.id)
-        createrBuyer = Buyer(company=company, user=user)
-        createdBuyer.save()
+        return HttpResponse({'buyer_create_success': "Buyer created successfully"}, status=200)
 
-    return
+    return HttpResponse({"buyer_create_failure": "Buyer created failed"}, status=404)
+
 
 
 # @route   DELETE views.adDelete
@@ -107,14 +117,22 @@ def buyerGet(request):
 # @route   POST views.adCreate
 # @desc    Create an ad
 # @access  Private
+@csrf_exempt
 def sellerCreate(request):
     if request.method == "POST":
-        user=request.user,
-        credit=request.POST['credit'],
-        createdSeller = Seller(user=user, credit=credit)
-        createdSeller.save()
-        return
-    return
+        try:
+            user_id=request.GET.get('user')
+            company=request.GET.get('company')
+            user = User.objects.get(pk=user_id)
+            createdSeller = Seller(user=user, company=company)
+            createdSeller.save()
+        except:
+            return HttpResponse({'seller_create_failure': "User does not exist"}, status=404)
+
+        return HttpResponse({'seller_create_success': "Seller created successfully"}, status=200)
+
+    return HttpResponse({"seller_create_failure": "Seller created failed"}, status=404)
+
 
 
 # @route   DELETE views.adDelete
@@ -147,12 +165,9 @@ def sellerGet(request):
 
 
 
-
-
-
-
-
-
+def usersGet(request):
+    data = serializers.serialize("json", User.objects.all())
+    return HttpResponse(data)
 
 
 
