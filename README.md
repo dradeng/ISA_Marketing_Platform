@@ -22,6 +22,8 @@ POST /api/v1/seller/create/?  Creates a seller object
 POST /api/v1/seller/update/?  Updates a seller object
 DELETE /api/v1/seller/delete/?  Deletes a seller object
 
+``
+
 # ** Individual Route Info **
 
 ###### params
@@ -52,19 +54,22 @@ cost  (cost of ad)
 pk (integer of the pk of the ad)
 DELETE /api/v1/ad/delete/?  Deletes a specific ad
 
-
+###### params
 POST /api/v1/buyer/create/?   Creates a buyer
+
+###### params
 POST /api/v1/buyer/update/?   Updates a buyer
+
+###### params
 DELETE /api/v1/buyer/delete/?   Deletes a buyer
 
-GET /api/v1/seller  Gets all the sellers
+###### params
 POST /api/v1/seller/create/?  Creates a seller object
+
+###### params
 POST /api/v1/seller/update/?  Updates a seller object
+
+###### params
 DELETE /api/v1/seller/delete/?  Deletes a seller object
 
 
-
-
-
-
-```
