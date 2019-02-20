@@ -1,10 +1,13 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
-from .models import User, Ad
+from .models import Seller, Buyer, Ad
 from django.template import loader
 from django.contrib.auth import authenticate, login
 from .forms import AdForm
-
+from django.forms.models import model_to_dict
+from django.http import JsonResponse
+from django.core import serializers
+import json
 
 # @route   POST views.adCreate
 # @desc    Create an ad
@@ -17,7 +20,7 @@ def adCreate(request):
         cost=request.POST['cost'],
         url = request.POST['url'],
         site_title = request.POST['site_title']
-        form_data={'image' : 'iamge', 'duration' : 'duration', 'cost' : 'cost', 'url' : 'url', 'site_title' : 'site_title'}
+        form_data={'image' : 'image', 'duration' : 'duration', 'cost' : 'cost', 'url' : 'url', 'site_title' : 'site_title'}
         form = AdForm(data = form_data)
         if(form.is_valid):
             #User = user.objects.get(user_id=request.user.id)
@@ -31,8 +34,10 @@ def adCreate(request):
 # @desc    delete ad
 # @access  Private
 def adDelete(request):
-    Ad.objects.filter(id=request.DELETE['id']).delete()
-    return
+    ad_object = Ad.objects.filter(pk=request.GET['pk'])
+    ad_object.delete()
+    return HttpResponse({"ad_delete_success": "Ad deleted successfully"}, status=200)
+
 
 
 # @route   POST views.adUpdate
@@ -50,10 +55,11 @@ def adUpdate(request):
 
 
 # @route   GET views.adGet
-# @desc    render individual ad
+# @desc    render all ad
 # @access  Public
 def adGet(request):
-    return Ad.objects.get(id=request.POST['id'])
+    data = serializers.serialize("json", Ad.objects.all())
+    return HttpResponse(data)
 
 
 
@@ -77,8 +83,10 @@ def buyerCreate(request):
 # @desc    delete ad
 # @access  Private
 def buyerDelete(request):
-    Buyer.objects.filter(id=request.DELETE['id']).delete()
-    return
+    buyer_object = Buyer.objects.filter(pk=request.GET['pk'])
+    buyer_object.delete()
+    return HttpResponse({"buyer_delete_success": "Buyer deleted successfully"}, status=200)
+
 
 
 # @route   POST views.adUpdate
@@ -93,7 +101,8 @@ def buyerUpdate(request):
 # @desc    render individual ad
 # @access  Public
 def buyerGet(request):
-    return Buyer.objects.get(id=request.POST['id'])
+    data = serializers.serialize("json", Buyer.objects.all())
+    return HttpResponse(data)
 
 # @route   POST views.adCreate
 # @desc    Create an ad
@@ -112,8 +121,10 @@ def sellerCreate(request):
 # @desc    delete ad
 # @access  Private
 def sellerDelete(request):
-    Seller.objects.filter(id=request.DELETE['id']).delete()
-    return
+    seller_object = Seller.objects.filter(pk=request.GET['pk'])
+    seller_object.delete()
+    return HttpResponse({"seller_delete_success": "Seller deleted successfully"}, status=200)
+
 
 
 # @route   POST views.adUpdate
@@ -130,7 +141,8 @@ def sellerUpdate(request):
 # @desc    render individual ad
 # @access  Public
 def sellerGet(request):
-    return Seller.objects.get(id=request.POST['id'])
+    data = serializers.serialize("json", Seller.objects.all())
+    return HttpResponse(data)
 
 
 
