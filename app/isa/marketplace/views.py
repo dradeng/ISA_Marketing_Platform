@@ -14,6 +14,7 @@ from django.views.decorators.csrf import csrf_exempt
 # @route   POST views.adCreate
 # @desc    Create an ad
 # @access  Private
+@csrf_exempt
 def adCreate(request):
     if request.method == "POST":
         try:
@@ -48,16 +49,21 @@ def adDelete(request):
 # @route   POST views.adUpdate
 # @desc    Update an ad
 # @access  Private
+@csrf_exempt
 def adUpdate(request):
-    updatedAd = Ad.objects(id = request.POST['id'])
-    updatedAd.image = request.POST['image'] if request.POST['image'] else updatedAd.image
-    updatedAd.duration = request.POST['duration'] if request.POST['duration'] else updatedAd.duration
-    updatedAd.cost = request.POST['cost'] if request.POST['cost'] else updatedAd.cost
-    updatedAd.url = request.POST['url'] if request.POST['url'] else updatedAd.url
-    updatedAd.site_title = request.POST['site_title'] if request.POST['site_title'] else updatedAd.site_title
-    updatedAd.save()
-    return
-
+    try:
+        ad_id = request.GET.get('pk')
+        updatedAd = Ad.objects.get(pk=ad_id)
+        updatedAd.image = request.GET.get('image') if request.GET.get('image') else updatedAd.image
+        updatedAd.duration = request.GET.get('duration') if request.GET.get('duration') else updatedAd.duration
+        updatedAd.cost = request.GET.get('cost') if request.GET.get('cost') else updatedAd.cost
+        updatedAd.url = request.GET.get('url') if request.GET.get('url') else updatedAd.url
+        updatedAd.site_title = request.GET.get('site_title') if request.GET.get('site_title') else updatedAd.site_title
+        updatedAd.save()
+        updatedAd.save()
+        return HttpResponse({"ad_update_success": "Ad Updated successfully"}, status=200)
+    except:
+        return HttpResponse({"ad_update_failure": "Ad unable to find"}, status=404)
 
 # @route   GET views.adGet
 # @desc    render all ad
@@ -72,6 +78,7 @@ def adGet(request):
 # @route   POST views.adCreate
 # @desc    Create an ad
 # @access  Private
+@csrf_exempt
 def buyerCreate(request):
     if request.method == "POST":
         try:
@@ -102,9 +109,17 @@ def buyerDelete(request):
 # @route   POST views.adUpdate
 # @desc    Update an ad
 # @access  Private
+@csrf_exempt
 def buyerUpdate(request):
-    updatedAd = Ad.objects(id = request.POST['id'])
-    return
+    try:
+        user_id = request.GET.get('pk')
+        updatedBuyer = Buyer.objects.get(pk=user_id)
+        updatedBuyer.company = request.GET.get('credit') if request.GET.get('credit') else updatedBuyer.credit
+        updatedBuyer.save()
+        return HttpResponse({"buyer_update_success": "Buyer Updated successfully"}, status=200)
+    except:
+        return HttpResponse({"buyer_update_failure": "Missing params or user not found"}, status=404)
+
 
 
 # @route   GET views.adGet
@@ -148,11 +163,18 @@ def sellerDelete(request):
 # @route   POST views.adUpdate
 # @desc    Update an ad
 # @access  Private
+@csrf_exempt
 def sellerUpdate(request):
-    updatedSeller = Seller.objects(id = request.POST['id'])
-    updatedSeller.company = request.POST['company'] if request.POST['company'] else updatedSeller.company
-    updatedSeller.save()
-    return
+    try:
+        user_id = request.GET.get('pk')
+        updatedSeller = Seller.objects.get(pk=user_id)
+        updatedSeller.company = request.GET.get('company') if request.GET.get('company') else updatedSeller.company
+        updatedSeller.save()
+        return HttpResponse({"seller_update_success": "Seller Updated successfully"}, status=200)
+    except:
+        return HttpResponse({"seller_update_failure": "Missing params or user not found"}, status=404)
+
+
 
 
 # @route   GET views.adGet
