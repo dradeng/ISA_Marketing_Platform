@@ -8,10 +8,10 @@
         crossorigin="anonymous">
 </head>
 <div style="margin-left: 5%">
-    <h1>{{ ad.site_title }}</h1>
-    <p>{{ ad.url }}</p>
-    <h2>{{ ad.User }}</h1>
-    <h5>{{ad.cost }} - {{ ad.duration }} days</h5>
+    <h1><b>{{ ad.site_title }}</b></h1>
+    <p>Website url: {{ ad.url }}</p>
+    <h2>Sold by: {{ ad.user.username }}</h1>
+    <h5><b>${{ad.cost }}</b> for <b>{{ ad.duration }}</b> days</h5>
     <!-- show ad image -->
 </div>
 {% endblock %}

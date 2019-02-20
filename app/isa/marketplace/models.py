@@ -10,7 +10,8 @@ class Buyer(models.Model):
     credit = models.IntegerField(default=0)
 
 class Ad(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, default=None)
+    user = models.ForeignKey(User,
+        null=True, blank=True, on_delete=models.SET_NULL)
     image = models.TextField(max_length=100, default="")
     duration = models.IntegerField(default=0)
     cost = models.DecimalField(max_digits=20, decimal_places=2, default=0)

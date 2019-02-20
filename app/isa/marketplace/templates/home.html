@@ -23,7 +23,7 @@
   {% if ads %}
   <ul>
       {% for ad in ads %}
-      <li><a href="{{ ad.id }}/detail" target="_blank">{{ ad.title }}</a></li>
+      <li><a href="{{ ad.id }}/detail" target="_blank">{{ ad.site_title }}</a></li>
       {% endfor %}
   </ul>
   {% else %}
