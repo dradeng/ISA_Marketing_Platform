@@ -16,6 +16,7 @@ from django.views.decorators.csrf import csrf_exempt
 # @access  Private
 def adCreate(request):
     if request.method == "POST":
+<<<<<<< HEAD
         try:
             user_id = request.GET.get('user')
             image = request.GET.get('image')
@@ -25,6 +26,18 @@ def adCreate(request):
             site_title = reques.GET.get('site_title')
             user = User.objects.get(pk=user_id)
             createdAd = Buyer(user=user, image=image, cost=cost, duration=duration,site_title=site_title, url=url)
+=======
+        image=request.POST['image'],
+        duration=request.POST['duration'],
+        user=request.user,
+        cost=request.POST['cost'],
+        url = request.POST['url'],
+        site_title = request.POST['site_title']
+        form_data={'image' : 'image', 'duration' : 'duration', 'cost' : 'cost', 'url' : 'url', 'site_title' : 'site_title'}
+        form = AdForm(data = form_data)
+        if(form.is_valid):
+            createdAd = Ad(image=image, duration=duration, user=user, cost=cost, url=url, site_title=site_title)
+>>>>>>> a17fec7fd70811a8fd607a44532e57c821792ebe
             createdAd.save()
         except:
             return HttpResponse({'ad_create_failure': "User does not exist"}, status=404)

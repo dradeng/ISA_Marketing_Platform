@@ -1,16 +1,20 @@
 <!-- templates/home.html-->
 {% extends 'base.html' %}
+<div style="padding-left: 20px">
+  {% block title %}Home{% endblock %}
 
-{% block title %}Home{% endblock %}
-
-{% block content %}
-{% if user.is_authenticated %}
-  Hi {{ user.username }}!
-  <p><a href="{% url 'logout' %}">logout</a></p>
-{% else %}
-  <p>You are not logged in</p>
-  <a href="{% url 'login' %}">login</a>
-{% endif %}
+  {% block content %}
+  {% if user.is_authenticated %}
+  <div style="margin: 20px">
+    <p>Hello {{ user.username }}!
+      <a href="{% url 'logout' %}">Logout Here</a>
+    </p>
+    {% else %}
+    <p>You are not logged in</p>
+    <a href="{% url 'login' %}">login</a>
+  </div>
+  {% endif %}
+</div>
 
 
 
@@ -21,13 +25,16 @@
 
 <div class="panel-body">
   <h3>AdSpace For Sale:</h3>
-  {% if ads %}
-  <ul>
-      {% for ad in ads %}
-      <li><a href="{{ ad.id }}/detail" target="_blank">{{ ad.site_title }}</a></li>
-      {% endfor %}
-  </ul>
-  {% else %}
+  <div style="margin:20px">
+    {% if ads %}
+    {% for ad in ads %}
+    <div class="row mb-2" style="background-color: white; outline-style: solid; outline-color: lightgrey;">
+      <p style="padding: 10px; margin: 0px"><a href="{{ ad.id }}/detail" target="_blank"
+          style="color:blue"><b>{{ ad.site_title }}</b></a> - ${{ ad.cost }} for {{ ad.duration }} days</p>
+    </div>
+    {% endfor %}
+    {% else %}
+  </div>
   <p>No ad space for purchase</p>
   {% endif %}
 </div>

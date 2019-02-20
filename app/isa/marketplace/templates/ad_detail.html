@@ -9,9 +9,10 @@
 </head>
 <div style="margin-left: 5%">
     <h1><b>{{ ad.site_title }}</b></h1>
-    <p>Website url: {{ ad.url }}</p>
-    <h2>Sold by: {{ ad.user.username }}</h1>
+    <p>Website url: <a href= {{ad.url}} >{{ ad.url }}</a></p>
     <h5><b>${{ad.cost }}</b> for <b>{{ ad.duration }}</b> days</h5>
+
+    <p>Sold by user: {{ ad.user.username }}</p>
     <!-- show ad image -->
 </div>
 {% endblock %}
