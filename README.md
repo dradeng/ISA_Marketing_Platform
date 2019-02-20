@@ -8,8 +8,31 @@ API Routes:
 ```
 
 GET /api/v1/ad  Gets all the ads
+
+@params
+user  (integer of a user pk)
+image (url of an online image)
+url (url of a website)
+site_title  (title of ad)
+duration  (integer of how long ad will last)
+cost  (cost of ad)
 POST /api/v1/ad/create/?  Creates an ad
+
+
+@notes
+Cant update user associated with ad
+Update as many as you want
+@params
+pk (integer of the pk of the ad)
+image (url of an online image)
+url (url of a website)
+site_title  (title of ad)
+duration  (integer of how long ad will last)
+cost  (cost of ad)
 POST /api/v1/ad/update/?  Updates a specific ad
+
+@params
+pk (integer of the pk of the ad)
 DELETE /api/v1/ad/delete/?  Deletes a specific ad
 
 GET /api/v1/buyer Gets all the buyers
