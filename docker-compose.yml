@@ -9,27 +9,27 @@ models:
     - "8001:8000"
   command: bash -c "python3 /app/isa/manage.py makemigrations && mod_wsgi-express start-server --working-directory /app/isa --reload-on-changes /app/isa/isa/wsgi.py"
 
-# experiences:
-#   image: tp33/django
-#   container_name: experiences
-#   links:
-#     - models:models-api
-#   ports:
-#     - "8002:8000"
-#   volumes:
-#     - ./app/experiences:/app/experiences
-#   command: "mod_wsgi-express start-server --reload-on-changes /app/experiences/experiences/wsgi.py"
+experiences:
+  image: tp33/django
+  container_name: experiences
+  links:
+    - models:models-api
+  ports:
+    - "8002:8000"
+  volumes:
+    - ./app/experiences:/app/experiences
+  command: "mod_wsgi-express start-server --reload-on-changes /app/experiences/experiences/wsgi.py"
 
-# frontend:
-#   image: tp33/django
-#   container_name: frontend
-#   links:
-#     - experiences:experiences-api
-#   ports:
-#     - "8000:8000"
-#   volumes:
-#     - ./app/frontend:/app/frontend
-#   command: "mod_wsgi-express start-server --reload-on-changes /app/frontend/frontend/wsgi.py"
+frontend:
+  image: tp33/django
+  container_name: frontend
+  links:
+    - experiences:experiences-api
+  ports:
+    - "8000:8000"
+  volumes:
+    - ./app/frontend:/app/frontend
+  command: "mod_wsgi-express start-server --reload-on-changes /app/frontend/frontend/wsgi.py"
 
 ############################################################################################################
 
