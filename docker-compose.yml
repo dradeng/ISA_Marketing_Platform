@@ -11,7 +11,7 @@ models:
 
 # experiences:
 #   image: tp33/django
-#   container_name: experience
+#   container_name: experiences
 #   links:
 #     - models:models-api
 #   ports:

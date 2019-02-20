@@ -17,8 +17,8 @@ class UserTestCase(TestCase):
 
 class AdTestCase(TestCase):
     def setUp(self):
-        Ad.objects.create(image="url_of_some_sort", duration="200", user=User.objects.get(user_id=1), cost="10", url="google.com", site_title="Google")
-        Ad.objects.create(image="youtube image", duration="100", user=User.objects.get(user_id=1), cost="20", url="youtube.com", site_title="YouTube")
+        Ad.objects.create(image="url_of_some_sort", duration="200", user=User.objects.get(pk=1), cost="10", url="google.com", site_title="Google")
+        Ad.objects.create(image="youtube image", duration="100", user=User.objects.get(pk=1), cost="20", url="youtube.com", site_title="YouTube")
 
     def test_ads_stored_correctly(self):
         google = Ad.objects.get(duration="200")
