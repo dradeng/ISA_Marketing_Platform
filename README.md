@@ -2,6 +2,7 @@
 Marketing platform
 
 Uses django built in user fyi
+Removed csrf token for any post routes to simplify testing for TA's
 
 API Routes:
 
