@@ -20,7 +20,6 @@ def adCreate(request):
         form_data={'image' : 'iamge', 'duration' : 'duration', 'cost' : 'cost', 'url' : 'url', 'site_title' : 'site_title'}
         form = AdForm(data = form_data)
         if(form.is_valid):
-            #User = user.objects.get(user_id=request.user.id)
             createdAd = Ad(image=image, duration=duration, user=user, cost=cost, url=url, site_title=site_title)
             createdAd.save()
             return redirect('home')
