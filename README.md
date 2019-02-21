@@ -30,12 +30,12 @@ DELETE /api/v1/seller/delete/?  Deletes a seller object
 ## POST /api/v1/ad/create/?  Creates an ad
 
 
-###### params
-user  (integer of a user pk)
-image (url of an online image)
-url (url of a website)
-site_title  (title of ad)
-duration  (integer of how long ad will last)
+###### params 
+user  (integer of a user pk) <br />
+image (url of an online image) <br />
+url (url of a website) <br />
+site_title  (title of ad) <br />
+duration  (integer of how long ad will last) <br />
 cost  (cost of ad)
 
 
@@ -48,12 +48,12 @@ Cant update user associated with ad
 Update as many as you want
 
 ###### params
-pk (integer of the pk of the ad)
-image (url of an online image)
-url (url of a website)
-site_title  (title of ad)
-duration  (integer of how long ad will last)
-cost  (cost of ad)
+pk (integer of the pk of the ad) <br />
+image (url of an online image) <br />
+url (url of a website)  <br />
+site_title  (title of ad) <br />
+duration  (integer of how long ad will last) <br />
+cost  (cost of ad) 
 
 ## DELETE /api/v1/ad/delete/?  Deletes a specific ad
 
@@ -66,7 +66,7 @@ pk (integer of the pk of the ad)
 
 
 ###### params
-user (integer of user pk)
+user (integer of user pk) <br />
 credit (integer of how much credit the user has)
 
 
@@ -90,7 +90,7 @@ pk (integer of user pk)
 ## POST /api/v1/seller/create/?  Creates a seller object
 
 ###### params
-company (string of company of the seller)
+company (string of company of the seller) <br />
 user (integer of user pk)
 
 
