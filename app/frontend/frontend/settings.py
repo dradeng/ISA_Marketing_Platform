@@ -25,12 +25,13 @@ SECRET_KEY = 'vc5mp2w76%ti$8a-tb@vo_#nj12!c&ie7@l41k+js+a_9s@3sc'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    'frontend_app.apps.FrontendAppConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -54,7 +55,7 @@ ROOT_URLCONF = 'frontend.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'frontend_app/templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

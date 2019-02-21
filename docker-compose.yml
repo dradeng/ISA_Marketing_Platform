@@ -17,8 +17,9 @@ experiences:
   ports:
     - "8002:8000"
   volumes:
-    - ./app/experiences:/app/experiences
-  command: "mod_wsgi-express start-server --reload-on-changes /app/experiences/experiences/wsgi.py"
+    - ./app/experiences:/app
+  command: "mod_wsgi-express start-server --reload-on-changes /app/experiences/wsgi.py"
+
 
 frontend:
   image: tp33/django
@@ -28,42 +29,5 @@ frontend:
   ports:
     - "8000:8000"
   volumes:
-    - ./app/frontend:/app/frontend
-  command: "mod_wsgi-express start-server --reload-on-changes /app/frontend/frontend/wsgi.py"
-
-############################################################################################################
-
-#   models:
-#   image: tp33/django
-#   container_name: models
-#   external_links:
-#     - mysql:db
-#   ports:
-#     - "8001:8000"
-#   volumes:
-#     - /home/tp/stuff-models:/app
-#   command: "mod_wsgi-express start-server --reload-on-changes stuff-models/wsgi.py"
-
-#experiences
-# exp:
-#   image: tp33/django
-#   container_name: exp
-#   links:
-#     - models:models-api
-#   ports:
-#     - "8002:8000"
-#   volumes:
-#     - /home/tp/stuff-exp:/app
-#   command: "mod_wsgi-express start-server --reload-on-changes stuff-exp/wsgi.py"
-
-#frontend
-# web:
-#   image: tp33/django
-#   container_name: web
-#   links:
-#     - exp:exp-api
-#   ports:
-#     - "8000:8000"
-#   volumes:
-#     - /home/tp/stuff-web:/app
-#   command: "mod_wsgi-express start-server --reload-on-changes stuff-web/wsgi.py"
+    - ./app/frontend:/app
+  command: "mod_wsgi-express start-server --reload-on-changes /app/frontend/wsgi.py"

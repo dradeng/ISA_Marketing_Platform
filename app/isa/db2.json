@@ -1,0 +1,78 @@
+[
+  {
+    "model": "auth.user",
+    "pk": 1,
+    "fields":
+      {
+        "password": "pbkdf2_sha256$120000$TrrrCyYbD1v3$jEkceDFj/ej0vg1eAhyNz8wrJeCSDvde2gQKy4COwt4=",
+        "last_login": "2019-02-19T16:13:17.959Z", "is_superuser": true, "username": "admin", "first_name": "",
+        "last_name": "",
+        "email": "dsg2dm@virginia.edu",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2019-02-19T07:12:53.578Z",
+        "groups": [],
+        "user_permissions": []
+      }
+  },
+  {
+    "model": "auth.user",
+    "pk": 2,
+    "fields":
+      {
+        "password": "pbkdf2_sha256$120000$TrrrCyYbD1v3$jEkceDFj/ej0vg1eAhyNz8wrJeCSDvde2gQKy4COwt4=",
+        "last_login": "2019-02-19T16:13:17.959Z", "is_superuser": true, "username": "draden", "first_name": "",
+        "last_name": "",
+        "email": "trevor@virginia.edu",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2019-02-19T07:12:53.578Z",
+        "groups": [],
+        "user_permissions": []
+      }
+  },
+  {
+    "model": "marketplace.ad",
+    "pk": 1,
+    "fields": {
+      "user": 1,
+      "image": "facebook.com",
+      "duration": 10,
+      "cost": "30.00",
+      "url": "http://google.com",
+      "site_title": "Google"
+    }
+  },
+  {
+    "model": "marketplace.ad",
+    "pk": 1,
+    "fields": {
+      "user": 2,
+      "image": "google.com",
+      "duration": 15,
+      "cost": "20.00",
+      "url": "http://facebook.com",
+      "site_title": "Facebook"
+    }
+  },
+  {
+    "model": "marketplace.buyer",
+    "pk": 1,
+    "fields": {"user": 1, "credit": 20}
+  },
+  {
+    "model": "marketplace.buyer",
+    "pk": 2,
+    "fields": {"user": 2, "company": 24}
+  },
+  {
+    "model": "marketplace.seller",
+    "pk": 1,
+    "fields": {"user": 1, "company": "google"}
+  },
+  {
+    "model": "marketplace.seller",
+    "pk": 2,
+    "fields": {"user": 2, "company": "facebook"}
+  }
+]

@@ -1,0 +1,59 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" ng-app>
+
+<head>
+  <meta charset="utf-8">
+  <title>{% block title %}{{ project_name }}{% endblock title %}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  {% block stylesheets %}
+  <!-- Bootstrap CSS -->
+  <!-- <link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css' %}"> -->
+  <!-- Font awesome CSS -->
+  {% endblock stylesheets %}
+
+  {% block css %}
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+
+  <!-- Optional theme -->
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-theme.min.css">
+
+  <!-- Your stuff: Third-party css libraries go here -->
+  <!-- <link rel="stylesheet" href="{% static 'assets/css/bootstrap.css' %}"> -->
+
+  <!-- This file store project specific CSS -->
+  {% endblock %}
+
+  {% block angular %}
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
+  {% endblock %}
+
+
+</head>
+
+<body>
+  <div class="header navbar" style="height:60px;">
+    <div class="container" style="margin-left: 0px">
+      <a class="navbar-brand" href="{% url 'home' %}"><b>Home</b></a>
+    </div> <!-- /container -->
+  </div>
+  {% block content %}
+
+  {% endblock content %}
+  <!-- {% block modal %}{% endblock modal %} -->
+
+  {% block javascript %}
+  <!-- <script src="{% static 'js/jquery.min.js' %}"></script>
+  <script src="{% static 'js/bootstrap.min.js' %}"></script> -->
+
+  <!-- Your stuff: Third-party javascript libraries go here -->
+
+  <!-- place project specific Javascript in this file -->
+  <!-- <script src="{% static 'js/underscore-min.js' %}"></script> -->
+
+  <link rel=”stylesheet” href=”//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css”> <link rel=”stylesheet”
+    href=”/resources/demos/style.css”> {% endblock javascript %} </body> </html>

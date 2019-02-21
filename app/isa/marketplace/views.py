@@ -218,22 +218,3 @@ def sellerGet(request):
 def usersGet(request):
     data = serializers.serialize("json", User.objects.all())
     return HttpResponse(data)
-
-
-
-# @route   Get views.home
-# @desc    Render home page
-# @access  Private
-def home(request):
-    ads = Ad.objects.all()
-    return render(request, 'home.html',
-        {'ads': ads })
-
-# @route   GET views.userCreate
-# @desc    return ad info
-# @access  Public
-def ad_detail(request, ad_id):
-
-    ad = get_object_or_404(Ad, pk=ad_id)
-    return render(request, 'ad_detail.html',
-                  {'ad': ad})
