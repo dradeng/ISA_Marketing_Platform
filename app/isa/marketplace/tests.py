@@ -45,7 +45,7 @@ class TestUsers(TestCase):
         getResponseValid = c.get("/api/v1/users?username=JDoe")
         self.assertEquals(getResponseValid.status_code, 200)
 
-        getResponseValid = c.get("/api/v1/users?first_name=John")
+        getResponseValid = c.get("/api/v1/users?username=JDoe")
         self.assertEquals(getResponseValid.status_code, 200)
         updateResponse = c.post("/api/v1/users/"+id+"/update", {"email": "newemail@yahoo.com"})
         self.assertEquals(updateResponse.status_code, 200)
