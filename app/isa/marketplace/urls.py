@@ -10,6 +10,7 @@ urlpatterns = [
     url(r'^accounts/', include('django.contrib.auth.urls')),
     url(r'^api/v1/users', views.usersGet, name='users_get'),
     url(r'^api/v1/ad/', views.adGet, name='ad_get'),
+    url(r'^api/v1/ad/<int:ad_id>/detail', views.ad_detail, name='ad_detail'),
     url(r'^api/v1/ad/update/', views.adUpdate, name='ad_upate'),
     url(r'^api/v1/ad/delete/', views.adDelete, name='ad_delete'),
     url(r'^api/v1/ad/create/', views.adCreate, name='ad_create'),

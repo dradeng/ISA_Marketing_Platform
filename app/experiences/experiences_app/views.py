@@ -16,3 +16,14 @@ def home(request):
     except Exception as e:
         return HttpResponse(json.dumps({"error": str(type(e))}), status=500)
     return HttpResponse(resp_json, status=200)
+
+def ad_detail(request, ad_id):
+
+    req = urllib.request.Request('http://models-api:8000/api/v1/ad/<int:ad_id>/detail')
+    try:
+        resp_json = urllib.request.urlopen(req).read().decode('utf-8')
+        return HttpResponse(resp_json, status=200)
+    except HTTPError as e:
+        return HttpResponse(json.dumps({"error": e.msg}), status=e.code)
+    except Exception as e:
+        return HttpResponse(e.args)

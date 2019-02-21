@@ -81,7 +81,9 @@ def adGet(request):
         return HttpResponse(data)
     return HttpResponse({'ad_get_failure': "Invalid Request"}, status=404)
 
-
+def ad_detail(request, ad_id):
+    data = serializers.serialize("json", Ad.objects.get(pk=ad_id))
+    return HttpResponse(ad)
 
 
 # @route   POST views.adCreate

@@ -18,5 +18,6 @@ from django.contrib import admin
 from experiences_app import views
 
 urlpatterns = [
-    url(r'^api/v1/home', views.home, name='homepage')
+    url(r'^api/v1/home', views.home, name='homepage'),
+    url(r'^api/v1/ad/<int:ad_id>/detail', views.ad_detail, name='ad_detail')
 ]

@@ -27,8 +27,12 @@ def home(request):
 # @desc    return ad info
 # @access  Public
 def ad_detail(request, ad_id):
-
-    #ad = get_object_or_404(Ad, pk=ad_id)
-    #return render(request, 'ad_detail.html',
-    #              {'ad': ad})
-    return HttpResponse("return this string2")
+    req = urllib.request.Request('http://experiences-api:8000/api/v1/ad/ad_detail')
+    try:
+        resp_json = urllib.request.urlopen(req).read().decode('utf-8')
+        ad = json.loads(resp_json)
+        return render(request, 'ad_detail.html',{'ad': ad})
+    except HTTPError as e:
+        return HttpResponse(json.dumps({"error": e.msg}), status=e.code)
+    except Exception as e:
+        return HttpResponse(e.args)
