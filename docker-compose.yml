@@ -5,6 +5,8 @@ models:
     - mysql:db
   volumes:
     - ./app/isa:/app/isa
+  expose:
+    - "8000"
   ports:
     - "8001:8000"
   command: bash -c "python3 /app/isa/manage.py makemigrations && mod_wsgi-express start-server --working-directory /app/isa --reload-on-changes /app/isa/isa/wsgi.py"
@@ -16,6 +18,8 @@ experiences:
     - models:models-api
   ports:
     - "8002:8000"
+  expose:
+    - "8000"
   volumes:
     - ./app/experiences:/app
   command: "mod_wsgi-express start-server --reload-on-changes /app/experiences/wsgi.py"
@@ -28,6 +32,14 @@ frontend:
     - experiences:experiences-api
   ports:
     - "8000:8000"
+  expose:
+    - "8000"
   volumes:
+<<<<<<< HEAD
     - ./app/frontend:/app
   command: "mod_wsgi-express start-server --reload-on-changes /app/frontend/wsgi.py"
+=======
+    - ./app/frontend:/app/frontend
+  command: bash -c "python3 /app/frontend/manage.py makemigrations && mod_wsgi-express start-server --working-directory /app/frontend --reload-on-changes /app/frontend/frontend/wsgi.py"
+
+>>>>>>> 3645078dc36acb54987d82602374f45260d0c209
