@@ -13,8 +13,8 @@
     {% if ads %}
     {% for ad in ads %}
     <div class="row mb-2" style="background-color: white; outline-style: solid; outline-color: lightgrey;">
-      <p style="padding: 10px; margin: 0px"><a href="{{ ad.id }}/detail" target="_blank"
-          style="color:blue"><b>{{ ad.site_title }}</b></a> - ${{ ad.cost }} for {{ ad.duration }} days</p>
+      <p style="padding: 10px; margin: 0px"><a href="/{{ad.pk}}/detail" target="_blank"
+          style="color:blue"><b>{{ ad.fields.site_title }}</b></a> - ${{ ad.fields.cost }} for {{ ad.fields.duration }} days</p>
     </div>
     {% endfor %}
     {% else %}

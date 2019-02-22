@@ -15,8 +15,8 @@ def home(request):
     try:
         resp_json = urllib.request.urlopen(req).read().decode('utf-8')
         ad_list = json.loads(resp_json)
-        return render(request, 'home.html',
-            {'ads': ad_list })
+        print(ad_list)
+        return render(request, 'home.html',{'ads': ad_list })
     except HTTPError as e:
         return HttpResponse(json.dumps({"error": e.msg}), status=e.code)
     except Exception as e:
