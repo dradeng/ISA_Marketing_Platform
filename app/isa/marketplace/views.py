@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
-from .models import Seller, Buyer, Ad
+from .models import Seller, Buyer, Ad, MarketUser
 from django.template import loader
 from django.contrib.auth import authenticate, login
 from .forms import AdForm
@@ -8,7 +8,6 @@ from django.forms.models import model_to_dict
 from django.http import JsonResponse
 from django.core import serializers
 import json
-from django.contrib.auth.models import User
 from django.views.decorators.csrf import csrf_exempt
 
 # @route   POST views.adCreate
@@ -24,7 +23,7 @@ def adCreate(request):
             duration = request.GET.get('duration')
             url =request.GET.get('url')
             site_title = reques.GET.get('site_title')
-            user = User.objects.get(pk=user_id)
+            user = MarketUser.objects.get(pk=user_id)
             createdAd = Buyer(user=user, image=image, cost=cost, duration=duration,site_title=site_title, url=url)
             createdAd.save()
         except:
@@ -95,7 +94,7 @@ def buyerCreate(request):
         try:
             user_id=request.GET.get('user')
             credit=request.GET.get('credit')
-            user = User.objects.get(pk=user_id)
+            user = MarketUser.objects.get(pk=user_id)
             createdBuyer = Buyer(user=user, credit=credit)
             createdBuyer.save()
         except:
@@ -157,7 +156,7 @@ def sellerCreate(request):
         try:
             user_id=request.GET.get('user')
             company=request.GET.get('company')
-            user = User.objects.get(pk=user_id)
+            user = MarketUser.objects.get(pk=user_id)
             createdSeller = Seller(user=user, company=company)
             createdSeller.save()
         except:
@@ -218,5 +217,5 @@ def sellerGet(request):
 
 
 def usersGet(request):
-    data = serializers.serialize("json", User.objects.all())
+    data = serializers.serialize("json", MarketUser.objects.all())
     return HttpResponse(data)

@@ -1,16 +1,26 @@
 from django.db import models
-from django.contrib.auth.models import User
+
+class MarketUser(models.Model):
+    name = models.CharField(max_length=100)
+    email = models.EmailField()
+    password = models.CharField(max_length=200)
+
+class Authenticator(models.Model):
+    user = models.ForeignKey(MarketUser, on_delete=models.CASCADE)
+    authenticator = models.CharField(primary_key=True, max_length=64)
+    date_created = models.DateTimeField(auto_now_add=True)
+
 
 class Seller(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(MarketUser, on_delete=models.CASCADE)
     company = models.TextField(max_length=500)
 
 class Buyer(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(MarketUser, on_delete=models.CASCADE)
     credit = models.IntegerField(default=0)
 
 class Ad(models.Model):
-    user = models.ForeignKey(User,
+    user = models.ForeignKey(MarketUser,
         null=True, blank=True, on_delete=models.SET_NULL)
     image = models.TextField(max_length=100, default="")
     duration = models.IntegerField(default=0)

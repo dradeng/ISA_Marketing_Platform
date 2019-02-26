@@ -27,7 +27,8 @@ def home(request):
 # @desc    return ad info
 # @access  Public
 def ad_detail(request, ad_id):
-    req = urllib.request.Request('http://experiences-api:8000/api/v1/ad/ad_detail')
+    reqUrl = 'http://experiences-api:8000/api/v1/ad/' + str(ad_id) + '/ad_detail'
+    req = urllib.request.Request(reqUrl)
     try:
         resp_json = urllib.request.urlopen(req).read().decode('utf-8')
         ad = json.loads(resp_json)
