@@ -7,8 +7,10 @@ from django.contrib.auth import views as auth_views
 
 
 urlpatterns = [
-    url(r'^accounts/', include('django.contrib.auth.urls')),
     url(r'^api/v1/users', views.usersGet, name='users_get'),
+    url(r'^api/v1/user/update', views.userUpdate, name='user_update'),
+    url(r'^api/v1/user/delete', views.userDelete, name='user_delete'),
+    url(r'^api/v1/user/create', views.userCreate, name='user_create'),
     url(r'^api/v1/ad/', views.adGet, name='ad_get'),
     url(r'^api/v1/ad/<int:ad_id>/detail', views.ad_detail, name='ad_detail'),
     url(r'^api/v1/ad/update/', views.adUpdate, name='ad_upate'),

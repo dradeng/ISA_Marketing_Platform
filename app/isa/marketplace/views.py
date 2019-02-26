@@ -203,7 +203,6 @@ def sellerUpdate(request):
 
 
 
-
 # @route   GET views.adGet
 # @desc    render individual ad
 # @access  Public
@@ -212,6 +211,61 @@ def sellerGet(request):
         data = serializers.serialize("json", Seller.objects.all())
         return HttpResponse(data)
     return HttpResponse({'seller_get': "Invalid Request"}, status=404)
+
+
+
+# @route   POST views.adUpdate
+# @desc    Update an user
+# @access  Private
+@csrf_exempt
+def userUpdate(request):
+    if request.method == "POST":
+        try:
+            user_id = request.GET.get('pk')
+            updatedUser = MarketUser.objects.get(pk=user_id)
+            updatedUser.name = request.GET.get('name') if request.GET.get('name') else updatedUser.name
+            updatedUser.save()
+            return HttpResponse({"user_update_success": "User Updated successfully"}, status=200)
+        except:
+            return HttpResponse({"user_update_failure": "Missing params or user not found"}, status=404)
+
+    return HttpResponse({'user_update_failure': "Invalid Request"}, status=404)
+
+
+
+# @route   DELETE views.adDelete
+# @desc    delete ad
+# @access  Private
+@csrf_exempt
+def userDelete(request):
+    if request.method == "DELETE":
+        try:
+            user_object = MarketUser.objects.get(pk=request.GET['pk'])
+            user_object.delete()
+            return HttpResponse({"user_delete_success": "User deleted successfully"}, status=200)
+        except:
+            return HttpResponse({"user_delete_failure": "User could not be found"}, status=404)
+    return HttpResponse({"user_delete_failure": "Invalid Method Request"}, status=404)
+
+
+# @route   POST views.adCreate
+# @desc    Create an ad
+# @access  Private
+@csrf_exempt
+def userCreate(request):
+    if request.method == "POST":
+        try:
+            password=request.GET.get('password')
+            email=request.GET.get('email')
+            name=request.GET.get('name')
+            createdUser = MarketUser(name=name, password=password, email=email)
+            createdUser.save()
+        except:
+            return HttpResponse({'user_create_failure': "User does not exist"}, status=404)
+
+        return HttpResponse({'user_create_success': "User created successfully"}, status=200)
+
+    return HttpResponse({"user_create_failure": "User created failed"}, status=404)
 
 
 
