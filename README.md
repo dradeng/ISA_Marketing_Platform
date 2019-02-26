@@ -9,10 +9,10 @@ API Routes:
 ```
 
 
-GET /api/v1/users Gets all the buyers
-POST /api/v1/user/create/?   Creates a buyer
-POST /api/v1/user/update/?   Updates a buyer
-DELETE /api/v1/user/delete/?   Deletes a buyer
+GET /api/v1/users Gets all the users
+POST /api/v1/user/create/?   Creates a user
+POST /api/v1/user/update/?   Updates a user
+DELETE /api/v1/user/delete/?   Deletes a user
 
 GET /api/v1/ad  Gets all the ads
 POST /api/v1/ad/create/?  Creates an ad
