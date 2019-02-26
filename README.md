@@ -8,6 +8,12 @@ API Routes:
 
 ```
 
+
+GET /api/v1/users Gets all the buyers
+POST /api/v1/user/create/?   Creates a buyer
+POST /api/v1/user/update/?   Updates a buyer
+DELETE /api/v1/user/delete/?   Deletes a buyer
+
 GET /api/v1/ad  Gets all the ads
 POST /api/v1/ad/create/?  Creates an ad
 POST /api/v1/ad/update/?  Updates a specific ad
@@ -25,7 +31,41 @@ DELETE /api/v1/seller/delete/?  Deletes a seller object
 
 ```
 
+
 # Individual Route Info
+
+## POST /api/v1/user/create/?  Creates an user
+
+
+###### params 
+name (name of user) <br />
+email  (unique email of user) <br />
+password  (password of user) <br />
+
+## DELETE /api/v1/user/delete/?  Delete an user
+
+
+###### params 
+pk (pk of user) <br />
+
+
+
+## POST /api/v1/user/update/?  Updates a specific user
+
+
+###### notes
+Cant update pk associated with user <br /> 
+Update as many fields as you want <br /> 
+pk is *required* <br /> 
+any other values in the query will be the newest values for the user <br /> 
+
+###### params
+pk (integer of the pk of the user) <br />
+name (url of an online image) <br />
+password (new password of user)  <br />
+email  (new email of user) <br />
+
+
 
 ## POST /api/v1/ad/create/?  Creates an ad
 
@@ -44,8 +84,10 @@ cost  (cost of ad)
 
 
 ###### notes
-Cant update user associated with ad
-Update as many as you want
+Cant update user associated with ad <br />
+Update as many as you want <br />
+pk is *required* <br />
+
 
 ###### params
 pk (integer of the pk of the ad) <br />
@@ -86,6 +128,9 @@ Can't change user associated with the buyer
 ###### params
 pk (integer of user pk)
 
+##### notes
+pk is *required*
+
 
 ## POST /api/v1/seller/create/?  Creates a seller object
 
@@ -106,4 +151,7 @@ Can't change user associated with seller
 
 ###### params
 pk (integer of user pk)
+
+###### notes
+pk is *required*
 
