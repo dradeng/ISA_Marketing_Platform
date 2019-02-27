@@ -19,5 +19,8 @@ from experiences_app import views
 
 urlpatterns = [
     url(r'^api/v1/home', views.home, name='homepage'),
-    url(r'^api/v1/ad/<int:ad_id>/detail', views.ad_detail, name='ad_detail')
+    url(r'^api/v1/ad/<int:ad_id>/detail', views.ad_detail, name='ad_detail'),
+    url(r'^api/v1/login', views.login, name='login'),
+    url(r'^api/v1/check_authenticator', views.check_authenticator, name='check_authenticator'),
+    url(r'^api/v1/logout', views.logout, name='logout'),
 ]
