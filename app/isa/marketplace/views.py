@@ -1,14 +1,17 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
-from .models import Seller, Buyer, Ad, MarketUser
+from .models import Seller, Buyer, Ad, MarketUser, Authenticator
 from django.template import loader
 from django.contrib.auth import authenticate, login
 from .forms import AdForm
 from django.forms.models import model_to_dict
 from django.http import JsonResponse
 from django.core import serializers
-import json
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.hashers import make_password, check_password
+
+import json
+import hmac
 
 # @route   POST views.adCreate
 # @desc    Create an ad
@@ -273,3 +276,65 @@ def userCreate(request):
 def usersGet(request):
     data = serializers.serialize("json", MarketUser.objects.all())
     return HttpResponse(data)
+
+
+def check_authenticator(request):
+    if request.method != "POST":
+        return HttpResponse(json.dumps({"error":"incorrect method (use POST instead)"}), status=405)
+
+    try:
+        authenticator = request.POST["authenticator"]
+        auth_object = Authenticator.objects.get(authenticator=authenticator)
+    except ObjectDoesNotExist:
+        return HttpResponse(json.dumps({"error": "Not logged in"}), status=401)
+    except Exception as e:
+        return HttpResponse(json.dumps({"error": str(type(e))}), status=500)
+    return HttpResponse(json.dumps({"success": "User logged in", "user_id": auth_object.user.id}), status=200)
+
+def login(request):
+    if request.method != "POST":
+        return HttpResponse(json.dumps({"error":"incorrect method (use POST instead)"}), status=405)
+
+    try:
+        username = request.POST["username"]
+        password = request.POST["password"]
+        user_list = MarketUser.objects.filter(username=username)
+    except KeyError as e:
+        return HttpResponse(json.dumps({"error": "Key not found: " + e.args[0]}), status=400)
+    except Exception as e:
+        return HttpResponse(json.dumps({"error": str(type(e))}), status=500)
+
+    if len(user_list) == 0:
+        return HttpResponse(json.dumps({"error": "Credentials invalid"}), status=401)
+    elif len(user_list) > 1:
+        return HttpResponse(json.dumps({"error": "More than one user has that login"}), status=401)
+    else:
+        user_object = user_list[0]
+    if not check_password(password, user_object.password):
+        return HttpResponse(json.dumps({"error": "Credentials invalid"}), status=401)
+
+    authenticator = hmac.new(
+        key=settings.SECRET_KEY.encode('utf-8'),
+        msg=os.urandom(32),
+        digestmod='sha256',
+    ).hexdigest()
+    try:
+        authenticator_object = Authenticator(authenticator=authenticator, user=user_object)
+        authenticator_object.save()
+    except Exception as e:
+        return HttpResponse(json.dumps({"error": str(type(e))}), status=500)
+
+    return HttpResponse(json.dumps({"authenticator": authenticator}), status=200)
+
+def logout(request):
+    if request.method != "POST":
+        return HttpResponse(json.dumps({"error":"incorrect method (use POST instead)"}), status=405)
+    try:
+        authenticator = request.POST["authenticator"]
+        auth_object = Authenticator.objects.get(authenticator=authenticator)
+        auth_object.delete()
+    except ObjectDoesNotExist:
+        return HttpResponse(json.dumps({"error": "Not logged in"}), status=401)
+    except Exception as e:
+        return HttpResponse(json.dumps({"error": str(type(e))}), status=500)
+    return HttpResponse(json.dumps({"success": "User logged out"}), status=200)
