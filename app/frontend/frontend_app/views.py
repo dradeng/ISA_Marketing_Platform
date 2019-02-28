@@ -1,7 +1,8 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from urllib.error import HTTPError
-from .forms import LoginForm, UserForm
+from .forms import LoginForm, MarketUserForm
+from django.views.decorators.csrf import csrf_exempt
 
 import urllib.request
 import json
@@ -145,7 +146,7 @@ def create_account(request):
         context = {"form": form, "auth": auth}
         return render(request, "create_account.html", context)
     elif request.method == "POST":
-        form = UserForm(request.POST)
+        form = MarketUserForm(request.POST)
         if form.is_valid():
             user_info = form.cleaned_data
         else:
