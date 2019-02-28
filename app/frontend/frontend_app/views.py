@@ -1,10 +1,10 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from urllib.error import HTTPError
+from .forms import LoginForm, UserForm
+
 import urllib.request
 import json
-from urllib.error import HTTPError
-
-
 
 # @route   Get views.home
 # @desc    Render home page
@@ -37,3 +37,127 @@ def ad_detail(request, ad_id):
         return HttpResponse(json.dumps({"error": e.msg}), status=e.code)
     except Exception as e:
         return HttpResponse(e.args)
+
+
+###### AUTH STUFF
+
+#Use for create ad, user has to login
+#Use for buying an ad
+def login_required(f):
+    def wrap(request, *args, **kwargs):
+        if user_logged_in(request):
+            return f(request, *args, **kwargs)
+        else:
+            return HttpResponseRedirect("login")
+
+    return wrap
+
+def login(request):
+    if request.method == 'GET':
+        auth = user_logged_in(request)
+        form = LoginForm()
+        context = {"form": form, "auth": auth}
+        return render(request, "login.html", context)
+
+    f = LoginForm(request.POST)
+
+    # Check if the form instance is invalid
+    if not f.is_valid():
+      context = {"form": f, "error": "Form was invalid"}
+      return render(request, 'login.html', context)
+
+
+    username = f.cleaned_data['username']
+    password = f.cleaned_data['password']
+
+    post_data = {'username': username, 'password': password}
+    post_encoded = urllib.parse.urlencode(post_data).encode('utf-8')
+    req = urllib.request.Request('http://exp-api:8000/api/v1/login', data=post_encoded, method='POST')
+
+    try:
+        resp_json = urllib.request.urlopen(req).read().decode('utf-8')
+    except HTTPError as e:
+        context = {"form": f, "error": "HTTP error: " + e.msg}
+        return render(request, 'login.html', context)
+    except Exception as e:
+        return HttpResponse(json.dumps({"error": str(type(e))}), status=500)
+
+    resp_dict = json.loads(resp_json)
+    authenticator = resp_dict['authenticator']
+    response = HttpResponseRedirect("/")
+
+    response.set_cookie("auth", authenticator)
+    return response
+
+@csrf_exempt
+@login_required
+def create_listing(request):
+    auth = user_logged_in(request)
+    if request.method == "GET":
+        form = BookForm()
+        context = {"form": form, "auth": auth}
+        return render(request, "create_listing.html", context)
+    elif request.method == "POST":
+        form = BookForm(request.POST)
+        if form.is_valid():
+            book_info = form.cleaned_data
+            book_info["price"] = float(book_info["price"])
+            user_object = get_user_object(request)
+            book_info["seller"] = user_object["id"]
+
+        else:
+            blank_form = BookForm()
+            context = {"form": form, "auth": auth, "error": "The form was invalid, please enter valid data"}
+            return render(request, "create_listing.html", context)
+
+        post_encoded = urllib.parse.urlencode(book_info).encode('utf-8')
+        req = urllib.request.Request('http://exp-api:8000/api/v1/books/create', data=post_encoded, method='POST')
+        try:
+            resp_json = urllib.request.urlopen(req).read().decode('utf-8')
+        except HTTPError as e:
+            return HttpResponse(json.dumps({"error": e.msg}), status=e.code)
+        except Exception as e:
+            return HttpResponse(json.dumps({"error": str(type(e))}), status=500)
+        resp_dict = json.loads(resp_json)
+        book_id = resp_dict["id"]
+        return redirect("book_detail", book_id=book_id)
+
+
+
+@login_required
+def logout(request):
+    auth = request.COOKIES.get('auth')
+    post_data = {'authenticator': auth}
+    post_encoded = urllib.parse.urlencode(post_data).encode('utf-8')
+    req = urllib.request.Request('http://exp-api:8000/api/v1/logout', data=post_encoded, method='POST')
+    try:
+        resp_json = urllib.request.urlopen(req).read().decode('utf-8')
+    except Exception as e:
+        return HttpResponse(json.dumps({"error": str(type(e))}), status=500)
+
+    return HttpResponseRedirect("/")
+
+@csrf_exempt
+def create_account(request):
+    auth = user_logged_in(request)
+    if request.method == "GET":
+        form = MarketUserForm()
+        context = {"form": form, "auth": auth}
+        return render(request, "create_account.html", context)
+    elif request.method == "POST":
+        form = UserForm(request.POST)
+        if form.is_valid():
+            user_info = form.cleaned_data
+        else:
+            context = {"form": form, "auth": auth, "error": "The form was invalid, please enter valid data"}
+            return render(request, "create_account.html", context)
+
+        post_encoded = urllib.parse.urlencode(user_info).encode('utf-8')
+        req = urllib.request.Request('http://exp-api:8000/api/v1/create_user', data=post_encoded, method='POST')
+        try:
+            resp_json = urllib.request.urlopen(req).read().decode('utf-8')
+        except HTTPError as e:
+            return HttpResponse(json.dumps({"error": e.msg}), status=e.code)
+        except Exception as e:
+            return HttpResponse(json.dumps({"error": str(type(e))}), status=500)
+        return redirect("home")

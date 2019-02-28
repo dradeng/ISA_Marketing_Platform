@@ -20,5 +20,7 @@ from frontend_app import views
 
 urlpatterns = [
     path('<int:ad_id>/detail', views.ad_detail, name='ad_detail'),
-    url('', views.home, name='home')
+    url('', views.home, name='home'),
+    url(r'^login', views.login, name='login'),
+    url(r'^logout', views.logout, name='logout'),
 ]
