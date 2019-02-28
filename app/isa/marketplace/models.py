@@ -5,6 +5,7 @@ class MarketUser(models.Model):
     email = models.EmailField()
     password = models.CharField(max_length=200)
 
+
 class Authenticator(models.Model):
     user = models.ForeignKey(MarketUser, on_delete=models.CASCADE)
     authenticator = models.CharField(primary_key=True, max_length=64)
@@ -20,8 +21,7 @@ class Buyer(models.Model):
     credit = models.IntegerField(default=0)
 
 class Ad(models.Model):
-    user = models.ForeignKey(MarketUser,
-        null=True, blank=True, on_delete=models.SET_NULL)
+    user = models.ForeignKey(MarketUser,null=True, blank=True, on_delete=models.SET_NULL)
     image = models.TextField(max_length=100, default="")
     duration = models.IntegerField(default=0)
     cost = models.DecimalField(max_digits=20, decimal_places=2, default=0)

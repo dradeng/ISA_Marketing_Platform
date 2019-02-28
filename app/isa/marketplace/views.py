@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
-from .models import Seller, Buyer, Ad, MarketUser, Authenticator
+from .models import Seller, Buyer, Ad,MarketUser, Authenticator
 from django.template import loader
 from django.contrib.auth import authenticate, login
 from .forms import AdForm
@@ -13,9 +13,6 @@ from django.contrib.auth.hashers import make_password, check_password
 import json
 import hmac
 
-# @route   POST views.adCreate
-# @desc    Create an ad
-# @access  Private
 @csrf_exempt
 def adCreate(request):
     if request.method == "POST":
@@ -38,9 +35,7 @@ def adCreate(request):
 
 
 
-# @route   DELETE views.adDelete
-# @desc    delete ad
-# @access  Private
+
 def adDelete(request):
     if request.method == "DELETE":
         try:
@@ -52,9 +47,7 @@ def adDelete(request):
     return HttpResponse({"seller_delete_failure": "Invalid Method Request"}, status=404)
 
 
-# @route   POST views.adUpdate
-# @desc    Update an ad
-# @access  Private
+
 @csrf_exempt
 def adUpdate(request):
     if request.method == "POST":
@@ -256,22 +249,21 @@ def userDelete(request):
 # @access  Private
 @csrf_exempt
 def userCreate(request):
-    if request.method == "POST":
-        try:
-            password=request.GET.get('password')
-            email=request.GET.get('email')
-            name=request.GET.get('name')
-            createdUser = MarketUser(name=name, password=password, email=email)
-            createdUser.save()
-        except:
-            return HttpResponse({'user_create_failure': "User does not exist"}, status=404)
+    if request.method != "POST":
+        return HttpResponse(json.dumps({"error":"incorrect method (use POST instead)"}), status=405)
 
-        return HttpResponse({'user_create_success': "User created successfully"}, status=200)
+    try:
+        name = request.POST["name"]
+        email = request.POST["email"]
+        password = make_password(request.POST["password"])
+        user_object = MarketUser(name=name, email=email, password=password)
+        user_object.save()
+    except KeyError as e:
+        return HttpResponse(json.dumps({"error": "Key not found: " + e.args[0]}), status=400)
+    except Exception as e:
+        return HttpResponse(json.dumps({"error": str(type(e))}), status=500)
 
-    return HttpResponse({"user_create_failure": "User created failed"}, status=404)
-
-
-
+    return HttpResponse(json.dumps(model_to_dict(user_object)), status=201)
 
 def usersGet(request):
     data = serializers.serialize("json", MarketUser.objects.all())
