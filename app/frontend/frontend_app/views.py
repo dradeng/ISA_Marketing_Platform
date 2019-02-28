@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from urllib.error import HTTPError
 from .forms import LoginForm, MarketUserForm
 from django.views.decorators.csrf import csrf_exempt
@@ -52,6 +52,20 @@ def login_required(f):
             return HttpResponseRedirect("login")
 
     return wrap
+
+
+def user_logged_in(request):
+    auth = request.COOKIES.get('auth')
+    post_data = {'authenticator': auth}
+    post_encoded = urllib.parse.urlencode(post_data).encode('utf-8')
+    req = urllib.request.Request('http://exp-api:8000/api/v1/check_authenticator', data=post_encoded, method='POST')
+
+    try:
+        response = urllib.request.urlopen(req)
+    except Exception as e:
+        return False
+    return True
+
 
 def login(request):
     if request.method == 'GET':
