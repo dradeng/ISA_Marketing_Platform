@@ -16,7 +16,7 @@ import hmac
 
 @csrf_exempt
 def adCreate(request):
-    if request.method == "POSTT":
+    if request.method == "POST":
         try:
             user_id = request.GET.get('user')
             image = request.GET.get('image')
