@@ -50,7 +50,7 @@ login {
 </style>
 <body class="text-center">
     <h1 class="h3 mb-3 font-weight-normal">Please create account</h1>
-    <form class="form-signin" method="post">
+    <form action="http://localhost:8000/create_account" class="form-signin" method="post">
         {% csrf_token %}
         {{ form.as_p }}
         <button class="btn btn-lg btn-primary btn-block" type="submit">Create</button>
