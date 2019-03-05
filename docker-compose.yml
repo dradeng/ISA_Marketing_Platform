@@ -9,7 +9,7 @@ models:
     - "8000"
   ports:
     - "8001:8000"
-  command: bash -c "python3 /app/isa/manage.py makemigrations && mod_wsgi-express start-server --working-directory /app/isa --reload-on-changes /app/isa/isa/wsgi.py  --log-to-terminal"
+  command: bash -c "python3 /app/isa/manage.py loaddata /app/isa/db.json && python3 /app/isa/manage.py migrate && python3 /app/isa/manage.py makemigrations && mod_wsgi-express start-server --working-directory /app/isa --reload-on-changes /app/isa/isa/wsgi.py  --log-to-terminal"
 
 experiences:
   image: tp33/django
