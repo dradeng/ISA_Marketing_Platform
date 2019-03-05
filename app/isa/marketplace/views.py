@@ -7,13 +7,13 @@ from .forms import AdForm
 from django.forms.models import model_to_dict
 from django.http import JsonResponse
 from django.core import serializers
-from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.hashers import make_password, check_password
-
+from django.core.exceptions import ObjectDoesNotExist
 import json
+import os
+from django.conf import settings
 import hmac
 
-@csrf_exempt
 def adCreate(request):
     if request.method == "POST":
         try:
@@ -48,7 +48,7 @@ def adDelete(request):
 
 
 
-@csrf_exempt
+
 def adUpdate(request):
     if request.method == "POST":
         try:
@@ -84,7 +84,7 @@ def ad_detail(request, ad_id):
 # @route   POST views.adCreate
 # @desc    Create an ad
 # @access  Private
-@csrf_exempt
+
 def buyerCreate(request):
     if request.method == "POST":
         try:
@@ -105,7 +105,6 @@ def buyerCreate(request):
 # @route   DELETE views.adDelete
 # @desc    delete ad
 # @access  Private
-@csrf_exempt
 def buyerDelete(request):
     if request.method == "DELETE":
         try:
@@ -120,7 +119,7 @@ def buyerDelete(request):
 # @route   POST views.adUpdate
 # @desc    Update an ad
 # @access  Private
-@csrf_exempt
+
 def buyerUpdate(request):
     if request.method == "POST":
         try:
@@ -146,7 +145,7 @@ def buyerGet(request):
 # @route   POST views.adCreate
 # @desc    Create an ad
 # @access  Private
-@csrf_exempt
+
 def sellerCreate(request):
     if request.method == "POST":
         try:
@@ -167,7 +166,7 @@ def sellerCreate(request):
 # @route   DELETE views.adDelete
 # @desc    delete ad
 # @access  Private
-@csrf_exempt
+
 def sellerDelete(request):
     if request.method == "DELETE":
         try:
@@ -183,7 +182,7 @@ def sellerDelete(request):
 # @route   POST views.adUpdate
 # @desc    Update an ad
 # @access  Private
-@csrf_exempt
+
 def sellerUpdate(request):
     if request.method == "POST":
         try:
@@ -213,7 +212,7 @@ def sellerGet(request):
 # @route   POST views.adUpdate
 # @desc    Update an user
 # @access  Private
-@csrf_exempt
+
 def userUpdate(request):
     if request.method == "POST":
         try:
@@ -232,7 +231,7 @@ def userUpdate(request):
 # @route   DELETE views.adDelete
 # @desc    delete ad
 # @access  Private
-@csrf_exempt
+
 def userDelete(request):
     if request.method == "DELETE":
         try:
@@ -247,7 +246,6 @@ def userDelete(request):
 # @route   POST views.adCreate
 # @desc    Create an ad
 # @access  Private
-@csrf_exempt
 def userCreate(request):
     if request.method != "POST":
         return HttpResponse(json.dumps({"error":"incorrect method (use POST instead)"}), status=405)
@@ -283,14 +281,15 @@ def check_authenticator(request):
         return HttpResponse(json.dumps({"error": str(type(e))}), status=500)
     return HttpResponse(json.dumps({"success": "User logged in", "user_id": auth_object.user.id}), status=200)
 
+
 def login(request):
     if request.method != "POST":
         return HttpResponse(json.dumps({"error":"incorrect method (use POST instead)"}), status=405)
 
     try:
-        username = request.POST["username"]
+        email = request.POST["email"]
         password = request.POST["password"]
-        user_list = MarketUser.objects.filter(username=username)
+        user_list = MarketUser.objects.filter(email=email)
     except KeyError as e:
         return HttpResponse(json.dumps({"error": "Key not found: " + e.args[0]}), status=400)
     except Exception as e:

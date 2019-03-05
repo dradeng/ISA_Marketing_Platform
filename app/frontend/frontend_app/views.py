@@ -3,7 +3,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from urllib.error import HTTPError
 from .forms import LoginForm, MarketUserForm
 from django.views.decorators.csrf import csrf_exempt
-
+from django.shortcuts import redirect
 import urllib.request
 import json
 
@@ -82,10 +82,10 @@ def login(request):
       return render(request, 'login.html', context)
 
 
-    username = f.cleaned_data['username']
+    email = f.cleaned_data['email']
     password = f.cleaned_data['password']
 
-    post_data = {'username': username, 'password': password}
+    post_data = {'email': email, 'password': password}
     post_encoded = urllib.parse.urlencode(post_data).encode('utf-8')
     req = urllib.request.Request('http://experiences-api:8000/api/v1/login', data=post_encoded, method='POST')
 
@@ -117,14 +117,34 @@ def logout(request):
 
     return HttpResponseRedirect("/")
 
+
+def get_user_object(request):
+    auth = request.COOKIES.get('auth')
+    post_data = {'authenticator': auth}
+    post_encoded = urllib.parse.urlencode(post_data).encode('utf-8')
+    req = urllib.request.Request('http://experiences-api:8000/api/v1/check_authenticator', data=post_encoded, method='POST')
+
+    try:
+        response = urllib.request.urlopen(req).read().decode('utf-8')
+    except Exception as e:
+        return {}
+    response_dict = json.loads(response)
+    user_dict = {}
+    user_dict['id'] = response_dict['user_id']
+    return user_dict
+
+
 @csrf_exempt
 def create_account(request):
+    print('we outside')
     auth = user_logged_in(request)
     if request.method == "GET":
         form = MarketUserForm()
         context = {"form": form, "auth": auth}
+        context = {"form": form}
         return render(request, "create_account.html", context)
     elif request.method == "POST":
+        print('we inside')
         form = MarketUserForm(request.POST)
         if form.is_valid():
             user_info = form.cleaned_data

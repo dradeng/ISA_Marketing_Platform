@@ -22,6 +22,6 @@ urlpatterns = [
     path('<int:ad_id>/detail', views.ad_detail, name='ad_detail'),
     url(r'^login', views.login, name='login'),
     url(r'^logout', views.logout, name='logout'),
-    url(r'^create_account', views.create_account, name='create_account'),
+    url(r'^create_account$', views.create_account, name='create_account'),
     url('', views.home, name='home'),
 ]

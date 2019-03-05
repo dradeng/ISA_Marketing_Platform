@@ -29,6 +29,7 @@ def ad_detail(request, ad_id):
         return HttpResponse(e.args)
 
 def create_user(request):
+    print('WHAT UP0')
     if request.method == "GET":
         return HttpResponse(json.dumps({}), status=200)
 
@@ -36,8 +37,9 @@ def create_user(request):
         post_data = request.POST
 
         post_encoded = urllib.parse.urlencode(post_data).encode('utf-8')
+        print('WHAT UP1')
         req = urllib.request.Request('http://models-api:8000/api/v1/user/create', data=post_encoded, method='POST')
-
+        print('WHAT UP2')
         try:
             resp_json = urllib.request.urlopen(req).read().decode('utf-8')
         except HTTPError as e:
@@ -54,14 +56,14 @@ def login(request):
         return HttpResponse(json.dumps({"error":"incorrect method (use POST instead)"}), status=405)
 
     try:
-        username = request.POST["username"]
+        email = request.POST["email"]
         password = request.POST["password"]
     except KeyError as e:
         return HttpResponse(json.dumps({"error": "Key not found: " + e.args[0]}), status=400)
     except Exception as e:
         return HttpResponse(json.dumps({"error": str(type(e))}), status=500)
 
-    post_data = {'username': username, 'password': password}
+    post_data = {'email': email, 'password': password}
     post_encoded = urllib.parse.urlencode(post_data).encode('utf-8')
     req = urllib.request.Request('http://models-api:8000/api/v1/login', data=post_encoded, method='POST')
 
@@ -72,6 +74,7 @@ def login(request):
     except Exception as e:
         return HttpResponse(json.dumps({"error": str(type(e))}), status=500)
     return HttpResponse(resp_json, status=200)
+
 
 def check_authenticator(request):
     if request.method != "POST":
