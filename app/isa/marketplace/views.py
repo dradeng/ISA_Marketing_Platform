@@ -13,9 +13,10 @@ from django.contrib.auth.hashers import make_password, check_password
 import json
 import hmac
 
+
 @csrf_exempt
 def adCreate(request):
-    if request.method == "POST":
+    if request.method == "POSTT":
         try:
             user_id = request.GET.get('user')
             image = request.GET.get('image')
