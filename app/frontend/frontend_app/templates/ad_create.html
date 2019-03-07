@@ -1,31 +1,61 @@
-{% load static %}
-<link rel="stylesheet" type="text/css" href="{% static 'style.css' %}" />
-<form method="post" action="{% url 'ad_create' %}">
-    {% csrf_token %}
-    <div class="modal-body">
-        <div class="form-group">
-            <label for="image">Image AdSpace</label>
-            <input type="text" class="form-control" required="required" name="image" id="image" maxlength="255" />
-        </div>
-        <div class="form-group">
-            <label for="url">Site Title</label>
-            <input type="text" class="form-control" required="required" name="site_title" id="site_title"
-                maxlength="255" />
-        </div>
-        <div class="form-group">
-            <label for="url">Site URL</label>
-            <input type="text" class="form-control" required="required" name="url" id="url" maxlength="255" />
-        </div>
-        <div class="form-group">
-            <label for="cost">Price</label>
-            <input type="number" class="form-control" required="required" min = "0" max="9999" required placeholder="Example: 10.50" name="cost" id="cost"
-                maxlength="255" />
-        </div>
-        <div class="form-group">
-            <label for="duration">Duration</label>
-            <input type="number" class="form-control" required="required" min = "0" max="9999" required placeholder="Example: 10.50" name="duration" id="duration"
-                maxlength="1000" />
-        </div>
+{% extends 'base.html' %}
+{% block title %}Create Account{% endblock %}
+
+{% block content %}
+<style>
+html,
+body {
+  height: 100%;
+}
+login {
+  display: -ms-flexbox;
+  display: -webkit-box;
+  display: flex;
+  -ms-flex-align: center;
+  -ms-flex-pack: center;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+  padding-top: 40px;
+  padding-bottom: 40px;
+  background-color: #f5f5f5;
+}
+.form-signin {
+  width: 100%;
+  max-width: 330px;
+  padding: 15px;
+  margin: 0 auto;
+}
+.form-signin .form-control {
+  position: relative;
+  box-sizing: border-box;
+  height: auto;
+  padding: 10px;
+  font-size: 16px;
+}
+.form-signin .form-control:focus {
+  z-index: 2;
+}
+.form-signin input[type="text"] {
+  margin-bottom: -1px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.form-signin input[type="password"] {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+</style>
+<body class="text-center">
+    <h1 class="h3 mb-3 font-weight-normal">Please create ad</h1>
+    <form method="post" action="http://localhost:8000/ad_create" class="form-signin">
+        {% csrf_token %}
+        {{ form.as_p }}
         <button type="submit" class="btn btn-primary pull-right">Add</button>
-    </div>
-</form>
+    </form>
+</body>
+<p>{{ error }}</p>
+
+{% endblock content %}

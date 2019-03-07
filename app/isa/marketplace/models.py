@@ -24,6 +24,6 @@ class Ad(models.Model):
     user = models.ForeignKey(MarketUser,null=True, blank=True, on_delete=models.SET_NULL)
     image = models.TextField(max_length=100, default="")
     duration = models.IntegerField(default=0)
-    cost = models.DecimalField(max_digits=20, decimal_places=2, default=0)
+    cost = models.IntegerField(default=0)
     url = models.URLField( null=True, blank=True)
     site_title = models.CharField(max_length=255, default='Google')

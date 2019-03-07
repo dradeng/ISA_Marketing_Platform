@@ -21,6 +21,7 @@ urlpatterns = [
     url(r'^api/v1/home', views.home, name='homepage'),
     url(r'^api/v1/ad/<int:ad_id>/detail', views.ad_detail, name='ad_detail'),
     url(r'^api/v1/login', views.login, name='login'),
+    url(r'^api/v1/ad_create', views.ad_create, name='ad_create'),
     url(r'^api/v1/check_authenticator', views.check_authenticator, name='check_authenticator'),
     url(r'^api/v1/logout', views.logout, name='logout'),
     url(r'^api/v1/create_user', views.create_user, name='create_user'),

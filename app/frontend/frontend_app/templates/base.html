@@ -39,6 +39,11 @@
   <div class="header navbar" style="height:60px;">
     <div class="container" style="margin-left: 0px">
       <a class="navbar-brand" href="{% url 'home' %}"><b>Home</b></a>
+      {% if not auth %}
+      <a class="navbar-brand" href="/login">Login</span></a>
+      {%else %}
+      <a class="navbar-brand" href="/logout">Logout</span></a>
+      {%endif%}
     </div> <!-- /container -->
   </div>
   {% block content %}

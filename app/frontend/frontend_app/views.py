@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from urllib.error import HTTPError
-from .forms import LoginForm, MarketUserForm
+from .forms import LoginForm, MarketUserForm, adCreateForm
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import redirect
 import urllib.request
@@ -11,13 +11,14 @@ import json
 # @desc    Render home page
 # @access  Private
 def home(request):
+    auth = user_logged_in(request)
 
     req = urllib.request.Request('http://experiences-api:8000/api/v1/home')
     try:
         resp_json = urllib.request.urlopen(req).read().decode('utf-8')
         ad_list = json.loads(resp_json)
         print(ad_list)
-        return render(request, 'home.html',{'ads': ad_list })
+        return render(request, 'home.html',{'ads': ad_list, 'auth':auth })
     except HTTPError as e:
         return HttpResponse(json.dumps({"error": e.msg}), status=e.code)
     except Exception as e:
@@ -109,6 +110,7 @@ def logout(request):
     auth = request.COOKIES.get('auth')
     post_data = {'authenticator': auth}
     post_encoded = urllib.parse.urlencode(post_data).encode('utf-8')
+
     req = urllib.request.Request('http://experiences-api:8000/api/v1/logout', data=post_encoded, method='POST')
     try:
         resp_json = urllib.request.urlopen(req).read().decode('utf-8')
@@ -116,6 +118,49 @@ def logout(request):
         return HttpResponse(json.dumps({"error": str(type(e))}), status=500)
 
     return HttpResponseRedirect("/")
+
+#*************************************************
+@login_required
+def ad_create(request):
+    if request.method == 'GET':
+        auth = user_logged_in(request)
+        form = adCreateForm()
+        context = {"form": form, "auth": auth}
+        return render(request, "ad_create.html", context)
+
+    f = adCreateForm(request.POST)
+    print(f.errors)
+
+    # Check if the form instance is invalid
+    if not f.is_valid():
+      context = {"form": f, "error": "Form was invalid"}
+      return render(request, 'ad_create.html', context)
+
+
+    site_title = f.cleaned_data['site_title']
+    url = f.cleaned_data['url']
+    cost = f.cleaned_data['price']
+    duration = f.cleaned_data['duration']
+
+    post_data = {
+        'site_title': site_title,
+        'url': url,
+        'cost': cost,
+        'duration': duration,
+    }
+    
+    post_encoded = urllib.parse.urlencode(post_data).encode('utf-8')
+    req = urllib.request.Request('http://experiences-api:8000/api/v1/ad_create', data=post_encoded, method='POST')
+
+    try:
+        resp_json = urllib.request.urlopen(req).read().decode('utf-8')
+    except Exception as e:
+        print("oof")
+        return HttpResponse(json.dumps({"error": str(type(e))}), status=500)
+
+    return redirect("/")
+#*************************************************
+
 
 
 def get_user_object(request):
@@ -161,3 +206,4 @@ def create_account(request):
         except Exception as e:
             return HttpResponse(json.dumps({"error": str(type(e))}), status=500)
         return redirect("home")
+

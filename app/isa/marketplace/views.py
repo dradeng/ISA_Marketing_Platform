@@ -15,17 +15,17 @@ from django.conf import settings
 import hmac
 
 def adCreate(request):
+    
     if request.method == "POST":
         try:
-            user_id = request.GET.get('user')
-            image = request.GET.get('image')
-            cost = request.GET.get('cost')
-            duration = request.GET.get('duration')
-            url =request.GET.get('url')
-            site_title = reques.GET.get('site_title')
-            user = MarketUser.objects.get(pk=user_id)
-            createdAd = Buyer(user=user, image=image, cost=cost, duration=duration,site_title=site_title, url=url)
+            cost = request.POST["cost"]
+            duration = request.POST["duration"]
+            url = request.POST["url"]
+            site_title = request.POST["site_title"]
+            print(cost)
+            createdAd = Ad(cost=cost, duration=duration,site_title=site_title, url=url)
             createdAd.save()
+
         except:
             return HttpResponse({'ad_create_failure': "User does not exist"}, status=404)
 
@@ -37,6 +37,7 @@ def adCreate(request):
 
 
 def adDelete(request):
+    print("found")
     if request.method == "DELETE":
         try:
             ad_object = Ad.objects.get(pk=request.GET['pk'])
@@ -287,6 +288,7 @@ def login(request):
         return HttpResponse(json.dumps({"error":"incorrect method (use POST instead)"}), status=405)
 
     try:
+
         email = request.POST["email"]
         password = request.POST["password"]
         user_list = MarketUser.objects.filter(email=email)
