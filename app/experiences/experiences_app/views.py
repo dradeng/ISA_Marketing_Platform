@@ -38,7 +38,7 @@ def create_user(request):
 
         post_encoded = urllib.parse.urlencode(post_data).encode('utf-8')
         print('WHAT UP1')
-        req = urllib.request.Request('http://models-api:8000/api/v1/user/create', data=post_encoded, method='POST')
+        req = urllib.request.Request('http://models-api:8000/api/v1/user/create/', data=post_encoded, method='POST')
         print('WHAT UP2')
         try:
             resp_json = urllib.request.urlopen(req).read().decode('utf-8')
