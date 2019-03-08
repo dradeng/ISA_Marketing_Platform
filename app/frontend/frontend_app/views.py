@@ -17,7 +17,7 @@ def home(request):
     try:
         resp_json = urllib.request.urlopen(req).read().decode('utf-8')
         ad_list = json.loads(resp_json)
-        print(ad_list)
+        #print(ad_list)
         return render(request, 'home.html',{'ads': ad_list, 'auth':auth })
     except HTTPError as e:
         return HttpResponse(json.dumps({"error": e.msg}), status=e.code)
@@ -34,6 +34,7 @@ def ad_detail(request, ad_id):
     try:
         resp_json = urllib.request.urlopen(req).read().decode('utf-8')
         ad = json.loads(resp_json)
+        print(ad)
         return render(request, 'ad_detail.html',{'ad': ad})
     except HTTPError as e:
         return HttpResponse(json.dumps({"error": e.msg}), status=e.code)

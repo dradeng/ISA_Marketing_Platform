@@ -8,11 +8,15 @@
         crossorigin="anonymous">
 </head>
 <div style="margin-left: 5%">
-    <h1><b>{{ ad.site_title }}</b></h1>
-    <p>Website url: <a href= {{ad.url}} >{{ ad.url }}</a></p>
-    <h5><b>${{ad.cost }}</b> for <b>{{ ad.duration }}</b> days</h5>
-
-    <p>Sold by user: {{ ad.user.username }}</p>
+	{% if ad %}
+	{% for ad_only in ad %}
+    <h1><b>{{ ad_only.fields.site_title }}</b></h1>
+    <p>Website url: <a href= {{ad_only.fields.url}} >{{ ad_only.fields.url }}</a></p>
+    <h5><b>${{ad_only.fields.cost }}</b> for <b>{{ ad_only.fields.duration }}</b> days</h5>
+    {% endfor %}
+    {% else %}
+ 	<p>Ad not found</p>
+ 	{% endif %}
     <!-- show ad image -->
 </div>
 {% endblock %}
