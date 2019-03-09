@@ -8,7 +8,7 @@ from urllib.error import HTTPError
 # Create your views here.
 
 def home(request):
-    req = urllib.request.Request('http://models-api:8000/api/v1/ads')
+    req = urllib.request.Request('http://models-api:8000/api/v1/ads/')
     try:
         resp_json = urllib.request.urlopen(req).read().decode('utf-8')
     except HTTPError as e:
@@ -18,16 +18,21 @@ def home(request):
     return HttpResponse(resp_json, status=200)
 
 def ad_detail(request, ad_id):
-    print("hi from experiences")
     #reqUrl = 'http://experiences-api:8000/api/v1/ads/' + str(ad_id) + '/ad_detail'
-    req = urllib.request.Request('http://models-api:8000/api/v1/ad/' + str(ad_id) + '/ad_detail')
+    req = urllib.request.Request('http://models-api:8000/api/v1/ad/' + str(ad_id) + '/ad_detail/')
     try:
         resp_json = urllib.request.urlopen(req).read().decode('utf-8')
-        return HttpResponse(resp_json, status=200)
     except HTTPError as e:
         return HttpResponse(json.dumps({"error": e.msg}), status=e.code)
     except Exception as e:
-        return HttpResponse(e.args)
+        return HttpResponse(json.dumps({"error": str(type(e))}), status=500)
+
+    if resp_json == "ads":
+        print("error sent")
+        return HttpResponse(json.dumps({"error": "Ad not found"}),status=404)
+
+    ad_list = json.loads(resp_json)
+    return HttpResponse(json.dumps(ad_list), status=200)
 
 def create_user(request):
     print('WHAT UP0')

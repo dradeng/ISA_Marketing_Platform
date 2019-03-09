@@ -77,10 +77,17 @@ def adGet(request):
         return HttpResponse(data)
     return HttpResponse({'ad_get_failure': "Invalid Request"}, status=404)
 
+
 def ad_detail(request, ad_id):
-    data = serializers.serialize("json", [Ad.objects.get(pk=ad_id)])
-    print(data)
-    return HttpResponse(data)
+    if request.method != "GET":
+        return HttpResponse(json.dumps({"error":"incorrect method (use GET instead)"}), status=405)
+    try:
+        data = serializers.serialize("json", [Ad.objects.get(pk=ad_id)])
+        return HttpResponse(data)
+    except ObjectDoesNotExist:
+        empty_list = []
+        return HttpResponse({'ads': empty_list})
+    
 
 
 # @route   POST views.adCreate

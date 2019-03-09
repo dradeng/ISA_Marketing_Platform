@@ -33,13 +33,15 @@ def ad_detail(request, ad_id):
     req = urllib.request.Request(reqUrl)
     try:
         resp_json = urllib.request.urlopen(req).read().decode('utf-8')
-        ad = json.loads(resp_json)
-        print(ad)
-        return render(request, 'ad_detail.html',{'ad': ad})
     except HTTPError as e:
-        return HttpResponse(json.dumps({"error": e.msg}), status=e.code)
+        return HttpResponse(json.dumps("Ad ID not found"), status=e.code)
     except Exception as e:
-        return HttpResponse(e.args)
+        return HttpResponse(json.dumps({"error": str(type(e))}), status=500)
+
+    ad = json.loads(resp_json)
+    #if 'error' in ad.keys():
+        #return render(request, 'ad_detail.html',{'ad': })
+    return render(request, 'ad_detail.html',{'ad': ad})
 
 
 ###### AUTH STUFF
