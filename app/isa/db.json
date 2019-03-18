@@ -496,7 +496,7 @@
       "user": 4,
       "image": "google.com",
       "duration": 20,
-      "cost": "20.00",
+      "cost": 20.00,
       "url": "http://google.com",
       "site_title": "Google"
     }
@@ -508,7 +508,7 @@
       "user": 5,
       "image": "facebook",
       "duration": 220,
-      "cost": "10.00",
+      "cost": 10.00,
       "url": "http://facebook.com",
       "site_title": "Facebook"
     }
@@ -521,12 +521,4 @@
       "credit": 20
     }
   },
-  {
-    "model": "marketplace.buyer",
-    "pk": 3,
-    "fields": {
-      "user": 5,
-      "credit": 200
-    }
-  }
 ]
