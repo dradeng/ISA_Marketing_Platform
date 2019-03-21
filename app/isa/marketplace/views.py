@@ -10,6 +10,7 @@ from django.core import serializers
 from django.contrib.auth.hashers import make_password, check_password
 from django.core.exceptions import ObjectDoesNotExist
 import json
+from django.http import JsonResponse
 import os
 from django.conf import settings
 import hmac
@@ -74,7 +75,11 @@ def adUpdate(request):
 def adGet(request):
     if request.method == "GET":
         data = serializers.serialize("json", Ad.objects.all())
-        return HttpResponse(data)
+       
+        res = json.loads(data)
+       
+        return JsonResponse(res, safe=False)
+
     return HttpResponse({'ad_get_failure': "Invalid Request"}, status=404)
 
 
