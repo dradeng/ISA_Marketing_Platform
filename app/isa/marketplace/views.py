@@ -281,16 +281,18 @@ def userCreate(request):
     except Exception as e:
         return JsonResponse({"error": str(type(e))}, status=500)
 
-    return HttpResponse(json.dumps(model_to_dict(user_object)), status=201)
+    return JsonResponse((model_to_dict(user_object)), safe=False,  status=201)
 
 def usersGet(request):
     data = serializers.serialize("json", MarketUser.objects.all())
-    return HttpResponse(data)
+    res = json.loads(data)
+       
+    return JsonResponse(res, safe=False)
 
 
 def check_authenticator(request):
     if request.method != "POST":
-        return HttpResponse(json.dumps({"error":"incorrect method (use POST instead)"}), status=405)
+        return JsonResponse(json.dumps({"error":"incorrect method (use POST instead)"}), status=405)
 
     try:
         authenticator = request.POST["authenticator"]
@@ -340,7 +342,7 @@ def login(request):
 
 def logout(request):
     if request.method != "POST":
-        return HttpResponse(json.dumps({"error":"incorrect method (use POST instead)"}), status=405)
+        return JsonResponse({"error":"incorrect method (use POST instead)"}, status=405)
     try:
         authenticator = request.POST["authenticator"]
         auth_object = Authenticator.objects.get(authenticator=authenticator)
