@@ -14,6 +14,7 @@ def home(request):
     try:
         resp_json = urllib.request.urlopen(req).read().decode('utf-8')
         data = json.loads(resp_json)
+
     except HTTPError as e:
         return JsonResponse({"error": e.msg}, status=e.code)
     except Exception as e:
@@ -31,7 +32,6 @@ def ad_detail(request, ad_id):
         return JsonResponse({"error": str(type(e))}, status=500)
 
     if resp_json == "ads":
-        print("error sent")
         return JsonResponse({"error": "Ad not found"},status=404)
 
     data = json.loads(resp_json)
@@ -39,39 +39,40 @@ def ad_detail(request, ad_id):
     #return HttpResponse(json.dumps(ad_list), status=200)
 
 def create_user(request):
-    print('WHAT UP0')
+   
     if request.method == "GET":
-        return HttpResponse(json.dumps({}), status=200)
+        return JsonResponse({"error": "Wront HTTP request"}, status=e.code)
 
     elif request.method == "POST":
         post_data = request.POST
 
         post_encoded = urllib.parse.urlencode(post_data).encode('utf-8')
-        print('WHAT UP1')
+       
         req = urllib.request.Request('http://models-api:8000/api/v1/user/create/', data=post_encoded, method='POST')
-        print('WHAT UP2')
+
         try:
             resp_json = urllib.request.urlopen(req).read().decode('utf-8')
+            data = json.loads(resp_json)
         except HTTPError as e:
-            return HttpResponse(json.dumps({"error": e.msg}), status=e.code)
+            return JsonResponse({"error": e.msg}, status=e.code)
         except Exception as e:
-            return HttpResponse(json.dumps({"error": str(type(e))}), status=500)
-        return HttpResponse(resp_json, status=201)
+            return JsonResponse({"error": str(type(e))}, status=500)
+        return JsonResponse(data, status=201)
     else:
-        return HttpResponse(json.dumps({"error":"incorrect method (use GET or POST instead)"}), status=405)
+        return JsonResponse({"error":"incorrect method (use GET or POST instead)"}, status=405)
 
 
 def login(request):
     if request.method != "POST":
-        return HttpResponse(json.dumps({"error":"incorrect method (use POST instead)"}), status=405)
+        return JsonResponse({"error":"incorrect method (use POST instead)"}, status=405)
 
     try:
         email = request.POST["email"]
         password = request.POST["password"]
     except KeyError as e:
-        return HttpResponse(json.dumps({"error": "Key not found: " + e.args[0]}), status=400)
+        return JsonResponse({"error": "Key not found: " + e.args[0]}, status=400)
     except Exception as e:
-        return HttpResponse(json.dumps({"error": str(type(e))}), status=500)
+        return JsonResponse({"error": str(type(e))}, status=500)
 
     post_data = {'email': email, 'password': password}
     post_encoded = urllib.parse.urlencode(post_data).encode('utf-8')
@@ -79,29 +80,29 @@ def login(request):
 
     try:
         resp_json = urllib.request.urlopen(req).read().decode('utf-8')
+        data = json.loads(resp_json)
     except HTTPError as e:
-        return HttpResponse(json.dumps({"error": e.msg}), status=e.code)
+        return JsonResponse({"error": e.msg}, status=e.code)
     except Exception as e:
-        return HttpResponse(json.dumps({"error": str(type(e))}), status=500)
-    return HttpResponse(resp_json, status=200)
+        return JsonResponse({"error": str(type(e))}, status=500)
+    return JsonResponse(data, status=200)
 
 #******************************************************
 
 def ad_create(request):
-    print("hi from experiences")
     if request.method != "POST":
-        return HttpResponse(json.dumps({"error":"incorrect method (use POST instead)"}), status=405)
+        return JsonResponse({"error":"incorrect method (use POST instead)"}, status=405)
 
     try:
         site_title = request.POST['site_title']
         url = request.POST['url']
         cost = request.POST['cost']
         duration = request.POST['duration']
-        print(url)
+       
     except KeyError as e:
-        return HttpResponse(json.dumps({"error": "Key not found: " + e.args[0]}), status=400)
+        return JsonResponse({"error": "Key not found: " + e.args[0]}, status=400)
     except Exception as e:
-        return HttpResponse(json.dumps({"error": str(type(e))}), status=500)
+        return JsonResponse({"error": str(type(e))}, status=500)
 
 
     post_data = {
@@ -116,24 +117,25 @@ def ad_create(request):
 
     try:
         resp_json = urllib.request.urlopen(req).read().decode('utf-8')
+        data = json.loads(resp_json)
     except HTTPError as e:
-        return HttpResponse(json.dumps({"error": e.msg}), status=e.code)
+        return JsonResponse({"error": e.msg}, status=e.code)
     except Exception as e:
-        return HttpResponse(json.dumps({"error": str(type(e))}), status=500)
-    return HttpResponse(resp_json, status=200)
+        return JsonResponse({"error": str(type(e))}, status=500)
+    return JsonResponse(data, status=200)
 
 #******************************************************
 
 def check_authenticator(request):
     if request.method != "POST":
-        return HttpResponse(json.dumps({"error":"incorrect method (use POST instead)"}), status=405)
+        return JsonResponse({"error":"incorrect method (use POST instead)"}, status=405)
 
     try:
         auth = request.POST["authenticator"]
     except KeyError as e:
-        return HttpResponse(json.dumps({"error": "Key not found: " + e.args[0]}), status=400)
+        return JsonResponse({"error": "Key not found: " + e.args[0]}, status=400)
     except Exception as e:
-        return HttpResponse(json.dumps({"error": str(type(e))}), status=500)
+        return JsonResponse({"error": str(type(e))}, status=500)
 
     post_data = {'authenticator': auth}
     post_encoded = urllib.parse.urlencode(post_data).encode('utf-8')
@@ -141,22 +143,23 @@ def check_authenticator(request):
 
     try:
         resp_json = urllib.request.urlopen(req).read().decode('utf-8')
+        data = json.loads(resp_json)
     except HTTPError as e:
-        return HttpResponse(json.dumps({"error": e.msg}), status=e.code)
+        return JsonResponse({"error": e.msg}, status=e.code)
     except Exception as e:
-        return HttpResponse(json.dumps({"error": str(type(e))}), status=500)
-    return HttpResponse(resp_json, status=urllib.request.urlopen(req).getcode())
+        return JsonResponse({"error": str(type(e))}, status=500)
+    return JsonResponse(data, status=urllib.request.urlopen(req).getcode())
 
 def logout(request):
     if request.method != "POST":
-        return HttpResponse(json.dumps({"error":"incorrect method (use POST instead)"}), status=405)
+        return JsonResponse({"error":"incorrect method (use POST instead)"}, status=405)
 
     try:
         auth = request.POST["authenticator"]
     except KeyError as e:
-        return HttpResponse(json.dumps({"error": "Key not found: " + e.args[0]}), status=400)
+        return JsonResponse({"error": "Key not found: " + e.args[0]}, status=400)
     except Exception as e:
-        return HttpResponse(json.dumps({"error": str(type(e))}), status=500)
+        return JsonResponse({"error": str(type(e))}, status=500)
 
     post_data = {'authenticator': auth}
     post_encoded = urllib.parse.urlencode(post_data).encode('utf-8')
@@ -165,7 +168,7 @@ def logout(request):
     try:
         resp_json = urllib.request.urlopen(req).read().decode('utf-8')
     except HTTPError as e:
-        return HttpResponse(json.dumps({"error": e.msg}), status=e.code)
+        return JsonResponse({"error": e.msg}, status=e.code)
     except Exception as e:
-        return HttpResponse(json.dumps({"error": str(type(e))}), status=500)
-    return HttpResponse(resp_json, status=200)
+        return JsonResponse({"error": str(type(e))}, status=500)
+    return JsonResponse(resp_json, status=200)
