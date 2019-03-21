@@ -28,11 +28,11 @@ def adCreate(request):
             createdAd.save()
 
         except:
-            return HttpResponse({'ad_create_failure': "User does not exist"}, status=404)
+            return JsonResponse({'ad_create_failure': "User does not exist"}, status=404)
 
-        return HttpResponse({'ad_create_success': "Ad created successfully"}, status=200)
+        return JsonResponse({'ad_create_success': "Ad created successfully"}, status=200)
 
-    return HttpResponse({"ad_create_failure": "Ad created failed"}, status=404)
+    return JsonResponse({"ad_create_failure": "Ad created failed"}, status=404)
 
 
 
@@ -43,10 +43,10 @@ def adDelete(request):
         try:
             ad_object = Ad.objects.get(pk=request.GET['pk'])
             ad_object.delete()
-            return HttpResponse({"ad_delete_success": "Ad deleted successfully"}, status=200)
+            return JsonResponse({"ad_delete_success": "Ad deleted successfully"}, status=200)
         except:
-            return HttpResponse({"seller_delete_failure": "Ad could not be ound"}, status=404)
-    return HttpResponse({"seller_delete_failure": "Invalid Method Request"}, status=404)
+            return JsonResponse({"seller_delete_failure": "Ad could not be ound"}, status=404)
+    return JsonResponse({"seller_delete_failure": "Invalid Method Request"}, status=404)
 
 
 
@@ -63,11 +63,11 @@ def adUpdate(request):
             updatedAd.site_title = request.GET.get('site_title') if request.GET.get('site_title') else updatedAd.site_title
             updatedAd.save()
             updatedAd.save()
-            return HttpResponse({"ad_update_success": "Ad Updated successfully"}, status=200)
+            return JsonResponse({"ad_update_success": "Ad Updated successfully"}, status=200)
         except:
-            return HttpResponse({"ad_update_failure": "Ad unable to find"}, status=404)
+            return JsonResponse({"ad_update_failure": "Ad unable to find"}, status=404)
 
-    return HttpResponse({'ad_update_failure': "Invalid Request"}, status=404)
+    return JsonResponse({'ad_update_failure': "Invalid Request"}, status=404)
 
 # @route   GET views.adGet
 # @desc    render all ad
@@ -80,18 +80,20 @@ def adGet(request):
        
         return JsonResponse(res, safe=False)
 
-    return HttpResponse({'ad_get_failure': "Invalid Request"}, status=404)
+    return JsonResponse({'ad_get_failure': "Invalid Request"}, status=404)
 
 
 def ad_detail(request, ad_id):
     if request.method != "GET":
-        return HttpResponse(json.dumps({"error":"incorrect method (use GET instead)"}), status=405)
+        return JsonResponse({"error":"incorrect method (use GET instead)"}, status=405)
     try:
         data = serializers.serialize("json", [Ad.objects.get(pk=ad_id)])
-        return HttpResponse(data)
+        res = json.loads(data)
+       
+        return JsonResponse(res, safe=False)
     except ObjectDoesNotExist:
         empty_list = []
-        return HttpResponse({'ads': empty_list})
+        return JsonResponse({'ads': empty_list})
     
 
 
@@ -108,11 +110,11 @@ def buyerCreate(request):
             createdBuyer = Buyer(user=user, credit=credit)
             createdBuyer.save()
         except:
-            return HttpResponse({'buyer_create_failure': "User does not exist"}, status=404)
+            return JsonResponse({'buyer_create_failure': "User does not exist"}, status=404)
 
-        return HttpResponse({'buyer_create_success': "Buyer created successfully"}, status=200)
+        return JsonResponse({'buyer_create_success': "Buyer created successfully"}, status=200)
 
-    return HttpResponse({"buyer_create_failure": "Buyer created failed"}, status=404)
+    return JsonResponse({"buyer_create_failure": "Buyer created failed"}, status=404)
 
 
 
@@ -124,10 +126,10 @@ def buyerDelete(request):
         try:
             buyer_object = Buyer.objects.get(pk=request.GET['pk'])
             buyer_object.delete()
-            return HttpResponse({"buyer_delete_success": "Buyer deleted successfully"}, status=200)
+            return JsonResponse({"buyer_delete_success": "Buyer deleted successfully"}, status=200)
         except:
-            return HttpResponse({"buyer_delete_failure": "Buyer could not be found"}, status=404)
-    return HttpResponse({"seller_delete_failure": "Invalid Method Request"}, status=404)
+            return JsonResponse({"buyer_delete_failure": "Buyer could not be found"}, status=404)
+    return JsonResponse({"seller_delete_failure": "Invalid Method Request"}, status=404)
 
 
 # @route   POST views.adUpdate
