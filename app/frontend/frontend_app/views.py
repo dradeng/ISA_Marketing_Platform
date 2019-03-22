@@ -7,6 +7,7 @@ from django.shortcuts import redirect
 import urllib.request
 import json
 import ast
+from django.http import JsonResponse
 
 # @route   Get views.home
 # @desc    Render home page
@@ -21,9 +22,9 @@ def home(request):
         
         return render(request, 'home.html',{'ads': data, 'auth':auth })
     except HTTPError as e:
-        return HttpResponse(json.dumps({"error": e.msg}), status=e.code)
+        return JsonResponse({"error": e.msg}, status=e.code)
     except Exception as e:
-        return HttpResponse(e.args)
+        return JsonResponse({"error": "Exception"}, status=500)
 
 
 # @route   GET views.userCreate
@@ -35,9 +36,9 @@ def ad_detail(request, ad_id):
     try:
         resp_json = urllib.request.urlopen(req).read().decode('utf-8')
     except HTTPError as e:
-        return HttpResponse(json.dumps("Ad ID not found"), status=e.code)
+        return JsonResponse({"error":"Ad ID not found"}, status=e.code)
     except Exception as e:
-        return HttpResponse(json.dumps({"error": str(type(e))}), status=500)
+        return JsonResponse({"error": str(type(e))}, status=500)
 
     ad = json.loads(resp_json)
     #if 'error' in ad.keys():
@@ -100,7 +101,7 @@ def login(request):
         context = {"form": f, "error": "HTTP error: " + e.msg}
         return render(request, 'login.html', context)
     except Exception as e:
-        return HttpResponse(json.dumps({"error": str(type(e))}), status=500)
+        return JsonResponse({"error": str(type(e))}, status=500)
 
     resp_dict = json.loads(resp_json)
     authenticator = resp_dict['authenticator']
@@ -119,7 +120,7 @@ def logout(request):
     try:
         resp_json = urllib.request.urlopen(req).read().decode('utf-8')
     except Exception as e:
-        return HttpResponse(json.dumps({"error": str(type(e))}), status=500)
+        return JsonResponse({"error": str(type(e))}, status=500)
 
     return HttpResponseRedirect("/")
 
@@ -160,7 +161,7 @@ def ad_create(request):
         resp_json = urllib.request.urlopen(req).read().decode('utf-8')
     except Exception as e:
         print("oof")
-        return HttpResponse(json.dumps({"error": str(type(e))}), status=500)
+        return JsonResponse({"error": str(type(e))}, status=500)
 
     return redirect("/")
 #*************************************************
@@ -206,8 +207,8 @@ def create_account(request):
         try:
             resp_json = urllib.request.urlopen(req).read().decode('utf-8')
         except HTTPError as e:
-            return HttpResponse(json.dumps({"error": e.msg}), status=e.code)
+            return JsonResponse({"error": e.msg}, status=e.code)
         except Exception as e:
-            return HttpResponse(json.dumps({"error": str(type(e))}), status=500)
+            return JsonResponse({"error": str(type(e))}, status=500)
         return redirect("home")
 
