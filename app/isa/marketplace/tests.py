@@ -32,9 +32,9 @@ class TestAdCreate(TestCase):
         createResponse = c.post("/api/v1/user/create", {"name": "John", "email": "hello@gmail.com", "password": "pwd"})
         self.assertEquals(createResponse.status_code, 201)
         user = json.loads(createResponse.content.decode("utf-8"))
-        id = str(user["id"])
+        id = user["id"]
         createResponse = c.post("/api/v1/ad/create",
-                          {"user": int(id), "image": "", "duration": 5, "cost": 4,
+                          {"user": id, "image": "", "duration": 5, "cost": 4,
                            "url": "http://www.google.com", "site_title":"google"})
         self.assertEquals(createResponse.status_code, 201)
 
