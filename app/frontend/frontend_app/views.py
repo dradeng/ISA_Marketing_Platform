@@ -19,7 +19,7 @@ def home(request):
     try:
         resp_json = urllib.request.urlopen(req).read().decode('utf-8')
         data = json.loads(resp_json)
-        
+
         return render(request, 'home.html',{'ads': data, 'auth':auth })
     except HTTPError as e:
         return JsonResponse({"error": e.msg}, status=e.code)
@@ -74,6 +74,13 @@ def user_logged_in(request):
 
 
 def login(request):
+    auth = user_logged_in(request)
+    print('AUTH IS', auth)
+    if(auth):
+        #doesnt allow user to login if authenticator is good
+        HttpResponseRedirect("/")
+
+
     if request.method == 'GET':
         auth = user_logged_in(request)
         form = LoginForm()
@@ -93,11 +100,14 @@ def login(request):
 
     post_data = {'email': email, 'password': password}
     post_encoded = urllib.parse.urlencode(post_data).encode('utf-8')
+    print('bout to call experiences')
     req = urllib.request.Request('http://experiences-api:8000/api/v1/login', data=post_encoded, method='POST')
 
     try:
         resp_json = urllib.request.urlopen(req).read().decode('utf-8')
+        print('RESPONSE', resp_json)
     except HTTPError as e:
+        print('ERROR msg', e.msg)
         context = {"form": f, "error": "HTTP error: " + e.msg}
         return render(request, 'login.html', context)
     except Exception as e:
@@ -153,7 +163,7 @@ def ad_create(request):
         'cost': cost,
         'duration': duration,
     }
-    
+
     post_encoded = urllib.parse.urlencode(post_data).encode('utf-8')
     req = urllib.request.Request('http://experiences-api:8000/api/v1/ad_create', data=post_encoded, method='POST')
 
@@ -188,10 +198,11 @@ def get_user_object(request):
 def create_account(request):
     print('we outside')
     auth = user_logged_in(request)
+    form = MarketUserForm()
+
+
     if request.method == "GET":
-        form = MarketUserForm()
-        context = {"form": form, "auth": auth}
-        context = {"form": form}
+        context = {"form": form, "auth": auth, "error": ""}
         return render(request, "create_account.html", context)
     elif request.method == "POST":
         print('we inside')
@@ -207,8 +218,8 @@ def create_account(request):
         try:
             resp_json = urllib.request.urlopen(req).read().decode('utf-8')
         except HTTPError as e:
-            return JsonResponse({"error": e.msg}, status=e.code)
+            context = {"form": form, "auth": auth, "error": "Email already in use"}
+            return render(request, "create_account.html", context)
         except Exception as e:
             return JsonResponse({"error": str(type(e))}, status=500)
         return redirect("home")
-

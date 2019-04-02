@@ -274,6 +274,9 @@ def userCreate(request):
     try:
         name = request.POST["name"]
         email = request.POST["email"]
+        user_list = MarketUser.objects.filter(email=email)
+        if len(user_list) > 0:
+            return JsonResponse({"error": "Email already taken"}, status=400)
         password = make_password(request.POST["password"])
         user_object = MarketUser(name=name, email=email, password=password)
         user_object.save()
@@ -322,35 +325,40 @@ def login(request):
         return JsonResponse({"error":"incorrect method (use POST instead)"}, status=405)
 
     try:
-
+        print('herew1')
         email = request.POST["email"]
         password = request.POST["password"]
         user_list = MarketUser.objects.filter(email=email)
+        print('list', user_list)
     except KeyError as e:
         return JsonResponse({"error": "Key not found: " + e.args[0]}, status=400)
     except Exception as e:
         return JsonResponse({"error": "Exception occured"}, status=500)
-
+    print('herew2')
     if len(user_list) == 0:
+        print('stop 0')
         return JsonResponse({"error": "Credentials invalid"}, status=401)
     elif len(user_list) > 1:
+        print('stop 1')
         return JsonResponse({"error": "More than one user has that login"}, status=401)
     else:
         user_object = user_list[0]
     if not check_password(password, user_object.password):
         return JsonResponse({"error": "Credentials invalid"}, status=401)
-
+    print('herew3')
     authenticator = hmac.new(
         key=settings.SECRET_KEY.encode('utf-8'),
         msg=os.urandom(32),
         digestmod='sha256',
     ).hexdigest()
     try:
+        print('herew4')
         authenticator_object = Authenticator(authenticator=authenticator, user=user_object)
         authenticator_object.save()
     except Exception as e:
+        print('herew5')
         return JsonResponse({"error": str(type(e))}, status=500)
-
+    print('herew6')
     return JsonResponse({"authenticator": authenticator}, status=200)
 
 def logout(request):

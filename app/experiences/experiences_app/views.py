@@ -10,7 +10,7 @@ from django.http import JsonResponse
 
 def home(request):
     req = urllib.request.Request('http://models-api:8000/api/v1/ads/')
-    
+
     try:
         resp_json = urllib.request.urlopen(req).read().decode('utf-8')
         data = json.loads(resp_json)
@@ -22,7 +22,7 @@ def home(request):
     return JsonResponse(data, safe=False, status=200)
 
 def ad_detail(request, ad_id):
-  
+
     req = urllib.request.Request('http://models-api:8000/api/v1/ad/' + str(ad_id) + '/ad_detail/')
     try:
         resp_json = urllib.request.urlopen(req).read().decode('utf-8')
@@ -39,7 +39,7 @@ def ad_detail(request, ad_id):
     #return HttpResponse(json.dumps(ad_list), status=200)
 
 def create_user(request):
-   
+
     if request.method == "GET":
         return JsonResponse({"error": "Wront HTTP request"}, status=e.code)
 
@@ -47,7 +47,7 @@ def create_user(request):
         post_data = request.POST
 
         post_encoded = urllib.parse.urlencode(post_data).encode('utf-8')
-       
+
         req = urllib.request.Request('http://models-api:8000/api/v1/user/create/', data=post_encoded, method='POST')
 
         try:
@@ -98,7 +98,7 @@ def ad_create(request):
         url = request.POST['url']
         cost = request.POST['cost']
         duration = request.POST['duration']
-       
+
     except KeyError as e:
         return JsonResponse({"error": "Key not found: " + e.args[0]}, status=400)
     except Exception as e:
