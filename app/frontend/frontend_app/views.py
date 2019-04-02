@@ -223,3 +223,20 @@ def create_account(request):
         except Exception as e:
             return JsonResponse({"error": str(type(e))}, status=500)
         return redirect("home")
+<<<<<<< HEAD
+=======
+
+def search(request):
+    auth = user_logged_in(request)
+    query = request.GET.get('query')
+    req = urllib.request.Request('http://exp-api:8000/api/v1/search?query='+urllib.parse.quote(query))
+    try:
+        resp_json = urllib.request.urlopen(req).read().decode('utf-8')
+    except HTTPError as e:
+        return JsonResponse({"error": e.msg}, status=e.code)
+    except Exception as e:
+        return JsonResponse({"error": str(type(e))}, status=500)
+
+    ads = json.loads(resp_json)
+    return render(request, "search.html", {"ads":ads, "auth":auth, "results": len(ads)})
+>>>>>>> f6375e9c330e5d08cb0dad94cf8e6eb4d81d981d
