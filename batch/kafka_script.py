@@ -5,7 +5,7 @@ from elasticsearch import Elasticsearch
 
 c = None #KafkaConsumer
 es = None #ElasticSearch
-while consumer is None:
+while c is None:
     try:
         c = KafkaConsumer('new-listings-topic', group_id='listing-indexer', bootstrap_servers=['kafka:9092'])
         es = Elasticsearch(['es'])

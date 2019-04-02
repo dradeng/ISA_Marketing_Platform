@@ -172,3 +172,28 @@ def logout(request):
     except Exception as e:
         return JsonResponse({"error": str(type(e))}, status=500)
     return JsonResponse(resp_json, status=200)
+
+
+
+def search(request):
+    if request.method == "POST":
+        return JsonResponse({"error": "incorrect method -> should be GET not POST"}, status=200)
+
+    elif request.method == "GET":
+        query = request.GET.get('query', 'none')
+
+        es = Elasticsearch(['es'])
+
+        result = es.search(index='listing_index', body={'query': {'query_string': {'query': query}}, 'size': 5})
+
+        if result['timed_out'] == True:
+            return JsonResponse({"error":"Search timed out"}, status=500)
+
+        sources = []
+        for returned in result['hits']['hits']:
+            sources.append(returned['_source'])
+
+        return JsonResponse(json.dumps(sources), status=201)
+
+    else:
+        return JsonResponse({"error":"incorrect method (use GET or POST instead)"}, status=405)
