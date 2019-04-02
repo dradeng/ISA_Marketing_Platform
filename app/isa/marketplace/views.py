@@ -10,13 +10,14 @@ from django.core import serializers
 from django.contrib.auth.hashers import make_password, check_password
 from django.core.exceptions import ObjectDoesNotExist
 import json
+from datetime import datetime, timedelta
 from django.http import JsonResponse
 import os
 from django.conf import settings
 import hmac
 
 def adCreate(request):
-    
+
     if request.method == "POST":
         try:
             cost = request.POST["cost"]
@@ -75,9 +76,9 @@ def adUpdate(request):
 def adGet(request):
     if request.method == "GET":
         data = serializers.serialize("json", Ad.objects.all())
-       
+
         res = json.loads(data)
-       
+
         return JsonResponse(res, safe=False)
 
     return JsonResponse({'ad_get_failure': "Invalid Request"}, status=404)
@@ -89,12 +90,12 @@ def ad_detail(request, ad_id):
     try:
         data = serializers.serialize("json", [Ad.objects.get(pk=ad_id)])
         res = json.loads(data)
-       
+
         return JsonResponse(res, safe=False)
     except ObjectDoesNotExist:
         empty_list = []
         return JsonResponse({'ads': empty_list})
-    
+
 
 
 # @route   POST views.adCreate
@@ -156,7 +157,7 @@ def buyerGet(request):
     if request.method == "GET":
         data = serializers.serialize("json", Buyer.objects.all())
         res = json.loads(data)
-       
+
         return JsonResponse(res, safe=False)
     return JsonResponse({'buyer_get': "Invalid request"}, status=404)
 
@@ -223,7 +224,7 @@ def sellerGet(request):
     if request.method == "GET":
         data = serializers.serialize("json", Seller.objects.all())
         res = json.loads(data)
-       
+
         return JsonResponse(res, safe=False)
     return JsonResponse({'seller_get': "Invalid Request"}, status=404)
 
@@ -286,7 +287,7 @@ def userCreate(request):
 def usersGet(request):
     data = serializers.serialize("json", MarketUser.objects.all())
     res = json.loads(data)
-       
+
     return JsonResponse(res, safe=False)
 
 
@@ -297,6 +298,18 @@ def check_authenticator(request):
     try:
         authenticator = request.POST["authenticator"]
         auth_object = Authenticator.objects.get(authenticator=authenticator)
+
+
+        #subtract 1 day
+        d = datetime.today() - timedelta(days=50)
+        if d.date() > auth_object.date_created.date():
+            #print('DELETE')
+            #will automatically log person out when any page is refreshed
+
+            auth_object.delete()
+            return JsonResponse({"success": "User logged out"}, status=200)
+
+
     except ObjectDoesNotExist:
         return JsonResponse({"error": "Not logged in"}, status=401)
     except Exception as e:
