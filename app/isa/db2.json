@@ -38,7 +38,7 @@
       "user": 1,
       "image": "facebook.com",
       "duration": 10,
-      "cost": "30.00",
+      "cost": 30.00,
       "url": "http://google.com",
       "site_title": "Google"
     }
@@ -50,7 +50,7 @@
       "user": 2,
       "image": "google.com",
       "duration": 15,
-      "cost": "20.00",
+      "cost": 20.00,
       "url": "http://facebook.com",
       "site_title": "Facebook"
     }
@@ -61,14 +61,14 @@
     "fields": {"user": 1, "credit": 20}
   },
   {
-    "model": "marketplace.buyer",
-    "pk": 2,
-    "fields": {"user": 2, "company": 24}
+    "model": "marketplace.marketuser",
+    "pk": 1,
+    "fields": {"name": "han", "email": "hg5mc@virginia.edu", "password": "1234"}
   },
   {
-    "model": "marketplace.seller",
-    "pk": 1,
-    "fields": {"user": 1, "company": "google"}
+    "model": "marketplace.marketuser",
+    "pk": 2,
+    "fields": {"name": "draden", "email": "draden@gmail.com", "password": "1234"}
   },
   {
     "model": "marketplace.seller",

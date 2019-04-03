@@ -223,8 +223,7 @@ def create_account(request):
         except Exception as e:
             return JsonResponse({"error": str(type(e))}, status=500)
         return redirect("home")
-<<<<<<< HEAD
-=======
+
 
 def search(request):
     auth = user_logged_in(request)
@@ -239,4 +238,3 @@ def search(request):
 
     ads = json.loads(resp_json)
     return render(request, "search.html", {"ads":ads, "auth":auth, "results": len(ads)})
->>>>>>> f6375e9c330e5d08cb0dad94cf8e6eb4d81d981d

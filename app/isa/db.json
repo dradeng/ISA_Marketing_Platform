@@ -496,7 +496,7 @@
       "user": 4,
       "image": "google.com",
       "duration": 20,
-      "cost": 20.00,
+      "cost": 20,
       "url": "http://google.com",
       "site_title": "Google"
     }
@@ -508,9 +508,21 @@
       "user": 5,
       "image": "facebook",
       "duration": 220,
-      "cost": 10.00,
+      "cost": 10,
       "url": "http://facebook.com",
       "site_title": "Facebook"
+    }
+  },
+  {
+    "model": "marketplace.ad",
+    "pk": 4,
+    "fields": {
+      "user": 5,
+      "image": "yahoo",
+      "duration": 150,
+      "cost": 5,
+      "url": "http://yahoo.com",
+      "site_title": "Yahoo"
     }
   },
   {
