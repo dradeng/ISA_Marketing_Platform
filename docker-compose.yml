@@ -16,6 +16,8 @@ experiences:
   container_name: experiences
   links:
     - models:models-api
+    - kafka:kafka
+    - es:es
   ports:
     - "8002:8000"
   expose:
@@ -45,7 +47,7 @@ kafka:
       ADVERTISED_HOST: kafka
       ADVERTISED_PORT: 9092
    hostname: kafka
-   
+
 es:
    image: elasticsearch:2.0
    container_name: es

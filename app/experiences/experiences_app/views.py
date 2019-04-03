@@ -126,8 +126,8 @@ def ad_create(request):
     except Exception as e:
         return JsonResponse({"error": str(type(e))}, status=500)
 
-    #producer = KafkaProducer(bootstrap_servers=['kafka:9092'])
-    #producer.send('new-listings-topic', resp_json.encode('utf-8'))
+    producer = KafkaProducer(bootstrap_servers=['kafka:9092'])
+    producer.send('new-listings-topic', resp_json.encode('utf-8'))
     return JsonResponse(data, status=200)
 
 #******************************************************
