@@ -277,7 +277,7 @@ def userCreate(request):
         user_list = MarketUser.objects.filter(email=email)
         if len(user_list) > 0:
             return JsonResponse({"error": "Email already taken"}, status=400)
-        password = make_password(request.POST["password"])
+        password = request.POST["password"]
         user_object = MarketUser(name=name, email=email, password=password)
         user_object.save()
     except KeyError as e:
@@ -343,7 +343,7 @@ def login(request):
         return JsonResponse({"error": "More than one user has that login"}, status=401)
     else:
         user_object = user_list[0]
-    if not check_password(password, user_object.password):
+    if not check_password(password, make_password(user_object.password)):
         return JsonResponse({"error": "Credentials invalid"}, status=401)
     print('herew3')
     authenticator = hmac.new(
@@ -372,4 +372,6 @@ def logout(request):
         return JsonResponse({"error": "Not logged in"}, status=401)
     except Exception as e:
         return JsonResponse({"error": str(type(e))}, status=500)
+    print("yay")
     return JsonResponse({"success": "User logged out"}, status=200)
+

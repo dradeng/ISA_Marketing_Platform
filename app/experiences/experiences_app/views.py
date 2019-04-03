@@ -165,13 +165,14 @@ def logout(request):
     post_encoded = urllib.parse.urlencode(post_data).encode('utf-8')
     req = urllib.request.Request('http://models-api:8000/api/v1/logout', data=post_encoded, method='POST')
 
+
     try:
-        resp_json = urllib.request.urlopen(req).read().decode('utf-8')
+        resp_json = json.loads(urllib.request.urlopen(req).read().decode('utf-8'))
     except HTTPError as e:
         return JsonResponse({"error": e.msg}, status=e.code)
     except Exception as e:
         return JsonResponse({"error": str(type(e))}, status=500)
-    return JsonResponse(resp_json, status=200)
+    return JsonResponse(resp_json, status=200,safe=False)
 
 
 
