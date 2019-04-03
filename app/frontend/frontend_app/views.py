@@ -224,7 +224,6 @@ def create_account(request):
             return JsonResponse({"error": str(type(e))}, status=500)
         return redirect("home")
 
-
 def search(request):
     auth = user_logged_in(request)
     query = request.GET.get('query')

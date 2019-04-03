@@ -31,7 +31,7 @@ def adCreate(request):
         except:
             return JsonResponse({'ad_create_failure': "User does not exist"}, status=404)
 
-        return JsonResponse({'ad_create_success': "Ad created successfully"}, status=200)
+        return HttpResponse(json.dumps(model_to_dict(createdAd)), status=201)
 
     return JsonResponse({"ad_create_failure": "Ad created failed"}, status=404)
 
@@ -374,4 +374,3 @@ def logout(request):
         return JsonResponse({"error": str(type(e))}, status=500)
     print("yay")
     return JsonResponse({"success": "User logged out"}, status=200)
-

@@ -4,6 +4,8 @@ import json
 import urllib.request
 from urllib.error import HTTPError
 from django.http import JsonResponse
+from kafka import KafkaProducer
+from elasticsearch import Elasticsearch
 # Create your views here.
 
 # Create your views here.
@@ -117,11 +119,15 @@ def ad_create(request):
 
     try:
         resp_json = urllib.request.urlopen(req).read().decode('utf-8')
+
         data = json.loads(resp_json)
     except HTTPError as e:
         return JsonResponse({"error": e.msg}, status=e.code)
     except Exception as e:
         return JsonResponse({"error": str(type(e))}, status=500)
+
+    #producer = KafkaProducer(bootstrap_servers=['kafka:9092'])
+    #producer.send('new-listings-topic', resp_json.encode('utf-8'))
     return JsonResponse(data, status=200)
 
 #******************************************************
