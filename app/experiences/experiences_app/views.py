@@ -200,7 +200,7 @@ def search(request):
         for returned in result['hits']['hits']:
             sources.append(returned['_source'])
 
-        return JsonResponse(json.dumps(sources), status=201)
+        return HttpResponse(json.dumps(sources), status=201)
 
     else:
         return JsonResponse({"error":"incorrect method (use GET or POST instead)"}, status=405)

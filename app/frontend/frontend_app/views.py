@@ -229,11 +229,17 @@ def search(request):
     query = request.GET.get('query')
     req = urllib.request.Request('http://exp-api:8000/api/v1/search?query='+urllib.parse.quote(query))
     try:
+        print('madeee')
+
         resp_json = urllib.request.urlopen(req).read().decode('utf-8')
+        print('goolla')
     except HTTPError as e:
+        print('http')
         return JsonResponse({"error": e.msg}, status=e.code)
     except Exception as e:
+        print('exception')
         return JsonResponse({"error": str(type(e))}, status=500)
-
+    print('weird')
     ads = json.loads(resp_json)
+    print('made it here')
     return render(request, "search.html", {"ads":ads, "auth":auth, "results": len(ads)})
