@@ -53,6 +53,8 @@ es:
    container_name: es
    ports:
       - "9200:9200"
+   expose:
+      - "9200"
 
 batch:
    image: tp33/django
