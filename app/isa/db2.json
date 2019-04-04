@@ -36,7 +36,7 @@
     "pk": 1,
     "fields": {
       "user": 1,
-      "image": "facebook.com",
+      "image": "google.com",
       "duration": 10,
       "cost": 30.00,
       "url": "http://google.com",
@@ -45,10 +45,10 @@
   },
   {
     "model": "marketplace.ad",
-    "pk": 1,
+    "pk": 2,
     "fields": {
       "user": 2,
-      "image": "google.com",
+      "image": "facebook.com",
       "duration": 15,
       "cost": 20.00,
       "url": "http://facebook.com",
