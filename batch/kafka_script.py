@@ -3,6 +3,12 @@ import json
 import time
 from elasticsearch import Elasticsearch
 
+es = Elasticsearch(['es'])
+ad = {"user": 1, "image": "", "duration": 10, "cost": 20.00, "url": "www.google.com", "site_title": "Google", "id": 1}
+es.index(index='listing_index', doc_type='listing', id=ad['id'], body=ad)
+es.indices.refresh(index="listing_index")
+print("hi")
+
 c = None #KafkaConsumer
 es = None #ElasticSearch
 while c is None:
@@ -13,7 +19,7 @@ while c is None:
         time.sleep(1)
 
 es_load = False
-ad = {"user": 1, "image": "", "duration": 10, "cost": 20.00, "url": "www.google.com", "site_title": "Google", 'id'=1}
+ad = {"user": 1, "image": "", "duration": 10, "cost": 20.00, "url": "www.google.com", "site_title": "Google", "id": 1}
 time.sleep(10)
 while not es_load:
     try:
