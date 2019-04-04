@@ -227,7 +227,7 @@ def create_account(request):
 def search(request):
     auth = user_logged_in(request)
     query = request.GET.get('query')
-    req = urllib.request.Request('http://exp-api:8000/api/v1/search?query='+urllib.parse.quote(query))
+    req = urllib.request.Request('http://experiences-api:8000/api/v1/search?query='+urllib.parse.quote(query))
     try:
         print('madeee')
 
