@@ -1,6 +1,6 @@
-{% extends 'base_generic.html' %}
+{% extends 'base.html' %}
 
-{% block title %}Results{% endblock %}
+{% block title %}Search Results{% endblock %}
 
 {% block content %}
 <div class="container">
@@ -9,8 +9,11 @@
     {% if not results %}
     <h3>No Results</h3>
     {% endif %}
-    {% for book in book_list %}
-      <p>PENIS</p>
+    {% for ad in ads %}
+    <div class="row mb-2" style="background-color: white; outline-style: solid; outline-color: lightgrey;">
+      <p style="padding: 10px; margin: 0px"><a href="{{ ad.id }}/detail" target="_blank"
+      style="color:blue"><b>{{ ad.site_title }}</b></a> - ${{ ad.cost }} for {{ ad.duration }} days</p>
+    </div>
     {% endfor %}
   </div>
 </div>

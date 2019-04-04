@@ -13,7 +13,7 @@ while c is None:
         time.sleep(1)
 
 es_load = False
-ad = {"user": 1, "image": "", "duration": 10, "cost": 20.00, "url": "www.google.com", "site_title": "Google"}
+ad = {"user": 1, "image": "", "duration": 10, "cost": 20.00, "url": "www.google.com", "site_title": "Google", 'id'=1}
 time.sleep(10)
 while not es_load:
     try:
