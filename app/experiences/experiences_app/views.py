@@ -183,14 +183,6 @@ def logout(request):
 
 
 def search(request):
-    
-    """
-    print("hi search")
-    es = Elasticsearch(['es'])
-    some_new_listing = {'title': 'Used MacbookAir 13"', 'description': 'This is a used Macbook Air in great condition', 'id':42}
-    es.index(index='listing_index', doc_type='listing', id=some_new_listing['id'], body=some_new_listing)
-    es.indices.refresh(index="listing_index")
-    """
 
     if request.method == "POST":
         return JsonResponse({"error": "incorrect method -> should be GET not POST"}, status=200)

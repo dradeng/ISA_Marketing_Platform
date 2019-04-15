@@ -65,3 +65,21 @@ batch:
    volumes:
       - ./batch:/kafka_script
    command: "python /kafka_script/kafka_script.py"
+
+selenium-chrome:
+  image: selenium/standalone-chrome
+  container_name: selenium-chrome
+  links:
+    - frontend:frontend
+  ports:
+    - "4444:4444"
+
+selenium-test:
+  image: tp33/django
+  container_name: selenium-test
+  links:
+    - selenium-chrome:selenium-chrome
+    - frontend:frontend
+  volumes:
+    - ./selenium:/app
+  command: bash -c "pip install selenium==3.11.0 && python /app/tests.py"
