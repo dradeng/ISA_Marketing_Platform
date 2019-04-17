@@ -97,7 +97,7 @@ selenium-test:
     - ./selenium:/app
   command: bash -c "pip install selenium==3.141.0 && sleep 30 && python /app/tests.py"
 
-haproxy:
+gateway-haproxy:
   image: haproxy
   container_name: gateway-haproxy
   volumes:
@@ -107,3 +107,13 @@ haproxy:
    - frontend2:frontend2
   ports:
    - 8004:8000
+
+jmeter:
+  image: hauptmedia/jmeter
+  container_name: jmeter
+  links:
+    - gateway-haproxy:gateway-haproxy
+  volumes:
+    - ./jmeter:/jmeter
+  command: bash -c "bin/jmeter -n -t /jmeter/test_1.jmx -l /jmeter/docker_results.log"
+
