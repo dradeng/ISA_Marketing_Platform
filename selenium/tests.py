@@ -39,29 +39,23 @@ class TestTemplate(unittest.TestCase):
         """Log in using web interface"""
         try:
             self.driver.get('http://frontend:8000/login')
-            self.driver.implicitly_wait(10)
             username = self.driver.find_element_by_id('id_email')
             username.send_keys("draden@gmail.com")
             password = self.driver.find_element_by_id('id_password')
             password.send_keys("1234")
             self.driver.implicitly_wait(10)
-            #password.submit()
-            submit = self.driver.find_element_by_class_name("btn-lg")
-            submit.click()
+            password.submit()
+            #submit = self.driver.find_element_by_class_name("btn-lg")
+            #submit.click()
         except NoSuchElementException as ex:
             self.fail(ex.msg)
 
 
         try:
             WebDriverWait(self.driver, 15)
+            #html = self.driver.execute_script("return document.body.innerHTML;")
 
-            # print new URL
-            new_url = self.driver.current_url
-            print(new_url)
-            html = self.driver.execute_script("return document.body.innerHTML;")
-            print("WHAATTTTT")
-            print(html)
-            self.assertEqual(self.driver.title, "localhost")
+            self.assertEqual(self.driver.title, "Home")
             self.driver.implicitly_wait(4)
             logout = self.driver.find_element_by_partial_link_text("Logout")
             self.assertEqual(logout.get_attribute("href"), "http://frontend:8000/logout")
@@ -84,23 +78,22 @@ class TestTemplate(unittest.TestCase):
         """Create a ad using web interface"""
         try:
             self.driver.get('http://frontend:8000/login')
-            self.driver.implicitly_wait(3)
             username = self.driver.find_element_by_id('id_email')
             username.send_keys("draden@gmail.com")
             password = self.driver.find_element_by_id('id_password')
             password.send_keys("1234")
+            self.driver.implicitly_wait(10)
             password.submit()
         except NoSuchElementException as ex:
             self.fail(ex.msg)
 
         try:
             self.driver.get('http://frontend:8000/ad_create')
-            print('URL IS')
-            print(self.driver.current_url)
+
             site_title = self.driver.find_element_by_id('id_site_title')
             site_title.send_keys("Free")
             url = self.driver.find_element_by_id('id_url')
-            url.send_keys("Free.com")
+            url.send_keys("http://Free.com")
             price = self.driver.find_element_by_id('id_price')
             price.send_keys(12)
             duration = self.driver.find_element_by_id('id_duration')
@@ -108,6 +101,7 @@ class TestTemplate(unittest.TestCase):
 
             submit = self.driver.find_element_by_class_name("btn")
             submit.click()
+
             self.assertEqual(self.driver.title, "Home")
 
         except NoSuchElementException as ex:

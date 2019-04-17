@@ -80,15 +80,17 @@ def login(request):
         #doesnt allow user to login if authenticator is good
         HttpResponseRedirect("/")
 
-
+    print("WE CALL")
     if request.method == 'GET':
         auth = user_logged_in(request)
         form = LoginForm()
         context = {"form": form, "auth": auth}
         return render(request, "login.html", context)
+    if request.method == "POST":
+        print('WE HERE MOTH')
 
     f = LoginForm(request.POST)
-
+    print("WE MADE IT")
     # Check if the form instance is invalid
     if not f.is_valid():
       context = {"form": f, "error": "Form was invalid"}
@@ -97,7 +99,8 @@ def login(request):
 
     email = f.cleaned_data['email']
     password = f.cleaned_data['password']
-
+    print("EMAIL IT IS")
+    print(email)
     post_data = {'email': email, 'password': password}
     post_encoded = urllib.parse.urlencode(post_data).encode('utf-8')
     print('bout to call experiences')
