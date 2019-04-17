@@ -107,9 +107,9 @@ haproxy:
    - frontend2:frontend2
   ports:
    - 8004:8000
-mysql_travis_ci:
+mysql:
   image: mysql:5.7.14
-  container_name: mysql_travis_ci
+  container_name: mysql
   environment:
     - MYSQL_ROOT_PASSWORD=$$3cureUS
     - MYSQL_DATABASE=cs4501
