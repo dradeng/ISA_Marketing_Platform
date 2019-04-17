@@ -107,3 +107,15 @@ haproxy:
    - frontend2:frontend2
   ports:
    - 8004:8000
+mysql_travis_ci:
+  image: mysql:5.7.14
+  container_name: mysql_travis_ci
+  environment:
+    - MYSQL_ROOT_PASSWORD=$$3cureUS
+    - MYSQL_DATABASE=cs4501
+    - MYSQL_USER=www
+    - MYSQL_PASSWORD=$$3cureUS
+  expose:
+    - "3306"
+  volumes:
+    - ./db_script.sh:/docker-entrypoint-initdb.d/db_script.sh
