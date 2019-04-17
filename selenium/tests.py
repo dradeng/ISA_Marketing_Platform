@@ -2,6 +2,8 @@ import unittest
 import time
 from selenium import webdriver
 from selenium.webdriver import ChromeOptions
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from selenium.common.exceptions import NoSuchElementException
 
@@ -37,25 +39,30 @@ class TestTemplate(unittest.TestCase):
         """Log in using web interface"""
         try:
             self.driver.get('http://frontend:8000/login')
-            time.sleep(5)
+            self.driver.implicitly_wait(10)
             username = self.driver.find_element_by_id('id_email')
             username.send_keys("draden@gmail.com")
             password = self.driver.find_element_by_id('id_password')
             password.send_keys("1234")
-            time.sleep(5)
-            password.submit()
-            #submit = self.driver.find_element_by_class_name("btn-lg")
-            #submit.click()
+            self.driver.implicitly_wait(10)
+            #password.submit()
+            submit = self.driver.find_element_by_class_name("btn-lg")
+            submit.click()
         except NoSuchElementException as ex:
             self.fail(ex.msg)
 
 
         try:
+            WebDriverWait(self.driver, 15)
+
+            # print new URL
+            new_url = self.driver.current_url
+            print(new_url)
             html = self.driver.execute_script("return document.body.innerHTML;")
             print("WHAATTTTT")
             print(html)
             self.assertEqual(self.driver.title, "localhost")
-            time.sleep(3)
+            self.driver.implicitly_wait(4)
             logout = self.driver.find_element_by_partial_link_text("Logout")
             self.assertEqual(logout.get_attribute("href"), "http://frontend:8000/logout")
             logout.click()
@@ -77,7 +84,7 @@ class TestTemplate(unittest.TestCase):
         """Create a ad using web interface"""
         try:
             self.driver.get('http://frontend:8000/login')
-            time.sleep(3)
+            self.driver.implicitly_wait(3)
             username = self.driver.find_element_by_id('id_email')
             username.send_keys("draden@gmail.com")
             password = self.driver.find_element_by_id('id_password')
@@ -105,6 +112,22 @@ class TestTemplate(unittest.TestCase):
 
         except NoSuchElementException as ex:
             self.fail(ex.msg)
+
+    def test_search(self):
+        """Search for an ad using web interface"""
+        try:
+            self.driver.get('http://frontend:8000/')
+            search = self.driver.find_element_by_class_name('form-control')
+            search.send_keys("Google")
+            search.submit()
+
+            info = self.driver.find_element_by_class_name("starter-template")
+            contains_title = "Google" in info.get_attribute("innerHTML")
+            self.assertTrue(contains_title)
+
+        except NoSuchElementException as ex:
+            self.fail(ex.msg)
+
 
 if __name__ == '__main__':
     suite = unittest.TestLoader().loadTestsFromTestCase(TestTemplate)
