@@ -2,6 +2,9 @@ sudo: required
 
 services:
   - docker
+before_install:
+  - sudo apt-get install python-pip
+  - sudo pip install selenium
 install:
   - docker pull mysql:5.7.23
   - mkdir -p ~/cs4501
