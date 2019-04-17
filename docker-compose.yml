@@ -40,6 +40,19 @@ frontend:
     - ./app/frontend:/app
   command: "mod_wsgi-express start-server --reload-on-changes /app/frontend/wsgi.py --log-to-terminal"
 
+frontend2:
+  image: tp33/django
+  container_name: frontend2
+  links:
+    - experiences:experiences-api
+  ports:
+    - "8003:8000"
+  expose:
+    - "8000"
+  volumes:
+    - ./app/frontend:/app
+  command: "mod_wsgi-express start-server --reload-on-changes /app/frontend/wsgi.py --log-to-terminal"
+
 kafka:
    image: spotify/kafka
    container_name: kafka
@@ -83,3 +96,15 @@ selenium-test:
   volumes:
     - ./selenium:/app
   command: bash -c "pip install selenium==3.141.0 && sleep 30 && python /app/tests.py && tail -f /dev/null"
+
+
+haproxy:
+  image: haproxy
+  container_name: gateway-haproxy
+  volumes:
+  - ./haproxy:/usr/local/etc/haproxy/haproxy.cfg:ro
+  links:
+   - frontend:frontend
+   - frontend2:frontend2
+  ports:
+   - 8004:8000
