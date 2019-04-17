@@ -13,4 +13,4 @@ before_script:
 - docker start mysql
 - docker-compose up -d
 script:
-- docker exec -it models python isa/manage.py test
+- docker exec -it selenium-test python /app/tests.py
