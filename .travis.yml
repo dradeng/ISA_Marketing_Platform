@@ -1,12 +1,21 @@
 sudo: required
 
+mysql:
+  image: mysql:5.7.14
+  container_name: mysql
+  environment:
+    - MYSQL_ROOT_PASSWORD=$$3cureUS
+    - MYSQL_DATABASE=cs4501
+    - MYSQL_USER=www
+    - MYSQL_PASSWORD=$$3cureUS
+  expose:
+    - "3306"
+  volumes:
+    - ./db_script.sh:/docker-entrypoint-initdb.d/db_script.sh
 services:
   - docker
 before_script:
-- docker-compose up -d mysql
-- docker-compose up -d models
-- docker-compose up -d experiences
-- docker-compose up -d frontend
+- docker start mysql
 - docker-compose up -d
 script:
 - docker exec -it models python isa/manage.py test
