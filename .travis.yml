@@ -4,6 +4,9 @@ services:
   - docker
 before_script:
 - docker-compose up -d mysql
+- docker-compose up -d models
+- docker-compose up -d experiences
+- docker-compose up -d frontend
 - docker-compose up -d
 script:
 - docker exec -it models python isa/manage.py test
