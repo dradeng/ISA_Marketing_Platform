@@ -1,5 +1,5 @@
 from django.test import TestCase, Client
-from django.core.urlresolvers import reverse
+# from django.core.urlresolvers import reverse
 import json
 
 
@@ -73,3 +73,17 @@ class TestAuthentication(TestCase):
         self.assertEquals(logoutResponse.status_code, 200)
 
     def tearDown(self):
+        pass
+
+class TestSearch(TestCase):
+    
+    def setUp(self):
+        pass
+
+    def testSearch(self):
+        c = Client()
+        searchResponse = c.get("/api/v1/search", {"query": "Google"})
+        self.assertEquals(searchResponse.status_code, 201)
+
+    def tearDown(self):
+        pass
