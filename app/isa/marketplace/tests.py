@@ -1,6 +1,5 @@
 from django.test import TestCase, Client
 from django.urls import reverse
-from marketplace.models import Ad, MarketUser
 import json
 
 class TestUsers(TestCase):
