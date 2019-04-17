@@ -95,8 +95,7 @@ selenium-test:
     - frontend:frontend
   volumes:
     - ./selenium:/app
-  command: bash -c "pip install selenium==3.141.0 && sleep 30 && python /app/tests.py && tail -f /dev/null"
-
+  command: bash -c "pip install selenium==3.141.0 && sleep 30 && python /app/tests.py"
 
 haproxy:
   image: haproxy

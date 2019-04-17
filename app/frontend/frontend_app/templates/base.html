@@ -40,9 +40,9 @@
     <div class="container" style="margin-left: 0px">
       <a class="navbar-brand" href="{% url 'home' %}"><b>Home</b></a>
       {% if not auth %}
-      <a class="navbar-brand" href="/login">Login</span></a>
+      <a class="navbar-brand login" id="login" href="/login">Login</span></a>
       {%else %}
-      <a class="navbar-brand" href="/logout">Logout</span></a>
+      <a class="navbar-brand logout" id="logout" href="/logout">Logout</span></a>
       <a class="navbar-brand" href="/ad_create">Create Ad</span></a>
       {%endif%}
     </div> <!-- /container -->

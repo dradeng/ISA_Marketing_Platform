@@ -50,7 +50,7 @@ login {
 </style>
 <body class="text-center">
     <h1 class="h3 mb-3 font-weight-normal">Please create ad</h1>
-    <form method="post" action="http://localhost:8000/ad_create" class="form-signin">
+    <form method="post" action="/ad_create" class="form-signin">
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit" class="btn btn-primary pull-right">Add</button>

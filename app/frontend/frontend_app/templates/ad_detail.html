@@ -10,7 +10,7 @@
 <div style="margin-left: 5%">
 	{% if ad %}
 	{% for ad_only in ad %}
-    <h1><b>{{ ad_only.fields.site_title }}</b></h1>
+    <h1><b class="title">{{ ad_only.fields.site_title }}</b></h1>
     <p>Website url: <a href= {{ad_only.fields.url}} >{{ ad_only.fields.url }}</a></p>
     <h5><b>${{ad_only.fields.cost }}</b> for <b>{{ ad_only.fields.duration }}</b> days</h5>
     {% endfor %}
