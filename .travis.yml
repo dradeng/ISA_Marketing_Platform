@@ -1,21 +1,17 @@
 sudo: required
 
-mysql:
-  image: mysql:5.7.14
-  container_name: mysql
-  environment:
-    - MYSQL_ROOT_PASSWORD=$$3cureUS
-    - MYSQL_DATABASE=cs4501
-    - MYSQL_USER=www
-    - MYSQL_PASSWORD=$$3cureUS
-  expose:
-    - "3306"
-  volumes:
-    - ./db_script.sh:/docker-entrypoint-initdb.d/db_script.sh
 services:
   - docker
+install:
+  - docker pull mysql:5.7.23
+  - mkdir ~/cs4501/db
+  - docker run --name mysql -d -e MYSQL_ROOT_PASSWORD='$3cureUS' -v ~/cs4501/db:/var/lib/mysql  mysql:5.7.23
+  - mysql -uroot -p'$3cureUS' -h db
+  - create user 'www'@'%' identified by '$3cureUS';
+  - create database cs4501 character set utf8;
+  - grant all on cs4501.* to 'www'@'%';
+  - ^D
 before_script:
-- docker start mysql
 - docker-compose up -d
 script:
 - docker exec -it models python isa/manage.py test
