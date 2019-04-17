@@ -3,7 +3,6 @@ sudo: required
 services:
   - docker
 before_script:
-- docker-compose up -d mysql
 - docker-compose up -d
 script:
 - docker exec -it models python isa/manage.py test
