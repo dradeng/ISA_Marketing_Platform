@@ -26,11 +26,13 @@ class TestTemplate(unittest.TestCase):
         """Find and click ad title button"""
         try:
             self.driver.get('http://frontend:8000/')
-            login = self.driver.find_element_by_partial_link_text("Login")
+            time.sleep(10)
             el = self.driver.find_element_by_class_name('adClass')
             el.click()
+            time.sleep(15)
             info = self.driver.find_element_by_class_name("adClass");
             contains_title = "Google" in info.get_attribute("innerHTML")
+            time.sleep(15)
             self.assertTrue(contains_title)
         except NoSuchElementException as ex:
             self.fail(ex.msg)
@@ -39,14 +41,14 @@ class TestTemplate(unittest.TestCase):
         """Log in using web interface"""
         try:
             self.driver.get('http://frontend:8000/login')
+            time.sleep(10)
             username = self.driver.find_element_by_id('id_email')
             username.send_keys("draden@gmail.com")
             password = self.driver.find_element_by_id('id_password')
             password.send_keys("1234")
             self.driver.implicitly_wait(10)
             password.submit()
-            #submit = self.driver.find_element_by_class_name("btn-lg")
-            #submit.click()
+
         except NoSuchElementException as ex:
             self.fail(ex.msg)
 
@@ -59,9 +61,11 @@ class TestTemplate(unittest.TestCase):
             self.driver.implicitly_wait(4)
             logout = self.driver.find_element_by_partial_link_text("Logout")
             self.assertEqual(logout.get_attribute("href"), "http://frontend:8000/logout")
+            time.sleep(10)
             logout.click()
 
             login_button = self.driver.find_element_by_partial_link_text("Login")
+            time.sleep(10)
             self.assertEqual(login_button.get_attribute("href"), "http://frontend:8000/login")
         except NoSuchElementException as ex:
             self.fail(ex.msg)
@@ -78,6 +82,7 @@ class TestTemplate(unittest.TestCase):
         """Create a ad using web interface"""
         try:
             self.driver.get('http://frontend:8000/login')
+            time.sleep(15)
             username = self.driver.find_element_by_id('id_email')
             username.send_keys("draden@gmail.com")
             password = self.driver.find_element_by_id('id_password')
@@ -89,7 +94,7 @@ class TestTemplate(unittest.TestCase):
 
         try:
             self.driver.get('http://frontend:8000/ad_create')
-
+            time.sleep(15)
             site_title = self.driver.find_element_by_id('id_site_title')
             site_title.send_keys("Free")
             url = self.driver.find_element_by_id('id_url')
@@ -101,7 +106,7 @@ class TestTemplate(unittest.TestCase):
 
             submit = self.driver.find_element_by_class_name("btn")
             submit.click()
-
+            time.sleep(15)
             self.assertEqual(self.driver.title, "Home")
 
         except NoSuchElementException as ex:
@@ -111,12 +116,14 @@ class TestTemplate(unittest.TestCase):
         """Search for an ad using web interface"""
         try:
             self.driver.get('http://frontend:8000/')
+            time.sleep(15)
             search = self.driver.find_element_by_class_name('form-control')
             search.send_keys("Google")
             search.submit()
-
+            time.sleep(15)
             info = self.driver.find_element_by_class_name("starter-template")
             contains_title = "Google" in info.get_attribute("innerHTML")
+            time.sleep(15)
             self.assertTrue(contains_title)
 
         except NoSuchElementException as ex:
