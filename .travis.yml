@@ -11,13 +11,11 @@ install:
   - mkdir -p ~/cs4501/db
   - docker run --name mysql -d -e MYSQL_ROOT_PASSWORD='\$3cureUS' -v ~/cs4501/db:/var/lib/mysql  mysql:5.7.23
   - sleep 10
-  - docker run -it --name mysql-cmdline --link mysql:db mysql:5.7.14 mysql -uroot -p'$3cureUS' -h db -e "CREATE USER 'www'@'%' IDENTIFIED BY '$3cureUS'; CREATE DATABASE cs4501 CHARACTER SET utf8; GRANT ALL ON *.* TO 'www'@'%';"
+  - docker run -it --name mysql-cmdline --link mysql:db mysql:5.7.14 mysql -uroot -p'$3cureUS' -h db -e "CREATE USER 'www'@'%' IDENTIFIED BY '\$3cureUS'; CREATE DATABASE cs4501 CHARACTER SET utf8; GRANT ALL ON *.* TO 'www'@'%';"
 before_script:
 - docker start mysql
 - docker-compose up
 script:
-- docker exec -it models python3 /app/isa/manage.py makemigrations
-- docker exec -it models python3 /app/isa/manage.py migrate
-- docker exec -it models python3 /app/isa/manage.py loaddata /app/isa/db2.json
+- docker exec -it models python manage.py test
 - docker exec -it selenium-test pip install selenium==3.141.0
 - docker exec -it selenium-test python tests.py
