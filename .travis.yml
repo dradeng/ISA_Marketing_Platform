@@ -2,6 +2,9 @@ sudo: required
 
 services:
   - docker
+before_install:
+  - sudo apt-get install python-pip
+  - sudo pip install selenium
 install:
   - docker pull mysql:5.7.23
   - mkdir -p ~/cs4501
@@ -13,4 +16,8 @@ before_script:
 - docker start mysql
 - docker-compose up -d
 script:
-- docker exec -it models python isa/manage.py test
+- docker exec -it models python3 /app/isa/manage.py makemigrations
+- docker exec -it models python3 /app/isa/manage.py migrate
+- docker exec -it models python3 /app/isa/manage.py loaddata /app/isa/db2.json
+- docker exec -it selenium-test pip install selenium==3.141.0
+- docker exec -it selenium-test python tests.py
