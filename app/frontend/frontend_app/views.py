@@ -82,9 +82,12 @@ def login(request):
 
     print("WE CALL")
     if request.method == 'GET':
+        print("we in here")
         auth = user_logged_in(request)
         form = LoginForm()
         context = {"form": form, "auth": auth}
+
+        print(auth)
         return render(request, "login.html", context)
     if request.method == "POST":
         print('WE HERE MOTH')

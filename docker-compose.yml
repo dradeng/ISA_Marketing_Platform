@@ -112,7 +112,7 @@ jmeter:
   image: hauptmedia/jmeter
   container_name: jmeter
   links:
-    - gateway-haproxy:gateway-haproxy
+    - frontend:frontend
   volumes:
     - ./jmeter:/jmeter
   command: bash -c "bin/jmeter -n -t /jmeter/test_1.jmx -l /jmeter/docker_results.log"
