@@ -16,6 +16,6 @@ before_script:
 - docker start mysql
 - docker-compose up
 script:
-- docker exec -it models python manage.py test
+- docker exec -it models python ./isa/manage.py test
 - docker exec -it selenium-test pip install selenium==3.141.0
 - docker exec -it selenium-test python tests.py
