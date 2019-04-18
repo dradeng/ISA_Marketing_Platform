@@ -26,7 +26,7 @@ class TestTemplate(unittest.TestCase):
         """Find and click ad title button"""
         try:
             self.driver.get('http://frontend:8000/')
-            time.sleep(10)
+            time.sleep(15)
             el = self.driver.find_element_by_class_name('adClass')
             el.click()
             time.sleep(15)
@@ -41,7 +41,7 @@ class TestTemplate(unittest.TestCase):
         """Log in using web interface"""
         try:
             self.driver.get('http://frontend:8000/login')
-            time.sleep(10)
+            time.sleep(15)
             username = self.driver.find_element_by_id('id_email')
             username.send_keys("draden@gmail.com")
             password = self.driver.find_element_by_id('id_password')
