@@ -55,8 +55,9 @@ class TestTemplate(unittest.TestCase):
 
         try:
             WebDriverWait(self.driver, 15)
-            #html = self.driver.execute_script("return document.body.innerHTML;")
-
+            html = self.driver.execute_script("return document.body.innerHTML;")
+            print("HERERER")
+            print(html)
             self.assertEqual(self.driver.title, "Home")
             self.driver.implicitly_wait(4)
             logout = self.driver.find_element_by_partial_link_text("Logout")
