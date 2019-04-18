@@ -16,4 +16,5 @@ before_script:
 - docker start mysql
 - docker-compose up -d
 script:
-- docker exec -it selenium-test pip install selenium==3.141.0 && sleep 30 && python ./tests.py
+- docker exec -it selenium-test pip install selenium==3.141.0
+- docker exec -it selenium-test python tests.py
