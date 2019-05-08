@@ -117,9 +117,18 @@ jmeter:
     - ./jmeter:/jmeter
   command: bash -c "bin/jmeter -n -t /jmeter/test_1.jmx -l /jmeter/docker_results.log"
 
+spark_batch:
+   image: tp33/django
+   container_name: spark_batch
+   links:
+      - kafka:kafka
+   volumes:
+      - ./spark:/app
+   command: "python /app/pageview_script.py"
+
 spark-master:
   image: gettyimages/spark
-  command: bash -c "chmod +x /tmp/data/install_mysql_stuff.sh && /tmp/data/install_mysql_stuff.sh && chmod +x /tmp/data/run_job.sh && /tmp/data/run_job.sh && bin/spark-class org.apache.spark.deploy.master.Master -h spark-master"
+  command: bin/spark-class org.apache.spark.deploy.master.Master -h spark-master
   container_name: spark-master
   hostname: spark-master
   environment:
@@ -144,7 +153,7 @@ spark-master:
 
 spark-worker:
   image: gettyimages/spark
-  command: bash -c "chmod +x /tmp/data/install_mysql_stuff.sh && /tmp/data/install_mysql_stuff.sh && bin/spark-class org.apache.spark.deploy.worker.Worker spark://spark-master:7077"
+  command: bin/spark-class org.apache.spark.deploy.worker.Worker spark://spark-master:7077
   container_name: spark-worker
   hostname: spark-worker
   environment:
@@ -154,7 +163,7 @@ spark-worker:
     SPARK_WORKER_PORT: 8881
     SPARK_WORKER_WEBUI_PORT: 8081
   links:
-    - spark-master:spark-master
+    - spark-master
   expose:
     - 7012
     - 7013
