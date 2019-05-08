@@ -376,6 +376,7 @@ def logout(request):
     return JsonResponse({"success": "User logged out"}, status=200)
 
 def recommendation(request):
+    print('WE MADE IT TO RECOMENDATION INS MODELS')
     if request.method != "GET":
         return JsonResponse({"error":"incorrect method (use POST instead)"}, status=405)
     try:

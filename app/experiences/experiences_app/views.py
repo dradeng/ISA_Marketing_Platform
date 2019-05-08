@@ -207,6 +207,7 @@ def search(request):
         return JsonResponse({"error":"incorrect method (use GET or POST instead)"}, status=405)
 
 def get_recommendations(request, ad_id):
+    print('we inside experiences get recommend')
     ad_rec = urllib.request.Request('http://models-api:8000/api/v1/ads/recommendation?Page_id='+str(ad_id))
     try:
         rec_json = urllib.request.urlopen(ad_rec).read().decode('utf-8')
@@ -215,10 +216,14 @@ def get_recommendations(request, ad_id):
     except Exception as e:
         return JsonResponse({"error": e.msg}, status=e.code)
 
+    print('WE MADE IT PAST THE REQ IN VIEWS EXP')
     reco_list = json.loads(rec_json)
     rec_objs = []
     for ad in reco_list:
-        rec_items = af['Related_pages'].split(',')
+        print("RIGHT BEFORE RELATED PAGES")
+        print(ad)
+        rec_items = ad['Related_pages'].split(',')
+        print('MADE IT PAST THE RELATE PAGES')
         recs = list(map(int, rec_items))
         for i in recs:
             try:

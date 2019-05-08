@@ -31,14 +31,24 @@ def home(request):
 # @desc    return ad info
 # @access  Public
 def ad_detail(request, ad_id):
+    auth = user_logged_in(request)
+    print('inside ad detail begin')
     reqUrl = 'http://experiences-api:8000/api/v1/ad/' + str(ad_id) + '/ad_detail'
     req = urllib.request.Request(reqUrl)
 
-    reqRec = urllib.request.Request('http://exp-api:8000/api/v1/recommend/' + str(ad_id))
+    reqRecUrl = 'http://experiences-api:8000/api/v1/recommend/' + str(ad_id)
+    print(reqRecUrl)
+    reqRec = urllib.request.Request(reqRecUrl)
+    print('made past request')
+    try:
+        auth_cookie = request.COOKIES.get('auth')
+        req.add_header("Cookie", "auth="+auth_cookie)
+        reqRec.add_header("Cookie", "auth="+auth_cookie)
+    except:
+        pass
 
     try:
         resp_json = urllib.request.urlopen(req).read().decode('utf-8')
-        req1.add_header("Cookie", "auth="+auth_cookie)
     except HTTPError as e:
         return JsonResponse({"error":"Ad ID not found"}, status=e.code)
     except Exception as e:
@@ -48,12 +58,13 @@ def ad_detail(request, ad_id):
     #if 'error' in ad.keys():
         #return render(request, 'ad_detail.html',{'ad': })
 
-
+    print('made it detail')
     try:
         resp_json1 = urllib.request.urlopen(reqRec).read().decode('utf-8')
     except HTTPError as e:
-        return JsonResponse({"error":"Whatup Sai"}, status=e.code)
+        return JsonResponse({"error": e.msg}, status=e.code)
 
+    print('made it here')
     recs = json.loads(resp_json1)
     return render(request, 'ad_detail.html',{'ad': ad, "recs":recs})
 

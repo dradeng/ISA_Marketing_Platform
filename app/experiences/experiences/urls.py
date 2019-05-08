@@ -26,5 +26,5 @@ urlpatterns = [
     url(r'^api/v1/logout', views.logout, name='logout'),
     url(r'^api/v1/create_user', views.create_user, name='create_user'),
     url(r'^api/v1/search', views.search, name='search'),
-    url(r'^api/v1/recommend/(?P<ad_id>\d+)$', views.get_recommendations, name='get_recommendations'),
+    url(r'^api/v1/recommend/(?P<ad_id>\d+)', views.get_recommendations, name='get_recommendations')
 ]
