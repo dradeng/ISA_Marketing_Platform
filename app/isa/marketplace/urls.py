@@ -14,6 +14,7 @@ urlpatterns = [
     url(r'^api/v1/user/update/', views.userUpdate, name='user_update'),
     url(r'^api/v1/user/delete/', views.userDelete, name='user_delete'),
     url(r'^api/v1/user/create/', views.userCreate, name='user_create'),
+    url(r'^api/v1/ads/recommendation', views.recommendation, name='recommend_ad'),
     url(r'^api/v1/ads/', views.adGet, name='ad_get'),
     url(r'^api/v1/ad/(?P<ad_id>\d+)/ad_detail/', views.ad_detail, name='ad_detail'),
     url(r'^api/v1/ad/update/', views.adUpdate, name='ad_upate'),
@@ -29,6 +30,5 @@ urlpatterns = [
     url(r'^api/v1/seller/create/', views.sellerCreate, name='seller_create'),
     url(r'^api/v1/login', views.login, name='login'),
     url(r'^api/v1/check_authenticator$', views.check_authenticator, name='check_authenticator'),
-    url(r'^api/v1/logout', views.logout, name='logout'),
-    url(r'^api/v1/ads/recommendation', views.recommendation, name = 'recommend_ad')
+    url(r'^api/v1/logout', views.logout, name='logout')
 ]
