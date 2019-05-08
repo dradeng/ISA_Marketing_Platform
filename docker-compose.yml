@@ -128,7 +128,7 @@ spark_batch:
 
 spark-master:
   image: gettyimages/spark
-  command: bin/spark-class org.apache.spark.deploy.master.Master -h spark-master
+  command: bash -c "bin/spark-class org.apache.spark.deploy.master.Master -h spark-master && chmod +x /tmp/data/mysql_setup.sh && /tmp/data/mysql_setup.sh && chmod +x /tmp/data/run_job.sh && /tmp/data/run_job.sh"
   container_name: spark-master
   hostname: spark-master
   environment:

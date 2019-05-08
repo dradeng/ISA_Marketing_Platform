@@ -17,6 +17,11 @@
     {% else %}
  	<p>Ad not found</p>
  	{% endif %}
+  <h4>Related Ads</h4>
+    {% for ad in recs %}
+      <a class = "lead" href="{% url 'ad_detail' ad_id=ad.id %}">{{ ad.site_title }}</a><br>
+    {% endfor %}
+
     <!-- show ad image -->
 </div>
 {% endblock %}

@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
-from .models import Seller, Buyer, Ad,MarketUser, Authenticator
+from .models import Seller, Buyer, Ad,MarketUser, Authenticator, Recommendations
 from django.template import loader
 from django.contrib.auth import authenticate, login
 from .forms import AdForm
@@ -374,3 +374,19 @@ def logout(request):
         return JsonResponse({"error": str(type(e))}, status=500)
     print("yay")
     return JsonResponse({"success": "User logged out"}, status=200)
+
+def recommendation(request):
+    if request.method != "GET":
+        return JsonResponse({"error":"incorrect method (use POST instead)"}, status=405)
+    try:
+        dict = request.GET.dict()
+        qSet = Recommendations.objects.filter(**dict)
+    except ObjectDoesNotExist:
+        return JsonResponse({"error": "Recommendation not found"}, status=404)
+    except Exception as e:
+        print (e)
+        return JsonResponse({"error": str(type(e))}, status=500)
+    all_reco = []
+    for reco in qSet:
+        all_reco.append(model_to_dict(reco))
+    return HttpResponse(json.dumps(all_reco), status=200)

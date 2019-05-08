@@ -205,3 +205,38 @@ def search(request):
 
     else:
         return JsonResponse({"error":"incorrect method (use GET or POST instead)"}, status=405)
+
+def get_recommendations(request, ad_id):
+    ad_rec = urllib.request.Request('http://models-api:8000/api/v1/ads/recommendation?Page_id='+str(ad_id))
+    try:
+        rec_json = urllib.request.urlopen(ad_rec).read().decode('utf-8')
+    except HTTPError as e:
+        return JsonResponse({"error": e.msg}, status=e.code)
+    except Exception as e:
+        return JsonResponse({"error": e.msg}, status=e.code)
+
+    reco_list = json.loads(rec_json)
+    rec_objs = []
+    for ad in reco_list:
+        rec_items = af['Related_pages'].split(',')
+        recs = list(map(int, rec_items))
+        for i in recs:
+            try:
+                ad_req = urllib.request.Request('http://models-api:8000/api/v1/ads?id=' + str(i))
+
+                try:
+                    ad_json = urllib.request.urlopen(ad_req).read().decode('utf-8')
+                except HTTPError as e:
+                    return JsonResponse({"error": e.msg}, status=e.code)
+                except Exception as e:
+                    return JsonResponse({"error": e.msg}, status=e.code)
+
+                ad_list = json.loads(ad_json)
+                if len(ad_list) != 1:
+                    return HttpResponse(json.dumps({"error": "Ad not found"}), status=404)
+                ad = ad_list[0]
+                rec_objs.append({"id":i, "site_title":ad['site_title']})
+            except:
+                return HttpResponse(json.dumps({"error": "Ad not found"}), status=404)
+
+    return HttpResponse(json.dumps(rec_objs), status=200)

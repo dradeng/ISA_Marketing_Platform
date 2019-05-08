@@ -27,3 +27,7 @@ class Ad(models.Model):
     cost = models.IntegerField(default=0)
     url = models.URLField( null=True, blank=True)
     site_title = models.CharField(max_length=255, default='Google')
+
+class Recommendations(models.Model):
+    Page_id = models.IntegerField(primary_key=True)
+    Related_pages = models.CharField(max_length=200)
