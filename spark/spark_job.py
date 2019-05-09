@@ -8,7 +8,9 @@ data = sc.textFile("/tmp/data/view_log.txt", 2)     # each worker loads a piece 
 
 # Each line is split into a list of [user_id, page_id]
 pairs = data.map(lambda line: line.split("\t"))   # tell each worker to split each line of it's partition
-output = pairs.collect()
+print("PAIRS")
+print(pairs)
+output = pairs.collect() # make all nodes return to master
 for thing in output:
     print("user_id %s page_id %s" % (thing[0], thing[1]))
 print("line done")
