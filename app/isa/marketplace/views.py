@@ -381,6 +381,8 @@ def recommendation(request):
         return JsonResponse({"error":"incorrect method (use POST instead)"}, status=405)
     try:
         dict = request.GET.dict()
+        print('ALL RECOMENDATION')
+        print(Recommendations.objects.all())
         qSet = Recommendations.objects.filter(**dict)
     except ObjectDoesNotExist:
         return JsonResponse({"error": "Recommendation not found"}, status=404)

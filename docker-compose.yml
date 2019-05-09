@@ -59,6 +59,7 @@ kafka:
    environment:
       ADVERTISED_HOST: kafka
       ADVERTISED_PORT: 9092
+      TOPICS: new-listings-topic, pageview-topic
    hostname: kafka
 
 es:
@@ -77,7 +78,7 @@ batch:
       - es:es
    volumes:
       - ./batch:/kafka_script
-   command: "python /kafka_script/kafka_script.py"
+   command: "python /kafka_script/kafka_script.py --log-to-terminal"
 
 selenium-chrome:
   image: selenium/standalone-chrome
@@ -124,11 +125,11 @@ spark_batch:
       - kafka:kafka
    volumes:
       - ./spark:/app
-   command: "python /app/pageview_script.py"
+   command: "python /app/pageview_script.py --log-to-terminal"
 
 spark-master:
   image: gettyimages/spark
-  command: bash -c "bin/spark-class org.apache.spark.deploy.master.Master -h spark-master && chmod +x /tmp/data/mysql_setup.sh && /tmp/data/mysql_setup.sh && chmod +x /tmp/data/run_job.sh && /tmp/data/run_job.sh"
+  command: bash -c "chmod +x /tmp/data/install_mysql_stuff.sh && /tmp/data/install_mysql_stuff.sh && chmod +x /tmp/data/run_job.sh && /tmp/data/run_job.sh --log-to-terminal"
   container_name: spark-master
   hostname: spark-master
   environment:
@@ -149,7 +150,7 @@ spark-master:
     - 7077:7077
     - 8080:8080
   volumes:
-    - ./data:/tmp/data
+    - ./spark:/tmp/data
 
 spark-worker:
   image: gettyimages/spark
@@ -174,4 +175,4 @@ spark-worker:
   ports:
     - 8081:8081
   volumes:
-    - ./data:/tmp/data
+    - ./spark:/tmp/data
