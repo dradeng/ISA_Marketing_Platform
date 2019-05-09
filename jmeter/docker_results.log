@@ -598,3 +598,78 @@
 1557363153628,140,logout,200,OK,Thread Group 1-4,text,true,4049,3,3,53
 1557363153611,171,logout,200,OK,Thread Group 1-3,text,true,4049,2,2,67
 1557363153681,114,logout,200,OK,Thread Group 1-5,text,true,4049,1,1,57
+1557363491991,584,Home page,200,OK,Thread Group 1-1,text,true,18397,5,5,584
+1557363491994,585,Home page,200,OK,Thread Group 1-2,text,true,18397,5,5,585
+1557363491990,615,Home page,200,OK,Thread Group 1-4,text,true,18397,5,5,615
+1557363492129,490,Home page,200,OK,Thread Group 1-5,text,true,18397,5,5,490
+1557363491991,637,Home page,200,OK,Thread Group 1-3,text,true,18397,5,5,637
+1557363492583,342,Wrong Login Info,200,OK,Thread Group 1-1,text,true,3901,5,5,342
+1557363492583,357,Wrong Login Info,200,OK,Thread Group 1-2,text,true,3901,5,5,357
+1557363492628,498,Wrong Login Info,200,OK,Thread Group 1-3,text,true,3901,5,5,498
+1557363492620,548,Wrong Login Info,200,OK,Thread Group 1-5,text,true,3901,5,5,548
+1557363492606,646,Wrong Login Info,200,OK,Thread Group 1-4,text,true,3901,5,5,646
+1557363492944,467,Correct Login Info,200,OK,Thread Group 1-1,text,true,18683,5,5,417
+1557363492941,483,Correct Login Info,200,OK,Thread Group 1-2,text,true,18683,5,5,411
+1557363493170,455,Correct Login Info,200,OK,Thread Group 1-5,text,true,18683,5,5,383
+1557363493128,582,Correct Login Info,200,OK,Thread Group 1-3,text,true,18683,5,5,470
+1557363493413,300,HTTP Request,500,Internal Server Error,Thread Group 1-1,text,false,225,5,5,299
+1557363493425,301,HTTP Request,500,Internal Server Error,Thread Group 1-2,text,false,225,5,5,301
+1557363493253,503,Correct Login Info,200,OK,Thread Group 1-4,text,true,18683,5,5,412
+1557363493625,286,HTTP Request,500,Internal Server Error,Thread Group 1-5,text,false,225,5,5,286
+1557363493711,210,HTTP Request,500,Internal Server Error,Thread Group 1-3,text,false,225,5,5,210
+1557363493756,166,HTTP Request,500,Internal Server Error,Thread Group 1-4,text,false,225,5,5,166
+1557363493727,218,logout,200,OK,Thread Group 1-2,text,true,4049,5,5,39
+1557363493715,242,logout,200,OK,Thread Group 1-1,text,true,4049,4,4,46
+1557363493913,99,logout,200,OK,Thread Group 1-5,text,true,4049,3,3,41
+1557363493922,118,logout,200,OK,Thread Group 1-3,text,true,4049,2,2,35
+1557363493922,134,logout,200,OK,Thread Group 1-4,text,true,4049,1,1,59
+1557363780535,585,Home page,200,OK,Thread Group 1-3,text,true,18698,5,5,585
+1557363780535,584,Home page,200,OK,Thread Group 1-2,text,true,18698,5,5,584
+1557363780803,313,Home page,200,OK,Thread Group 1-5,text,true,18698,5,5,312
+1557363780593,560,Home page,200,OK,Thread Group 1-4,text,true,18698,5,5,560
+1557363780535,660,Home page,200,OK,Thread Group 1-1,text,true,18698,5,5,658
+1557363781125,750,Wrong Login Info,200,OK,Thread Group 1-5,text,true,3901,5,5,750
+1557363781126,855,Wrong Login Info,200,OK,Thread Group 1-3,text,true,3901,5,5,854
+1557363781196,901,Wrong Login Info,200,OK,Thread Group 1-1,text,true,3901,5,5,901
+1557363781154,1015,Wrong Login Info,200,OK,Thread Group 1-4,text,true,3901,5,5,1015
+1557363781125,1315,Wrong Login Info,200,OK,Thread Group 1-2,text,true,3901,5,5,1315
+1557363781885,1228,Correct Login Info,200,OK,Thread Group 1-5,text,true,18984,5,5,1047
+1557363782099,1270,Correct Login Info,200,OK,Thread Group 1-1,text,true,18984,5,5,1157
+1557363782172,1386,Correct Login Info,200,OK,Thread Group 1-4,text,true,18984,5,5,1258
+1557363781985,1602,Correct Login Info,200,OK,Thread Group 1-3,text,true,18984,5,5,1447
+1557363783370,643,HTTP Request,500,Internal Server Error,Thread Group 1-1,text,false,225,5,5,643
+1557363783116,911,HTTP Request,500,Internal Server Error,Thread Group 1-5,text,false,225,5,5,910
+1557363783589,445,HTTP Request,500,Internal Server Error,Thread Group 1-3,text,false,225,5,5,445
+1557363783559,511,HTTP Request,500,Internal Server Error,Thread Group 1-4,text,false,225,5,5,511
+1557363782441,1652,Correct Login Info,200,OK,Thread Group 1-2,text,true,18984,5,5,1315
+1557363784014,235,logout,200,OK,Thread Group 1-1,text,true,4049,5,5,72
+1557363784038,240,logout,200,OK,Thread Group 1-3,text,true,4049,4,4,52
+1557363784094,186,HTTP Request,500,Internal Server Error,Thread Group 1-2,text,false,225,4,4,186
+1557363784035,251,logout,200,OK,Thread Group 1-5,text,true,4049,3,3,59
+1557363784071,262,logout,200,OK,Thread Group 1-4,text,true,4049,2,2,68
+1557363784282,107,logout,200,OK,Thread Group 1-2,text,true,4049,1,1,34
+1557363946567,522,Home page,200,OK,Thread Group 1-3,text,true,18999,5,5,522
+1557363946598,501,Home page,200,OK,Thread Group 1-5,text,true,18999,5,5,501
+1557363946575,540,Home page,200,OK,Thread Group 1-1,text,true,18999,5,5,540
+1557363946546,586,Home page,200,OK,Thread Group 1-2,text,true,18999,5,5,586
+1557363946573,578,Home page,200,OK,Thread Group 1-4,text,true,18999,5,5,578
+1557363947116,450,Wrong Login Info,200,OK,Thread Group 1-1,text,true,3901,5,5,450
+1557363947152,576,Wrong Login Info,200,OK,Thread Group 1-4,text,true,3901,5,5,576
+1557363947132,604,Wrong Login Info,200,OK,Thread Group 1-2,text,true,3901,5,5,603
+1557363947100,648,Wrong Login Info,200,OK,Thread Group 1-5,text,true,3901,5,5,648
+1557363947097,769,Wrong Login Info,200,OK,Thread Group 1-3,text,true,3901,5,5,769
+1557363947571,915,Correct Login Info,200,OK,Thread Group 1-1,text,true,19285,5,5,819
+1557363947742,827,Correct Login Info,200,OK,Thread Group 1-2,text,true,19285,5,5,696
+1557363947730,884,Correct Login Info,200,OK,Thread Group 1-4,text,true,19285,5,5,767
+1557363947750,1076,Correct Login Info,200,OK,Thread Group 1-5,text,true,19285,5,5,941
+1557363948487,342,HTTP Request,500,Internal Server Error,Thread Group 1-1,text,false,225,5,5,342
+1557363947902,1127,Correct Login Info,200,OK,Thread Group 1-3,text,true,19285,5,5,895
+1557363948570,490,HTTP Request,500,Internal Server Error,Thread Group 1-2,text,false,225,5,5,490
+1557363948830,334,logout,200,OK,Thread Group 1-1,text,true,4049,5,5,79
+1557363948615,609,HTTP Request,500,Internal Server Error,Thread Group 1-4,text,false,225,4,4,609
+1557363949061,223,logout,200,OK,Thread Group 1-2,text,true,4049,4,4,107
+1557363948827,601,HTTP Request,500,Internal Server Error,Thread Group 1-5,text,false,225,3,3,600
+1557363949030,429,HTTP Request,500,Internal Server Error,Thread Group 1-3,text,false,225,3,3,429
+1557363949226,257,logout,200,OK,Thread Group 1-4,text,true,4049,3,3,101
+1557363949428,127,logout,200,OK,Thread Group 1-5,text,true,4049,2,2,47
+1557363949460,98,logout,200,OK,Thread Group 1-3,text,true,4049,1,1,20
